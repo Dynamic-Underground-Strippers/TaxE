@@ -7,6 +7,7 @@ public class Game {
     public static void main(String [ ] args)
     {
         //Here is where stuff goes that makes the game work
+        currentMap = new Map();
     }
     public void endGame() {
     }

@@ -27,6 +27,7 @@ public class Map {
 
     public boolean checkObstruction(Node Node1,Node Node2){
         // returns whether or not an obstruction exists between two nodes, true is so, false if no obstruction exists.
+        //(connections[nodes.get(i).getId()][nodes.get(i + 1).getId()].getObstacle() != null)
         return true;
     }
 }

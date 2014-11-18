@@ -7,11 +7,19 @@ public class Route {
 
     public boolean isBlocked() {
         for (int i = 0; i < (nodes.size() - 1); i++) {
-            if (Game.currentMap.connections[nodes.get(i).getId()][nodes.get(i + 1).getId()].getObstacle() != null) {
+            if (Game.currentMap.checkObstruction(nodes.get(i),nodes.get(i+1))) {
                 return true;
             }
         }
         return false;
+    }
+
+    public int findTotalDistance(){
+        int totalDistance = 0;
+        for (int i = 0; i < (nodes.size() - 1); i++) {
+           totalDistance += Game.currentMap.findDistance(nodes.get(i),nodes.get(i+1));
+        }
+        return totalDistance;
     }
 
 
