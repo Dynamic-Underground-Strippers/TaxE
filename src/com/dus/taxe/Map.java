@@ -19,5 +19,11 @@ public class Map {
         return adjacentNodes;
     }
 
+    public int findDistance(Node Node1,Node Node2){
+        return 0;
+    }
 
+    public boolean checkObstruction(Node Node1,Node Node2){
+        return true;
+    }
 }
