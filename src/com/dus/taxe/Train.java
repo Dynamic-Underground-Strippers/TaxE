@@ -6,28 +6,42 @@ public class Train {
     private Node currentNode;
     private int distanceAlongConnection;
     private Engine engine;
-    private boolean Engineer;
-    private int Speed;
+    private boolean engineer;
+    private int speed;
     private boolean frozen;
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
+    public Route route;
 
 
-    public Train(Node currentNode, int distanceAlongConnection, Engine engine, boolean frozen, ArrayList<Upgrade> upgrades, ArrayList<Node> visitedNodes) {
+    public Train(Node currentNode, int distanceAlongConnection, int speed, Engine engine, boolean frozen, ArrayList<Upgrade> upgrades, ArrayList<Node> visitedNodes) {
         this.currentNode = currentNode;
         this.distanceAlongConnection = distanceAlongConnection;
         this.engine = engine;
         this.frozen = frozen;
         this.upgrades = upgrades;
         this.visitedNodes = visitedNodes;
+        this.speed = speed;
+    }
+
+    public void associateRoute(Route route){
+        this.route = route;
     }
 
     public int getSpeed() {
-        return Speed;
+        return speed;
     }
 
     public void setSpeed(int speed) {
-        Speed = speed;
+       this.speed = speed;
+    }
+
+    public boolean haveEngineer() {
+        return engineer;
+    }
+
+    public void setEngineer(boolean engineer) {
+        this.engineer = engineer;
     }
 
     public void addUpgrade(Upgrade upgrade) {
@@ -72,7 +86,7 @@ public class Train {
     }
 
     public ArrayList<Node> getVisitedNodes () {
-        //returns upgrades for GUI
+        //returns nodes for GUI
         return this.visitedNodes;
     }
 

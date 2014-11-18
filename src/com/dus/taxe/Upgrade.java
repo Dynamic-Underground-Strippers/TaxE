@@ -51,12 +51,28 @@ public class Upgrade extends Resource {
     }
 
     public void useUpgrade(Train train){
+        switch (type){
+            case doubleSpeed:
+                train.setSpeed(train.getSpeed()*2);
+                break;
+            case Engineer:
+                if(!train.haveEngineer()) {
+                    train.setEngineer(True);
+                }
+                else {
+                    //throw exception
+                }
+                break;
+        }
 
     }
 
     public void useUpgrade(Train train, Node node){
         if (this.type == UpgradeType.Teleport){
-            //code
+            if(train.route.nodes.contains(node)) { //can teleport only on nodes contained in the route.
+                train.setCurrentNode(node);
+                //need to modify route too
+            }
         }else{
             //throw exception
         }
