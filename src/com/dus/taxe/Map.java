@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Map {
     public ArrayList<Node> listOfNodes;
-    Connection[][] connections;
+    public Connection[][] connections;
 
 
 
