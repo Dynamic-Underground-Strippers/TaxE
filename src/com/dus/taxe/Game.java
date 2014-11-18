@@ -3,7 +3,11 @@ package com.dus.taxe;
 public class Game {
     private final int maxPoints = 1000;
     private int turn;
-
+    public static Map currentMap;
+    public static void main(String [ ] args)
+    {
+        //Here is where stuff goes that makes the game work
+    }
     public void endGame() {
     }
 
