@@ -12,8 +12,10 @@ public class Game {
         //Here is where stuff goes that makes the game work
         currentMap = new Map();
         Station node1 = new Station(1,"One",new Point(1,1));
+        Junction node2 = new Junction(2,"Two", new Point(2,2));
         ArrayList<Node> testList = new ArrayList<Node>();
         testList.add(node1);
+        testList.add(node2);
         Route currentRoute = new Route(testList);
         System.out.println(currentRoute.toString());
     }

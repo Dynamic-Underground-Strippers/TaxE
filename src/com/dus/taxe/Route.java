@@ -8,9 +8,9 @@ public class Route{
 
     public Route(ArrayList<Node> newNodes){
         setRoute(newNodes);
-        if (!isValid()){
+      /*  if (!isValid()){
             throw new Error("Invalid Route");
-        }
+        }*/
         length = findTotalDistance();
     }
 
