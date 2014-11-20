@@ -6,16 +6,14 @@ public class Train {
     private Node currentNode;
     private int distanceAlongConnection;
     private Engine engine;
-    private boolean frozen;
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
 
 
-    public Train(Node currentNode, int distanceAlongConnection, Engine engine, boolean frozen, ArrayList<Upgrade> upgrades, ArrayList<Node> visitedNodes) {
+    public Train(Node currentNode, int distanceAlongConnection, Engine engine, ArrayList<Upgrade> upgrades, ArrayList<Node> visitedNodes) {
         this.currentNode = currentNode;
         this.distanceAlongConnection = distanceAlongConnection;
         this.engine = engine;
-        this.frozen = frozen;
         this.upgrades = upgrades;
         this.visitedNodes = visitedNodes;
     }
@@ -48,11 +46,8 @@ public class Train {
         this.engine = engine;
     }
 
-    public boolean isFrozen() {
-        return frozen;
+    public ArrayList<Node> getVisitedNodes() {
+        return visitedNodes;
     }
 
-    public void setFrozen(boolean frozen) {
-        this.frozen = frozen;
-    }
 }

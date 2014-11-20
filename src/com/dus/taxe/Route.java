@@ -40,6 +40,7 @@ public class Route{
     }
 
     private int findTotalDistance(){
+        // Finds the total length of the route
         int totalDistance = 0;
         for (int i = 0; i < (listOfNodes.size() - 1); i++) {
            totalDistance += Game.currentMap.findDistance(listOfNodes.get(i),listOfNodes.get(i+1));
@@ -48,6 +49,7 @@ public class Route{
     }
 
     public String toString(){
+        // Represents the route as a string
         String retStr = "";
         for (int i = 0; i < (listOfNodes.size()); i++) {
            retStr = retStr + listOfNodes.get(i).toString() + " ";
