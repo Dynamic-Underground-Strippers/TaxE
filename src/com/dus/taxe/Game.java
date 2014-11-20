@@ -4,45 +4,51 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Game {
-    private final int maxPoints = 1000;
-    private int turn;
+    private static final int maxPoints = 1000;
+    private static int turn;
     public static Map currentMap;
     private static Player currentPlayer;
     private static Player otherPlayer;
 
     public static void main(String [ ] args)
     {
-        //Here is where stuff goes that makes the game work
-        currentMap = new Map();
-        Station node1 = new Station(1,"One",new Point(1,1));
-        Junction node2 = new Junction(2,"Two", new Point(2,2));
-        ArrayList<Node> testList = new ArrayList<Node>();
-        testList.add(node1);
-        testList.add(node2);
-        Route currentRoute = new Route(testList);
-        System.out.println(currentRoute.toString());
+        //Player presses start game button
+        //Game asks for player's names
+       /* currentPlayer = new Player(GetNameFromGUIInput);
+        otherPlayer = new Player(GetNameFromGUIInput);*/
+        //Loads map from storage of different maps
+        //Game starts, enters playing loop
+        while ((currentPlayer.getPoints() < maxPoints) && (otherPlayer.getPoints() < maxPoints)){
+            //While the players' have less than the max score then the game keeps playing
+            //Need some kind of timer here to time the turn
+            //TODO:
+            endTurn();
+        }
+
+        endGame();
     }
 
-    public void endGame() {
-
+    public static void endGame() {
+        System.out.println("Congratulations " + currentPlayer.getName());
     }
-    private void swapPlayers(){
+
+    private static void swapPlayers(){
         Player temp;
         temp = currentPlayer;
         currentPlayer = otherPlayer;
         otherPlayer = temp;
     }
 
-    public void endTurn() {
+    public static void endTurn() {
         swapPlayers();
-    }
-
-    public int getMaxPoints() {
-        return maxPoints;
+        turn += 1;
     }
 
     public int getTurn() {
-        return turn;
+        return this.turn;
     }
-
+    private Map chooseRandomMap(){
+        //Random map is found in this subroutine
+        return null;
+    }
 }

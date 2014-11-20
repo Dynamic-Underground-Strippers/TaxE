@@ -6,11 +6,13 @@ public class Player {
     private final String name;
     private int points;
     private ArrayList<Goal> currentGoals;
-    private ArrayList<Upgrade> inventory;
+    private ArrayList<Resource> inventory;
 
     public Player(String name) {
         this.name = name;
         this.points = 0;
+        this.currentGoals = new ArrayList<Goal>();
+        this.inventory = new ArrayList<Resource>();
     }
 
     public String getName() {
