@@ -57,7 +57,7 @@ public class Upgrade extends Resource {
                 break;
             case Engineer:
                 if(!train.haveEngineer()) {
-                    train.setEngineer(True);
+                    train.setEngineer(true);
                 }
                 else {
                     //throw exception
@@ -79,9 +79,10 @@ public class Upgrade extends Resource {
 
     }
 
+    /*
     public void useUpgrade(Object node){
-        node.createObstable();
+        node.createObstacle();
 
     }
-
+    */
 }
