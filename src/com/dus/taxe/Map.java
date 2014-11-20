@@ -14,7 +14,6 @@ public class Map {
         for (int i=0; i<listOfNodes.size(); i++) {
             if (connections[node1.getId()][i] != null) {
                 adjacentNodes.add(listOfNodes.get(i));
-
             }
         }
         return adjacentNodes;
@@ -25,9 +24,7 @@ public class Map {
         return 0;
     }
 
-    public boolean checkObstruction(Node node1,Node node2){
-        // returns whether or not an obstruction exists between two nodes, true is so, false if no obstruction exists.
-        //(connections[nodes.get(i).getId()][nodes.get(i + 1).getId()].getObstacle() != null)
-        return true;
+    public Node retrieveNode(int index){
+        return listOfNodes.get(index);
     }
 }
