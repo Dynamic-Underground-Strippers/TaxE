@@ -1,7 +1,5 @@
 package com.dus.taxe;
 
-import java.util.ArrayList;
-
 public class Upgrade extends Resource {
     private UpgradeType type;
 
@@ -13,10 +11,10 @@ public class Upgrade extends Resource {
         //removeObstacle,
         ;
 
-        private String name;
-        private String description;
+        private String name; //name variable internal to enumerated type
+        private String description; //description variable internal to enumerated type
 
-        private UpgradeType(String name, String description){
+        private UpgradeType(String name, String description){ //setting upgrade type sets names to those defined in enum
             this.name = name;
             this.description = description;
         }
