@@ -6,50 +6,49 @@ public class Upgrade extends Resource {
     private UpgradeType type;
 
     public enum UpgradeType {
-        doubleSpeed, //apply to trains
-        //engineer, //apply to trains should be implemented with obstacles
-        teleport //, // use on train, modifies route and current node
+        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains!"), //apply to trains
+        //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle"), //apply to trains should be implemented with obstacles
+        teleport ("Teleport", "Brings a train to a Station instantly")//, // use on train, modifies route and current node
         //obstacle,
         //removeObstacle,
-
         ;
+
+        private String name;
+        private String description;
+
+        private UpgradeType(String name, String description){
+            this.name = name;
+            this.description = description;
+        }
+
+        private String getUpgradeName(){
+            return this.name;
+        }
+
+        private String getUpgradeDescription(){
+            return this.description;
+        }
 
 
     }
 
-    public Upgrade(UpgradeType type) {
+    public Upgrade(UpgradeType type) { //Why would this ever be used??
         this.setType(type);
-
-        String name = "";
-        String description = "";
-
-        switch (type){
-            case doubleSpeed:
-                name = "Double Speed";
-                description = "This upgrade doubles the speed of one of your trains!";
-                break;
-            /* should be implemented with obstacles
-            case engineer:
-                name = "Engineer";
-                description = "Carrying an engineer allows you to instantly repair an obstacle";
-                //code
-                break;
-            */
-            case teleport:
-                name = "Teleport";
-                description = "Brings a train to a Station instantly";
-                //code
-                break;
-        }
-        super.setName(name);
-        super.setDescription(description);
     }
 
     public UpgradeType getType() {
         return type;
     }
 
-    public void setType(UpgradeType type) {
+    public String getName(){
+        return type.getUpgradeName();
+    }
+
+    public String getDescription(){
+        return type.getUpgradeDescription();
+    }
+
+    public void setType(UpgradeType type) {//Why would this ever be used??
         this.type = type;
     }
 

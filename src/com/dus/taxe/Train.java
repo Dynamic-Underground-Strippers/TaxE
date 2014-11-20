@@ -11,7 +11,7 @@ public class Train {
     private boolean frozen;
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
-    private int defaultSpeed = 1; //speed of base train
+    private int defaultSpeed = 10; //speed of base train
     public Route route;
 
 
