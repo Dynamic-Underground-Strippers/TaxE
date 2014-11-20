@@ -6,8 +6,6 @@ public class Map {
     public ArrayList<Node> listOfNodes;
     public Connection[][] connections;
 
-
-
     public ArrayList<Node> findAdjacentNodes(Node node1){
         // returns a list of all nodes that have a connection with the node passed to the function
         ArrayList<Node> adjacentNodes = new ArrayList<Node>();

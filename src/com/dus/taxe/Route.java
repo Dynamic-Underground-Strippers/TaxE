@@ -47,5 +47,12 @@ public class Route{
         return totalDistance;
     }
 
+    public String toString(){
+        String retStr = "";
+        for (int i = 0; i < (listOfNodes.size()); i++) {
+           retStr = retStr + listOfNodes.get(i).toString() + " ";
+        }
+        return retStr;
+    }
 
 }
