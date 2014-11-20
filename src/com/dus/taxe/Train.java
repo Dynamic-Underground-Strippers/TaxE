@@ -90,4 +90,13 @@ public class Train {
         return this.visitedNodes;
     }
 
+    public boolean hasUpgrade(String name){
+        for (Upgrade up: upgrades){
+            if (up.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
