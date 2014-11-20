@@ -21,7 +21,8 @@ public class Game {
         while ((currentPlayer.getPoints() < maxPoints) && (otherPlayer.getPoints() < maxPoints)){
             //While the players' have less than the max score then the game keeps playing
             //Need some kind of timer here to time the turn
-            //TODO:
+            //TODO: Give player a goal
+            //TODO: Give player 2 resources
             endTurn();
         }
 
@@ -40,6 +41,8 @@ public class Game {
     }
 
     public static void endTurn() {
+        //TODO: Make trains move on their route
+        currentPlayer.completeGoals();
         swapPlayers();
         turn += 1;
     }

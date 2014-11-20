@@ -30,6 +30,14 @@ public class Player {
     public void selectRandomEngine() {
     }
 
+    public void completeGoals(){
+        for (Goal goal: currentGoals){
+            if (goal.isComplete()){
+                addPoints(goal.getPoints());
+                inventory.remove(goal);
+            }
+        }
+    }
     public void selectRandomGoal() {
     }
 
