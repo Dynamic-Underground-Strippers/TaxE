@@ -23,6 +23,7 @@ public class Game {
             //Need some kind of timer here to time the turn
             //TODO: Give player a goal
             //TODO: Give player 2 resources
+            //TODO: Work out how the hell we are going to store all possible resources and goals
             endTurn();
         }
 
