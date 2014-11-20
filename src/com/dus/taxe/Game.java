@@ -8,6 +8,7 @@ public class Game {
     {
         //Here is where stuff goes that makes the game work
         currentMap = new Map();
+        System.out.println("Hello");
     }
     public void endGame() {
     }
