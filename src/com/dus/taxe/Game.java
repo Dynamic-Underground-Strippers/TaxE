@@ -7,6 +7,9 @@ public class Game {
     private final int maxPoints = 1000;
     private int turn;
     public static Map currentMap;
+    private static Player currentPlayer;
+    private static Player otherPlayer;
+
     public static void main(String [ ] args)
     {
         //Here is where stuff goes that makes the game work
@@ -19,10 +22,19 @@ public class Game {
         Route currentRoute = new Route(testList);
         System.out.println(currentRoute.toString());
     }
+
     public void endGame() {
+
+    }
+    private void swapPlayers(){
+        Player temp;
+        temp = currentPlayer;
+        currentPlayer = otherPlayer;
+        otherPlayer = temp;
     }
 
     public void endTurn() {
+        swapPlayers();
     }
 
     public int getMaxPoints() {
@@ -33,7 +45,4 @@ public class Game {
         return turn;
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
 }
