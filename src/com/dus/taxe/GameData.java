@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class GameData {
     private static ArrayList<Goal> possibleGoals = new ArrayList<Goal>();
-    public static Goal getRandomGoal(){
-       return possibleGoals.get(ThreadLocalRandom.current().nextInt(possibleGoals.size()));
+    public static Goal getRandomGoal() {
+       return possibleGoals.get(((int) Math.random() * possibleGoals.size()));
     }
 }
