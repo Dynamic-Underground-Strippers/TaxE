@@ -13,5 +13,5 @@ public class GameData {
     public static Goal getRandomGoal() {
        return possibleGoals.get(((int) Math.random() * possibleGoals.size()));
     }
-    //Maybe this time
+    //Maybe this time plzzzzzzzzz
 }
