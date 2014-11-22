@@ -1,54 +1,55 @@
 package com.dus.taxe;
+import java.util.ArrayList;
 
 public class Engine extends Resource {
-    private int speed;
+    private EngineType type;
 
-    public enum engineType {
-        diesel,
-        petrol,
-        steam,
-        nuclear
-    }
+    public enum EngineType {
+        steam ("Steam Engine", "", 25),
+        diesel ("Diesel Engine", "", 50),
+        petrol ("Petrol Engine", "", 75),
+        nuclear ("Nuclear Engine", "", 100),
 
-    public Engine(engineType type) {
-        String name = "";
-        String description = "";
+            ;
 
-        switch(type){
-            case steam:
-                name = "Steam Engine";
-                description = "";
-                this.speed = 25;
-                break;
+        private String name;
+        private String description;
+        private int speed;
 
-            case diesel:
-                name = "Diesel Engine";
-                description = "";
-                this.speed = 50;
-                break;
-
-            case petrol:
-                name = "Petrol Engine";
-                description = "";
-                this.speed = 75;
-                break;
-
-            case nuclear:
-                name = "Nuclear Engine";
-                description = "";
-                this.speed = 100;
-                break;
+        private EngineType(String name, String description, int speed){
+            this.name = name;
+            this.description = description;
+            this.speed = speed;
         }
 
-        super.setName(name);
-        super.setDescription(description);
+        private String getEngineName(){
+            return this.name;
+        }
+
+        private String getEngineDescription(){
+            return this.description;
+        }
+
+        private int getEngineSpeed(){
+            return this.speed;
+        }
+    }
+
+    public Engine(EngineType type) {
+        this.type = type;
+    }
+
+    public String getName(){
+        return this.type.name;
+    }
+
+    public String getDescription(){
+        return this.type.description;
     }
 
     public int getSpeed() {
-        return speed;
+        return this.type.speed;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
+
 }

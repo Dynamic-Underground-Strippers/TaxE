@@ -69,10 +69,6 @@ public class Train {
         return engine;
     }
 
-    public void setEngine(Engine engine) {
-        this.engine = engine;
-    }
-
     public boolean isFrozen() {
         return frozen;
     }

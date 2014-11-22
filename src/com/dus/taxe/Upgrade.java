@@ -19,14 +19,6 @@ public class Upgrade extends Resource {
             this.description = description;
         }
 
-        private String getUpgradeName(){
-            return this.name;
-        }
-
-        private String getUpgradeDescription(){
-            return this.description;
-        }
-
 
     }
 
@@ -39,11 +31,11 @@ public class Upgrade extends Resource {
     }
 
     public String getName(){
-        return type.getUpgradeName();
+        return type.name;
     }
 
     public String getDescription(){
-        return type.getUpgradeDescription();
+        return type.description;
     }
 
     public void setType(UpgradeType type) {//Why would this ever be used??
