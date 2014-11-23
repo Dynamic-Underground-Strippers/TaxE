@@ -10,4 +10,5 @@ public class Connection {
     public int getDistance() {
         return distance;
     }
+
 }

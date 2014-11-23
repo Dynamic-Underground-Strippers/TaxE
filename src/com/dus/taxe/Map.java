@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Map {
     public ArrayList<Node> listOfNodes;
-    public Connection[][] connections;
+    public Connection[][] connections; //ASK
 
     public Map(){
 
@@ -23,13 +23,15 @@ public class Map {
 
     public int findDistance(Node node1,Node node2){
         // returns the distance between two nodes if a connection exists, if it doesn't returns 0
-        return 0;
+        return connections[node1.getId()][node2.getId()].getDistance();
+
+
     }
 
     public Node retrieveNode(int index){
+        //returns a node based on index;
         return listOfNodes.get(index);
-        //IT GODDAMN WORKS!!!!
-    }
 
+    }
 
 }
