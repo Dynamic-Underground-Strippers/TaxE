@@ -1,7 +1,7 @@
 package com.dus.taxe;
 import java.util.ArrayList;
 
-public class Engine extends Resource {
+public class Engine implements Resource {
     private EngineType type;
 
     public enum EngineType {
@@ -40,13 +40,13 @@ public class Engine extends Resource {
         return this.type.speed;
     }
 
-    public void applyEngine(Train train) {
+    public void use (Train train) {
         train.setEngine(this);
         train.setSpeed(this.getSpeed());
 
         for (Upgrade upgrade : train.getUpgrades()){
             if (upgrade.getType() == Upgrade.UpgradeType.doubleSpeed){
-                upgrade.useUpgrade(train); //if train has double, upgrade should be applied again
+                upgrade.use(train); //if train has double, upgrade should be applied again
             }
         }
     }
