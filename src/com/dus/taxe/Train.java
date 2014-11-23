@@ -14,7 +14,6 @@ public class Train {
     private int defaultSpeed = 10; //speed of base train
     public Route route;
 
-
     public Train(Node currentNode, int distanceAlongConnection, Engine engine, boolean frozen, ArrayList<Upgrade> upgrades, ArrayList<Node> visitedNodes) {
         this.currentNode = currentNode;
         this.distanceAlongConnection = distanceAlongConnection;
@@ -67,6 +66,11 @@ public class Train {
 
     public Engine getEngine() {
         return engine;
+    }
+
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 
     public boolean isFrozen() {
