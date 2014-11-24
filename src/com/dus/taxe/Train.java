@@ -6,12 +6,9 @@ public class Train {
     private Node currentNode;
     private int distanceAlongConnection;
     private Engine engine;
-<<<<<<< HEAD
     private boolean engineer;
     private int speed;
     private boolean frozen;
-=======
->>>>>>> map
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
     private int defaultSpeed = 10; //speed of base train
@@ -75,11 +72,6 @@ public class Train {
         this.engine = engine;
     }
 
-    public ArrayList<Node> getVisitedNodes() {
-        return visitedNodes;
-    }
-
-<<<<<<< HEAD
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
     }
@@ -103,6 +95,4 @@ public class Train {
         return false;
     }
 
-=======
->>>>>>> map
 }
