@@ -12,10 +12,16 @@ public class Route{
 
     public Route(ArrayList<Node> newNodes){
         setRoute(newNodes);
+        this.indexOfCurrentNode = 0;
+        this.distanceAlongConnection = 0;
       /*  if (!isValid()){
             throw new Error("Invalid Route");
         }*/
-        length = findTotalDistance();
+        this.length = findTotalDistance();
+    }
+
+    public void changeRoute(){
+
     }
 
 /*    public boolean isBlocked() {
