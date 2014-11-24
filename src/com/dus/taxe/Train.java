@@ -3,24 +3,18 @@ package com.dus.taxe;
 import java.util.ArrayList;
 
 public class Train {
-    private Node currentNode;
-    private int distanceAlongConnection;
+
     private Engine engine;
     private boolean engineer;
     private int speed;
     private boolean frozen;
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
-    private int defaultSpeed = 10; //speed of base train
     public Route route;
 
-    public Train(Node currentNode, int distanceAlongConnection, Engine engine, ArrayList<Upgrade> upgrades, ArrayList<Node> visitedNodes) {
-        this.currentNode = currentNode;
-        this.distanceAlongConnection = distanceAlongConnection;
-        this.engine = engine;
-        this.upgrades = upgrades;
-        this.visitedNodes = visitedNodes;
-        this.speed = defaultSpeed;
+    public Train() {
+        this.engine = new Engine(Engine.EngineType.steam);
+        this.speed = this.engine.getSpeed();
     }
 
     public void associateRoute(Route route){
@@ -31,38 +25,10 @@ public class Train {
         return speed;
     }
 
-    public void setSpeed(int speed) {
-       this.speed = speed;
-    }
-
-    public boolean haveEngineer() {
-        return engineer;
-    }
-
-    public void setEngineer(boolean engineer) {
-        this.engineer = engineer;
-    }
-
     public void addUpgrade(Upgrade upgrade) {
         upgrades.add(upgrade);
     }
-
-    public Node getCurrentNode() {
-        return currentNode;
-    }
-
-    public void setCurrentNode(Node currentNode) {
-        this.currentNode = currentNode;
-    }
-
-    public int getDistanceAlongConnection() {
-        return distanceAlongConnection;
-    }
-
-    public void setDistanceAlongConnection(int distanceAlongConnection) {
-        this.distanceAlongConnection = distanceAlongConnection;
-    }
-
+    
     public Engine getEngine() {
         return engine;
     }
@@ -70,6 +36,11 @@ public class Train {
 
     public void setEngine(Engine engine) {
         this.engine = engine;
+        for (Upgrade upgrade :this.upgrades){
+            if (upgrade.getType() == Upgrade.UpgradeType.doubleSpeed){
+                this.speed = engine.getSpeed()*2; //if train has double, upgrade should be applied again
+            }
+        }
     }
 
     public void setFrozen(boolean frozen) {

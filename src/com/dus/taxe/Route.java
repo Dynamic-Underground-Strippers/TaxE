@@ -1,10 +1,12 @@
 package com.dus.taxe;
 
 import java.util.ArrayList;
-
+//How do we store where the train is on the route???
 public class Route{
     ArrayList<Node> listOfNodes;
     int length = 0; //Length of the route as a unit measurement
+    private int distanceAlongConnection;
+    private int indexOfCurrentNode;
 
     public Route(ArrayList<Node> newNodes){
         setRoute(newNodes);

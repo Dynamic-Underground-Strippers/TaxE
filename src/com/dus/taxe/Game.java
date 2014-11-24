@@ -22,7 +22,7 @@ public class Game {
             //While the players' have less than the max score then the game keeps playing
             //Need some kind of timer here to time the turn
             //TODO: Give player a goal
-            //TODO: Give player 2 resources
+            //TODO: Give player 2 resources: System to include assign resources randomly based on weightings
             //TODO: Work out how the hell we are going to store all possible resources and goals
             endTurn();
         }

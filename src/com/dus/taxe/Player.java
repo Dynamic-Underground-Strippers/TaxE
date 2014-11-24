@@ -38,13 +38,13 @@ public class Player {
             }
         }
     }
-    public void selectRandomGoal() {
-    }
 
     public void selectRandomUpgrade() {
     }
+
     public void getNewGoal(){
         //Need a way of finding appropriate points for a goal
         Goal newGoal = GameData.getRandomGoal();
+        currentGoals.add(newGoal);
     }
 }
