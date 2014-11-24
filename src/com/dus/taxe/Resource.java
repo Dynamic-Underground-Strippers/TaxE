@@ -4,10 +4,6 @@ public abstract class Resource {
     private String description;
     private String name;
 
-    public Resource(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
     public String getDescription() {
         return description;
