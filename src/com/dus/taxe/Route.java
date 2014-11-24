@@ -2,6 +2,8 @@ package com.dus.taxe;
 
 import java.util.ArrayList;
 //How do we store where the train is on the route???
+//Need update route method to occur at the end of every turn. Teleport upgrade
+//Change route method, passed an index and a list of nodes and replaces all nodes after that index with those from the ordered list
 public class Route{
     ArrayList<Node> listOfNodes;
     int length = 0; //Length of the route as a unit measurement

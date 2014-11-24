@@ -1,18 +1,22 @@
 package com.dus.taxe;
 
 import java.util.ArrayList;
-
+//TODO: Give player a random engine
+//TODO: Give player a random upgrade
+//TODO: Implement basic trains: storing them, check max for each; implement discarding random upgrade and engines and unstarted goals
 public class Player {
     private final String name;
     private int points;
     private ArrayList<Goal> currentGoals;
-    private ArrayList<Resource> inventory;
+    private ArrayList<Upgrade> upgradeInventory;
+    private ArrayList<Engine> engineInventory;
 
     public Player(String name) {
+        //TODO: Update constructor
         this.name = name;
         this.points = 0;
         this.currentGoals = new ArrayList<Goal>();
-        this.inventory = new ArrayList<Resource>();
+        this.upg = new ArrayList<Resource>();
     }
 
     public String getName() {
@@ -34,7 +38,7 @@ public class Player {
         for (Goal goal: currentGoals){
             if (goal.isComplete()){
                 addPoints(goal.getPoints());
-                inventory.remove(goal);
+                currentGoals.remove(goal);
             }
         }
     }
