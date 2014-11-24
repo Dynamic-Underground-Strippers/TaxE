@@ -6,6 +6,7 @@ public class Goal {
     private final String name;
     private final int points;
     private final Node start;
+    private Train currentTrain;
 
     public Goal(String name, String description, int points, Node start, Node end) {
         this.name = name;
@@ -13,6 +14,7 @@ public class Goal {
         this.points = points;
         this.start = start;
         this.end = end;
+        this.currentTrain = null;
     }
 
     public String getDescription() {
@@ -36,6 +38,12 @@ public class Goal {
     }
 
     public boolean isComplete() {
-        return false;
+        if ((currentTrain.getVisitedNodes().contains(this.start)) && ((currentTrain.getVisitedNodes().contains(this.end)))){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
+
