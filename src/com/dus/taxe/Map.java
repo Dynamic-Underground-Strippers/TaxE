@@ -5,9 +5,12 @@ import java.util.ArrayList;
 public class Map {
     public ArrayList<Node> listOfNodes;
     public Connection[][] connections;
+    public ArrayList<Goal> possibleGoals;
 
-    public Map(){
-
+    public Map(ArrayList<Node> listOfNodes, Connection[][] connections, ArrayList<Goal> possibleGoals){
+        this.listOfNodes = listOfNodes;
+        this.connections = connections;
+        this.possibleGoals = possibleGoals;
     }
 
     public ArrayList<Node> findAdjacentNodes(Node node1){
