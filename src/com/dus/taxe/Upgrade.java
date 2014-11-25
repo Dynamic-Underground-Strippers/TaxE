@@ -2,6 +2,8 @@ package com.dus.taxe;
 
 import java.util.Random;
 
+//TODO: Create method to randomly generate an upgrade
+
 public class Upgrade implements Resource {
     private UpgradeType type;
 
