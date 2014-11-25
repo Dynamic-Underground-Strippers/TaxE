@@ -1,4 +1,7 @@
 package com.dus.taxe;
+
+import java.util.Random;
+
 //TODO: Create method to randomly generate an upgrade
 public class Upgrade implements Resource {
     private UpgradeType type;
@@ -28,6 +31,17 @@ public class Upgrade implements Resource {
     public Upgrade(UpgradeType type) { //Why would this ever be used??
         this.setType(type);
     }
+
+    public Upgrade() {
+        Random rand = new Random();
+        int chance = rand.nextInt(100);
+        if (chance < 50){
+            this.type = UpgradeType.doubleSpeed;
+        } else {
+            this.type = UpgradeType.teleport;
+        }
+    }
+
 
     public UpgradeType getType() {
         return type;
