@@ -73,9 +73,17 @@ public class Player {
         }
     }
 
-    public void giveRandomUpgrade(){
+    public void giveRandomUpgrade(){ //Need to come up with more upgrades
+        if (!this.hasMaxUpgrades()){
+             double giveMeRand=Math.random();
+             if (giveMeRand<0.5) {
+                 upgradeInventory.add (new Upgrade(Upgrade.UpgradeType.doubleSpeed));
+             }
+            else upgradeInventory.add (new Upgrade(Upgrade.UpgradeType.teleport));
+        }
 
     }
+
 
     public int randomUnstartedGoal () {
         for (int i = 2; i >= 0; i--) {
