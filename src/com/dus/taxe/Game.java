@@ -10,11 +10,25 @@ public class Game {
     private static Player currentPlayer;
     private static Player otherPlayer;
 
-    public Game(){
-
+    public Game(Map currentMap){
+        this.turn = 0;
+        this.currentMap = currentMap;
     }
     public static void main(String [ ] args)
     {
+        Station station1 = new Station(0,"Zero",new Point(400,600));
+        Station station2 = new Station(1,"One", new Point(600,1000));
+        Connection connection1 = new Connection(10);
+        Connection[][] connections = new Connection[2][2];
+        connections[0][1] = connection1;
+        connections[1][0] = connection1;
+        ArrayList<Node> listOfNodes = new ArrayList<Node>();
+        listOfNodes.add(station1);
+        listOfNodes.add(station2);
+        ArrayList<Goal> possibleGoals = new ArrayList<Goal>();
+        Map map1 = new Map(listOfNodes,connections,possibleGoals);
+        Game game1 = new Game(map1);
+
         //Player presses start game button
         //Game asks for player's names
        /* currentPlayer = new Player(GetNameFromGUIInput);

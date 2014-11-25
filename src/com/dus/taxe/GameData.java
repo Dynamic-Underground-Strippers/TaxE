@@ -9,10 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * Had an idea of storing possible maps in here?
  */
 public class GameData {
-    private class
     private static ArrayList<Goal> possibleGoals = new ArrayList<Goal>();
     public static Goal getRandomGoal() {
        return possibleGoals.get(((int) Math.random() * possibleGoals.size()));
     }
     //Maybe this time plzzzzzzzzzzz
+
 }
