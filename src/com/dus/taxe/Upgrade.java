@@ -5,8 +5,8 @@ import java.util.Random;
 public class Upgrade implements Resource {
     private UpgradeType type;
 
-    public enum UpgradeType {
-        //identifier (String name, String description, boolean reapply)
+    public enum UpgradeType { //enumerated type containing types of engine
+        //UpgradeType (String name, String description, boolean reapply)
         doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains! - only one per train", true), //apply to trains
         //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle", false), //apply to trains should be implemented with obstacles
         teleport ("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
@@ -29,9 +29,9 @@ public class Upgrade implements Resource {
 
     public Upgrade(UpgradeType type) { //Why would this ever be used??
         this.setType(type);
-    }
+    } //Create upgrade with specified type
 
-    public Upgrade() {
+    public Upgrade() { //Create upgrade with random upgrade type
         Random rand = new Random();
         int chance = rand.nextInt(100);
         if (chance < 50){
@@ -62,7 +62,7 @@ public class Upgrade implements Resource {
 
     /*
     *
-    * useUpgrade allows to use an upgrade.
+    * the method use allows an upgrade to be applied to a train
     *
     * if called with a train object as parameter allows to apply modifiers to trains
     *
@@ -72,24 +72,26 @@ public class Upgrade implements Resource {
     *
     * */
 
-     public void use (Train train){
-        switch (type){
-            case doubleSpeed:
-                if (train.hasUpgrade("doubleSpeed")) {
-                    //throw exception - can't have 2 doublespeeds
-                } else {
-                    train.setSpeed(train.getSpeed()*2);
-                }
+     public void use (Train train) {
+         if (train.hasUpgrade(type.name)) {
+             //throw exception - can't have 2 of an upgrade applied
+         } else {
+             switch (type) {
+                 case doubleSpeed:
+                     train.setSpeed(train.getSpeed() * 2);
+                     break;
 
-            /*case engineer:
-                if(train.hasUpgrade("engineer")){
-                    //Throw exception
-                }
-                train.setEngineer(true);
-                break;*/
-        }
+                /*case engineer:
+                    if(train.hasUpgrade("engineer")){
+                        //Throw exception
+                    }
+                    train.setEngineer(true);
+                    break;*/
+             }
 
-    }
+         }
+
+     }
 
     public void use (Train train, Node node){
         if (this.type == UpgradeType.teleport){
@@ -104,11 +106,4 @@ public class Upgrade implements Resource {
 
     }
 
-
-
-    /*
-    public void useUpgrade(Object node){
-        node.createObstacle();
-    }
-    */
 }
