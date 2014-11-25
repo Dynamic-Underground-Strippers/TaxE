@@ -31,7 +31,7 @@ public class Engine implements Resource {
     }
 
     public Engine() {
-        private Random rand = new Random();
+        Random rand = new Random();
         int chance = rand.nextInt(100);
         if (chance < 40){
             this.type = EngineType.steam;
