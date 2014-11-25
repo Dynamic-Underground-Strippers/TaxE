@@ -43,7 +43,7 @@ public abstract class GuiElement extends Rect {
 		return zIndex;
 	}
 
-	final void mouseMoved(MouseEvent e) {
+	protected void mouseMoved(MouseEvent e) {
 		if (contains(e.getPoint())) {
 			if (!mouseHover) {
 				onMouseOver();

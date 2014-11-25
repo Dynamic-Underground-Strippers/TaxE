@@ -41,26 +41,30 @@ public class GoalGuiElement extends GuiElement {
 		this.colour = colour;
 	}
 
+	public Color getColor() {
+		return colour;
+	}
+
 	public void setGoal(Goal goal) {
 		this.goal = goal;
 	}
 
 	@Override
 	protected void onMouseOver() {
-		focus = true;
-		setZIndex(1);
+		if (((GoalContainer) getParent()).getActiveChild() == null) {
+			focus = true;
+			setZIndex(1);
+			((GoalContainer) getParent()).setActiveChild(this);
+		}
 	}
 
 	@Override
 	protected void onMouseOut() {
 		focus = false;
+		((GoalContainer) getParent()).setActiveChild(null);
 	}
 
 	public boolean hasFocus() {
 		return focus;
-	}
-
-	public void setActiveChild(GuiElement child) {
-
 	}
 }
