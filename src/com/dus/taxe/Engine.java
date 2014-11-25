@@ -5,14 +5,14 @@ import java.util.Random;
 public class Engine implements Resource {
     private EngineType type;
 
-    public enum EngineType {
+    public enum EngineType { //enumerated type containing types of engine
+        //EngineType (String name, String description, int Speed)
         handCart ("Hand Cart", "", 15),
         steam ("Steam Engine", "", 25),
         diesel ("Diesel Engine", "", 50),
         electric ("Electric Engine", "", 75),
         nuclear ("Nuclear Engine", "", 100),
-
-            ;
+        ;
 
         private String name; //name variable internal to enumerated type
         private String description; //description variable internal to enumerated type
@@ -28,9 +28,9 @@ public class Engine implements Resource {
 
     public Engine(EngineType type) {
         this.type = type;
-    }
+    } //generate engine with specified type
 
-    public Engine() {
+    public Engine() { //generate engine with random type
         Random rand = new Random();
         int chance = rand.nextInt(100);
         if (chance < 40){
@@ -56,7 +56,7 @@ public class Engine implements Resource {
         return this.type.speed;
     }
 
-   public void use (Train train) {
+    public void use (Train train) {
        train.setSpeed(type.speed);
     }
 
