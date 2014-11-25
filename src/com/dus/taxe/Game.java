@@ -10,6 +10,9 @@ public class Game {
     private static Player currentPlayer;
     private static Player otherPlayer;
 
+    public Game(){
+
+    }
     public static void main(String [ ] args)
     {
         //Player presses start game button
