@@ -59,7 +59,7 @@ public class GUI extends JFrame {
     public void paint(Graphics graphics) {
 		BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = image.getGraphics();
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
         int imageWidth = (int) ((float) mapImage.getWidth(this) * ((float) getHeight() / (float) mapImage.getHeight(this)));
         g.drawImage(mapImage, getWidth() - imageWidth, 0, imageWidth, getHeight(), this);
