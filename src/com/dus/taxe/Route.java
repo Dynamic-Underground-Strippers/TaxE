@@ -1,7 +1,7 @@
 package com.dus.taxe;
 
 import java.util.ArrayList;
-//How do we store where the train is on the route???
+//How do we store where the train is on the route??? indexOfCurrentNode
 //Need update route method to occur at the end of every turn. Teleport upgrade
 //Change route method, passed an index and a list of nodes and replaces all nodes after that index with those from the ordered list
 public class Route{
@@ -9,6 +9,7 @@ public class Route{
     int length = 0; //Length of the route as a unit measurement
     private int distanceAlongConnection;
     private int indexOfCurrentNode;
+    private Train train;
 
     public Route(ArrayList<Node> newNodes){
         setRoute(newNodes);
@@ -20,8 +21,74 @@ public class Route{
         this.length = findTotalDistance();
     }
 
-    public void changeRoute(){
 
+    public int getCurrentNode(){
+        return this.indexOfCurrentNode;
+    }
+
+    public void incrementIndexOfCurrentNode(){
+        this.indexOfCurrentNode+=1;
+    }
+
+    public int getDistanceAlongConnection(){
+        return this.distanceAlongConnection;
+    }
+
+    public void setDistanceAlongConnection(int distance){
+        this.distanceAlongConnection = distance;
+    }
+
+    public void updateDistanceAlongConnection(){
+        int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
+        int speedPerTurn = train.getSpeed()/60; //for one minute turns
+        if (this.distanceAlongConnection + speedPerTurn < totalDistance){
+            this.distanceAlongConnection+=speedPerTurn;
+        }else{
+            if(indexOfCurrentNode < listOfNodes.size()){
+                this.indexOfCurrentNode+=1;
+            }else{
+                return;
+            }
+            this.distanceAlongConnection = 0;
+            int leftDistance = distanceAlongConnection+speedPerTurn-totalDistance;
+            if (leftDistance == 0){
+                return;
+            }else{
+                updateDistanceAlongConnection(leftDistance);
+            }
+        }
+    }
+
+    public void updateDistanceAlongConnection(int left){
+        int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
+        if (this.distanceAlongConnection + left < totalDistance){
+            this.distanceAlongConnection+=left;
+        }else{
+            if(indexOfCurrentNode < listOfNodes.size()){
+                this.indexOfCurrentNode+=1;
+            }else{
+                return;
+            }
+            this.distanceAlongConnection = 0;
+            int leftDistance = distanceAlongConnection+left-totalDistance;
+            if (leftDistance == 0){
+                return;
+            }else{
+                updateDistanceAlongConnection(leftDistance);
+            }
+        }
+    }
+
+    public boolean isComplete(){
+        if(this.indexOfCurrentNode == listOfNodes.size()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void changeRoute(int index, ArrayList<Node> nodes){
+        this.listOfNodes.addAll(index,nodes); //assuming that the GUI will force the user to select suitable nodes!!
     }
 
 /*    public boolean isBlocked() {
