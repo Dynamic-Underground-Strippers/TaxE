@@ -40,15 +40,9 @@ public class Engine implements Resource {
         return this.type.speed;
     }
 
-   /* public void use (Train train) {
-        train.setEngine(this);
-
-        for (Upgrade upgrade : train.getUpgrades()){
-            if (upgrade.getType() == Upgrade.UpgradeType.doubleSpeed){
-                upgrade.useUpgrade(train); //if train has double, upgrade should be applied again
-            }
-        }
-    }*/
+   public void use (Train train) {
+       train.setSpeed(type.speed);
+    }
 
 
 }

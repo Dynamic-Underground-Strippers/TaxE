@@ -26,19 +26,22 @@ public class Train {
     }
 
     public void addUpgrade(Upgrade upgrade) {
+        upgrade.use(this); //applies upgrade
         upgrades.add(upgrade);
     }
+
+    public void setSpeed(int speed){ this.speed = speed;}
     
     public Engine getEngine() {
         return engine;
     }
 
-
     public void setEngine(Engine engine) {
+        engine.use(this);
         this.engine = engine;
         for (Upgrade upgrade :this.upgrades){
-            if (upgrade.getType() == Upgrade.UpgradeType.doubleSpeed){
-                this.speed = engine.getSpeed()*2; //if train has double, upgrade should be applied again
+            if (upgrade.getReapply()){
+                upgrade.use(this);
             }
         }
     }
