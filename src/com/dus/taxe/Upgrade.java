@@ -1,6 +1,6 @@
 package com.dus.taxe;
 //TODO: Create method to randomly generate an upgrade
-public class Upgrade extends Resource {
+public class Upgrade implements Resource {
     private UpgradeType type;
 
     public enum UpgradeType {
