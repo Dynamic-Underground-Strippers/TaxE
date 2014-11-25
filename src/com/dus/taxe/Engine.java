@@ -7,7 +7,7 @@ public class Engine implements Resource {
     public enum EngineType {
         steam ("Steam Engine", "", 25),
         diesel ("Diesel Engine", "", 50),
-        petrol ("Petrol Engine", "", 75),
+        electric ("Electric Engine", "", 75),
         nuclear ("Nuclear Engine", "", 100),
 
             ;
