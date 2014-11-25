@@ -1,10 +1,12 @@
 package com.dus.taxe;
-import java.util.ArrayList;
+import java.util.Random;
+
 
 public class Engine implements Resource {
     private EngineType type;
 
     public enum EngineType {
+        handCart ("Hand Cart", "", 15),
         steam ("Steam Engine", "", 25),
         diesel ("Diesel Engine", "", 50),
         electric ("Electric Engine", "", 75),
@@ -28,6 +30,20 @@ public class Engine implements Resource {
         this.type = type;
     }
 
+    public Engine() {
+        private Random rand = new Random();
+        int chance = rand.nextInt(100);
+        if (chance < 40){
+            this.type = EngineType.steam;
+        } else if (chance < 70) {
+            this.type = EngineType.diesel;
+        } else if (chance < 90) {
+            this.type = EngineType.electric;
+        } else {
+            this.type = EngineType.nuclear;
+        }
+    }
+
     public String getName(){
         return this.type.name;
     }
@@ -43,6 +59,5 @@ public class Engine implements Resource {
    public void use (Train train) {
        train.setSpeed(type.speed);
     }
-
 
 }
