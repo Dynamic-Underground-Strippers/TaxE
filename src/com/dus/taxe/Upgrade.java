@@ -2,7 +2,6 @@ package com.dus.taxe;
 
 import java.util.Random;
 
-//TODO: Create method to randomly generate an upgrade
 public class Upgrade implements Resource {
     private UpgradeType type;
 
@@ -92,17 +91,17 @@ public class Upgrade implements Resource {
 
     }
 
-    public void useUpgrade(Train train, Node node){
-        /*if (this.type == UpgradeType.teleport){
-            if(train.route.nodes.contains(node)) { //can teleport only on nodes contained in the route.
-                train.setCurrentNode(node);
+    public void use (Train train, Node node){
+        if (this.type == UpgradeType.teleport){
+            /*if(node is in trains route) { //can teleport only on nodes contained in the route.
+                /*set current node to new node
             }else{
                 //throw exception
             }
         }else{
-            //throw exception
-        }
-        */
+            //throw exception -- cannot be called for any upgrade that isn't teleport
+        */}
+
     }
 
 

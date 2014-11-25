@@ -10,7 +10,7 @@ public class Train {
     private boolean frozen;
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
-    public Route route;
+    private Route route;
 
     public Train() {
         this.engine = new Engine(Engine.EngineType.steam);
@@ -69,4 +69,8 @@ public class Train {
         return false;
     }
 
+
+    public Route getRoute() {
+        return route;
+    }
 }
