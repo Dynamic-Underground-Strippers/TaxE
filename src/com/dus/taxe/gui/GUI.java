@@ -1,6 +1,8 @@
 package com.dus.taxe.gui;
 
 import com.dus.taxe.Goal;
+import com.dus.taxe.Map;
+import com.dus.taxe.Node;
 import com.dus.taxe.gui.goals.GoalContainer;
 
 import java.awt.Color;
@@ -20,6 +22,7 @@ import javax.swing.WindowConstants;
 public class GUI extends JFrame {
     Image mapImage;
     ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
+	Map map;
 
     public GUI() {
         //noinspection ConstantConditions
@@ -66,6 +69,12 @@ public class GUI extends JFrame {
         for (GuiElement guiElement : guiElements) {
             guiElement.draw(g);
         }
+		g.setColor(Color.MAGENTA);
+		if (map != null) {
+			for (Node n : map.listOfNodes) {
+				g.fillOval(n.getLocation().x, n.getLocation().y, 20, 20);
+			}
+		}
 		graphics.drawImage(image, 0, 0, this);
 		repaint();
     }
