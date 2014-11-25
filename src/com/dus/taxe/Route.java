@@ -44,7 +44,7 @@ public class Route{
         if (this.distanceAlongConnection + speedPerTurn < totalDistance){
             this.distanceAlongConnection+=speedPerTurn;
         }else{
-            if(indexOfCurrentNode < listOfNodes.size()){
+            if(indexOfCurrentNode < listOfNodes.size()-1){
                 this.indexOfCurrentNode+=1;
             }else{
                 return;
@@ -64,7 +64,7 @@ public class Route{
         if (this.distanceAlongConnection + left < totalDistance){
             this.distanceAlongConnection+=left;
         }else{
-            if(indexOfCurrentNode < listOfNodes.size()){
+            if(indexOfCurrentNode < listOfNodes.size()-1){
                 this.indexOfCurrentNode+=1;
             }else{
                 return;
@@ -80,7 +80,7 @@ public class Route{
     }
 
     public boolean isComplete(){
-        if(this.indexOfCurrentNode == listOfNodes.size()){
+        if(this.indexOfCurrentNode == listOfNodes.size()-1){
             return true;
         }else{
             return false;
