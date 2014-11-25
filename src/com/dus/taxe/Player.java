@@ -16,7 +16,7 @@ public class Player {
         this.name = name;
         this.points = 0;
         this.currentGoals = new ArrayList<Goal>();
-        this.upg = new ArrayList<Resource>();
+        this.upgradeInventory = new ArrayList<Upgrade>();
     }
 
     public String getName() {
@@ -44,11 +44,5 @@ public class Player {
     }
 
     public void selectRandomUpgrade() {
-    }
-
-    public void getNewGoal(){
-        //Need a way of finding appropriate points for a goal
-        Goal newGoal = GameData.getRandomGoal();
-        currentGoals.add(newGoal);
     }
 }
