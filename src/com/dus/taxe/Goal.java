@@ -38,7 +38,7 @@ public class Goal {
     }
 
     public boolean isComplete() {
-        return currentTrain.route.isComplete();
+        return currentTrain.getRoute().isComplete();
     }
 }
 
