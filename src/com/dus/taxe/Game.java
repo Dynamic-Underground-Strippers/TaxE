@@ -14,6 +14,7 @@ public class Game {
         this.turn = 0;
         this.currentMap = currentMap;
     }
+
     public static void main(String [ ] args)
     {
         Station station1 = new Station(0,"Zero",new Point(400,600));
