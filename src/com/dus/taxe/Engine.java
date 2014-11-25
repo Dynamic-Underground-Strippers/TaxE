@@ -1,16 +1,18 @@
 package com.dus.taxe;
-import java.util.ArrayList;
+import java.util.Random;
+
 
 public class Engine implements Resource {
     private EngineType type;
 
-    public enum EngineType {
+    public enum EngineType { //enumerated type containing types of engine
+        //EngineType (String name, String description, int Speed)
+        handCart ("Hand Cart", "", 15),
         steam ("Steam Engine", "", 25),
         diesel ("Diesel Engine", "", 50),
-        petrol ("Petrol Engine", "", 75),
+        electric ("Electric Engine", "", 75),
         nuclear ("Nuclear Engine", "", 100),
-
-            ;
+        ;
 
         private String name; //name variable internal to enumerated type
         private String description; //description variable internal to enumerated type
@@ -26,6 +28,20 @@ public class Engine implements Resource {
 
     public Engine(EngineType type) {
         this.type = type;
+    } //generate engine with specified type
+
+    public Engine() { //generate engine with random type
+        Random rand = new Random();
+        int chance = rand.nextInt(100);
+        if (chance < 40){
+            this.type = EngineType.steam;
+        } else if (chance < 70) {
+            this.type = EngineType.diesel;
+        } else if (chance < 90) {
+            this.type = EngineType.electric;
+        } else {
+            this.type = EngineType.nuclear;
+        }
     }
 
     public String getName(){
@@ -40,15 +56,8 @@ public class Engine implements Resource {
         return this.type.speed;
     }
 
-   /* public void use (Train train) {
-        train.setEngine(this);
-
-        for (Upgrade upgrade : train.getUpgrades()){
-            if (upgrade.getType() == Upgrade.UpgradeType.doubleSpeed){
-                upgrade.useUpgrade(train); //if train has double, upgrade should be applied again
-            }
-        }
-    }*/
-
+    public void use (Train train) {
+       train.setSpeed(type.speed);
+    }
 
 }
