@@ -3,7 +3,6 @@ package com.dus.taxe;
 import com.dus.taxe.gui.GUI;
 import com.dus.taxe.gui.GuiController;
 
-import java.awt.Point;
 import java.util.ArrayList;
 
 public class Game {
