@@ -21,6 +21,10 @@ public class Goal {
         return description;
     }
 
+    public Train getCurrentTrain(){
+        return this.currentTrain;
+    }
+
     public Node getEnd() {
         return end;
     }
