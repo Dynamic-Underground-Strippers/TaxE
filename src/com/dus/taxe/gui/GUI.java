@@ -72,7 +72,7 @@ public class GUI extends JFrame {
 		g.setColor(Color.MAGENTA);
 		if (map != null) {
 			for (Node n : map.listOfNodes) {
-				g.fillOval(n.getLocation().x, n.getLocation().y, 20, 20);
+                g.fillOval((int) (n.getLocation().getX() * getWidth()) - 10, (int) (n.getLocation().getY() * getHeight()) - 10, 20, 20);
 			}
 		}
 		graphics.drawImage(image, 0, 0, this);
