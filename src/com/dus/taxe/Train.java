@@ -10,7 +10,7 @@ public class Train {
     private boolean frozen;
     private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
     private ArrayList<Node> visitedNodes = new ArrayList<Node>();
-    public Route route;
+    private Route route;
 
     public Train() {
         this.engine = new Engine(Engine.EngineType.steam);
@@ -26,19 +26,22 @@ public class Train {
     }
 
     public void addUpgrade(Upgrade upgrade) {
+        upgrade.use(this); //applies upgrade
         upgrades.add(upgrade);
     }
+
+    public void setSpeed(int speed){ this.speed = speed;}
     
     public Engine getEngine() {
         return engine;
     }
 
-
     public void setEngine(Engine engine) {
+        engine.use(this);
         this.engine = engine;
         for (Upgrade upgrade :this.upgrades){
-            if (upgrade.getType() == Upgrade.UpgradeType.doubleSpeed){
-                this.speed = engine.getSpeed()*2; //if train has double, upgrade should be applied again
+            if (upgrade.getReapply()){
+                upgrade.use(this);
             }
         }
     }
@@ -66,4 +69,8 @@ public class Train {
         return false;
     }
 
+
+    public Route getRoute() {
+        return route;
+    }
 }

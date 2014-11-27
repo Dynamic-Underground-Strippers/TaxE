@@ -1,22 +1,29 @@
 package com.dus.taxe;
+
+import java.util.Random;
+
 //TODO: Create method to randomly generate an upgrade
-public class Upgrade extends Resource {
+
+public class Upgrade implements Resource {
     private UpgradeType type;
 
-    public enum UpgradeType {
-        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains!"), //apply to trains
-        //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle"), //apply to trains should be implemented with obstacles
-        teleport ("Teleport", "Brings a train to a Station instantly")//, // use on train, modifies route and current node
+    public enum UpgradeType { //enumerated type containing types of engine
+        //UpgradeType (String name, String description, boolean reapply)
+        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains! - only one per train", true), //apply to trains
+        //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle", false), //apply to trains should be implemented with obstacles
+        teleport ("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
         //obstacle,
         //removeObstacle,
         ;
 
         private String name; //name variable internal to enumerated type
         private String description; //description variable internal to enumerated type
+        private boolean reapply; //true if upgrade must be reapplied for new engine
 
-        private UpgradeType(String name, String description){ //setting upgrade type sets names to those defined in enum
+        private UpgradeType(String name, String description, boolean reapply){ //setting upgrade type sets names to those defined in enum
             this.name = name;
             this.description = description;
+            this.reapply = reapply;
         }
 
 
@@ -24,7 +31,18 @@ public class Upgrade extends Resource {
 
     public Upgrade(UpgradeType type) { //Why would this ever be used??
         this.setType(type);
+    } //Create upgrade with specified type
+
+    public Upgrade() { //Create upgrade with random upgrade type
+        Random rand = new Random();
+        int chance = rand.nextInt(100);
+        if (chance < 50){
+            this.type = UpgradeType.doubleSpeed;
+        } else {
+            this.type = UpgradeType.teleport;
+        }
     }
+
 
     public UpgradeType getType() {
         return type;
@@ -38,13 +56,15 @@ public class Upgrade extends Resource {
         return type.description;
     }
 
+    public boolean getReapply() {return type.reapply;}
+
     public void setType(UpgradeType type) {//Why would this ever be used??
         this.type = type;
     }
 
     /*
     *
-    * useUpgrade allows to use an upgrade.
+    * the method use allows an upgrade to be applied to a train
     *
     * if called with a train object as parameter allows to apply modifiers to trains
     *
@@ -54,42 +74,38 @@ public class Upgrade extends Resource {
     *
     * */
 
-     public void useUpgrade(Train train){
-        switch (type){
-            case doubleSpeed:
-                if(train.hasUpgrade("doubleSpeed")){
-                    //Throw exception
-                }
-                train.setSpeed(train.getSpeed()*2);
-                break;
-            /*case engineer:
-                if(train.hasUpgrade("engineer")){
-                    //Throw exception
-                }
-                train.setEngineer(true);
-                break;*/
-        }
+     public void use (Train train) {
+         if (train.hasUpgrade(type.name)) {
+             //throw exception - can't have 2 of an upgrade applied
+         } else {
+             switch (type) {
+                 case doubleSpeed:
+                     train.setSpeed(train.getSpeed() * 2);
+                     break;
 
-    }
+                /*case engineer:
+                    if(train.hasUpgrade("engineer")){
+                        //Throw exception
+                    }
+                    train.setEngineer(true);
+                    break;*/
+             }
 
-    public void useUpgrade(Train train, Node node){
+         }
+
+     }
+
+    public void use (Train train, Node node){
         if (this.type == UpgradeType.teleport){
-            if(train.route.nodes.contains(node)) { //can teleport only on nodes contained in the route.
-                train.setCurrentNode(node);
+            /*if(node is in trains route) { //can teleport only on nodes contained in the route.
+                /*set current node to new node
             }else{
                 //throw exception
             }
         }else{
-            //throw exception
-        }
+            //throw exception -- cannot be called for any upgrade that isn't teleport
+        */}
 
     }
 
-
-
-    /*
-    public void useUpgrade(Object node){
-        node.createObstacle();
-    }
-    */
 }

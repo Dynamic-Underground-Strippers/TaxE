@@ -67,7 +67,7 @@ public class Player {
                 engineInventory.add(new Engine(Engine.EngineType.diesel));
             }
             else if (giveMeRand<0.9){
-                engineInventory.add(new Engine (Engine.EngineType.petrol));
+                engineInventory.add(new Engine (Engine.EngineType.electric));
             }
             else engineInventory.add(new Engine (Engine.EngineType.nuclear));
         }
@@ -191,11 +191,5 @@ public class Player {
     }
 
     public void selectRandomUpgrade() {
-    }
-
-    public void getNewGoal(){
-        //Need a way of finding appropriate points for a goal
-        Goal newGoal = GameData.getRandomGoal();
-        currentGoals.add(newGoal);
     }
 }

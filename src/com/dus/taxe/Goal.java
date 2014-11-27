@@ -42,12 +42,7 @@ public class Goal {
     }
 
     public boolean isComplete() {
-        if ((currentTrain.getVisitedNodes().contains(this.start)) && ((currentTrain.getVisitedNodes().contains(this.end)))){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return currentTrain.getRoute().isComplete();
     }
 }
 
