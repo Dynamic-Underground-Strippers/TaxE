@@ -58,29 +58,11 @@ public class Player {
     }
 
     public void giveRandomEngine(){
-        if (!this.hasMaxEngines()){
-            double giveMeRand=Math.random();
-            if (giveMeRand<0.4){
-             engineInventory.add(new Engine(Engine.EngineType.steam));
-            }
-            else if (giveMeRand<0.7){
-                engineInventory.add(new Engine(Engine.EngineType.diesel));
-            }
-            else if (giveMeRand<0.9){
-                engineInventory.add(new Engine (Engine.EngineType.electric));
-            }
-            else engineInventory.add(new Engine (Engine.EngineType.nuclear));
-        }
+        this.engineInventory.add(new Engine());
     }
 
     public void giveRandomUpgrade(){ //Need to come up with more upgrades
-        if (!this.hasMaxUpgrades()){
-             double giveMeRand=Math.random();
-             if (giveMeRand<0.5) {
-                 upgradeInventory.add (new Upgrade(Upgrade.UpgradeType.doubleSpeed));
-             }
-            else upgradeInventory.add (new Upgrade(Upgrade.UpgradeType.teleport));
-        }
+        this.upgradeInventory.add(new Upgrade());
 
     }
 
