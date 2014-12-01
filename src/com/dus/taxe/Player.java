@@ -14,7 +14,7 @@ public class Player {
     private ArrayList<Goal> currentGoals;
     private ArrayList<Upgrade> upgradeInventory;
     private ArrayList<Engine> engineInventory;
-    //private ArrayList<Train> currentTrains;
+    private ArrayList<Train> currentTrains;
 
 
     public Player(String name) {
@@ -25,6 +25,28 @@ public class Player {
         this.engineInventory = new ArrayList<Engine>();
     }
 
+
+    public void addTrain(){
+        if (currentTrains.size()<3){
+            currentTrains.add(new Train());
+        }
+    }
+
+    public void removeTrain(int i){
+        currentTrains.remove(i);
+    }
+
+    public int getTrainIndex(Train t){
+        return currentTrains.indexOf(t);
+    }
+
+    public ArrayList<Train> getTrains(){
+        return currentTrains;
+    }
+
+    public Train getTrain(int i){
+        return currentTrains.get(i);
+    }
 
 
     public boolean hasMaxUpgrades()
