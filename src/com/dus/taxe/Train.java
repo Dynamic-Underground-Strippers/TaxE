@@ -26,7 +26,7 @@ public class Train {
     }
 
     public void addUpgrade(Upgrade upgrade) {
-        upgrade.use(this, false); //applies upgrade
+        upgrade.use(this); //applies upgrade
         upgrades.add(upgrade);
     }
 
@@ -41,7 +41,9 @@ public class Train {
         this.engine = engine;
         for (Upgrade upgrade :this.upgrades){
             if (upgrade.getReapply()){
-                upgrade.use(this, true);
+                this.upgrades.remove(upgrade);
+                upgrade.use(this);
+                this.upgrades.add(upgrade);
             }
         }
     }

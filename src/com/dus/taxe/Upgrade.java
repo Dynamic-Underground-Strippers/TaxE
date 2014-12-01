@@ -74,7 +74,7 @@ public class Upgrade implements Resource {
     *
     * */
 
-     public void use (Train train, boolean reuse) {
+     public void use (Train train) {
          if (train.hasUpgrade(type.name)) {
              //throw exception - can't have 2 of an upgrade applied
          } else {
