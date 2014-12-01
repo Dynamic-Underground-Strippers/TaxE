@@ -13,7 +13,7 @@ public class Train {
     private Route route;
 
     public Train() {
-        this.engine = new Engine(Engine.EngineType.steam);
+        this.engine = new Engine(Engine.EngineType.handCart);
         this.speed = this.engine.getSpeed();
     }
 
@@ -26,7 +26,7 @@ public class Train {
     }
 
     public void addUpgrade(Upgrade upgrade) {
-        upgrade.use(this); //applies upgrade
+        upgrade.use(this, false); //applies upgrade
         upgrades.add(upgrade);
     }
 
@@ -41,7 +41,7 @@ public class Train {
         this.engine = engine;
         for (Upgrade upgrade :this.upgrades){
             if (upgrade.getReapply()){
-                upgrade.use(this);
+                upgrade.use(this, true);
             }
         }
     }

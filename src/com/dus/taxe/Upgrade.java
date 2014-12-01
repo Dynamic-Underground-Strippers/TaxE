@@ -9,7 +9,7 @@ public class Upgrade implements Resource {
 
     public enum UpgradeType { //enumerated type containing types of engine
         //UpgradeType (String name, String description, boolean reapply)
-        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains! - only one per train", true), //apply to trains
+        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains!", true), //apply to trains
         //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle", false), //apply to trains should be implemented with obstacles
         teleport ("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
         //obstacle,
@@ -74,7 +74,7 @@ public class Upgrade implements Resource {
     *
     * */
 
-     public void use (Train train) {
+     public void use (Train train, boolean reuse) {
          if (train.hasUpgrade(type.name)) {
              //throw exception - can't have 2 of an upgrade applied
          } else {
