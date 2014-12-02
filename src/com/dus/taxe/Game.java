@@ -3,7 +3,6 @@ package com.dus.taxe;
 import com.dus.taxe.gui.GUI;
 import com.dus.taxe.gui.GuiController;
 
-import java.awt.Point;
 import java.util.ArrayList;
 
 public class Game {
@@ -20,15 +19,15 @@ public class Game {
 
     public static void main(String [ ] args)
     {
-        Station station1 = new Station(0,"Zero",new Point(1400,600));
-        Station station2 = new Station(1,"One", new Point(1600,1000));
+//        Station station1 = new Station(0,"Zero",new Point(1400,600));
+//        Station station2 = new Station(1,"One", new Point(1600,1000));
         Connection connection1 = new Connection(10);
         Connection[][] connections = new Connection[2][2];
         connections[0][1] = connection1;
         connections[1][0] = connection1;
         ArrayList<Node> listOfNodes = new ArrayList<Node>();
-        listOfNodes.add(station1);
-        listOfNodes.add(station2);
+//        listOfNodes.add(station1);
+//        listOfNodes.add(station2);
         ArrayList<Goal> possibleGoals = new ArrayList<Goal>();
         Map map1 = new Map(listOfNodes,connections,possibleGoals);
         Game game1 = new Game(map1);

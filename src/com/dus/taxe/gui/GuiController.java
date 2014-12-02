@@ -3,7 +3,6 @@ package com.dus.taxe.gui;
 import com.dus.taxe.Map;
 
 public class GuiController {
-
 	private static GUI gui;
 
 	public static void init(GUI gui) {

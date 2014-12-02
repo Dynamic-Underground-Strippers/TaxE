@@ -1,10 +1,14 @@
 package com.dus.taxe.gui.goals;
 
 import com.dus.taxe.Goal;
+import com.dus.taxe.gui.GUI;
 import com.dus.taxe.gui.GuiElement;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 public class GoalGuiElement extends GuiElement {
 	private Color colour;
@@ -12,18 +16,21 @@ public class GoalGuiElement extends GuiElement {
 	private boolean focus = false;
 	private int originalX;
 	private int originalWidth;
+	Image img;
 
 	GoalGuiElement(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		originalX = x;
 		originalWidth = width;
+		img = new ImageIcon(getClass().getClassLoader().getResource("steam_train.png")).getImage();
 	}
 
 	@Override
 	public void draw(Graphics graphics) {
 		updateBounds();
-		graphics.setColor(colour);
-		graphics.fillRect((int) (getParent().x + x), (int) (getParent().y + y), (int) width, (int) height);
+		graphics.drawImage(img, (int) x, (int) y, (int) width, (int) height, GUI.self);
+//		graphics.setColor(colour);
+//		graphics.fillRect((int) (getParent().x + x), (int) (getParent().y + y), (int) width, (int) height);
 	}
 
 	private void updateBounds() {

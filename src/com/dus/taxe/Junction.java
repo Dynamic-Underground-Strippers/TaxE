@@ -1,6 +1,6 @@
 package com.dus.taxe;
 
-import java.awt.*;
+import com.dus.taxe.gui.Point;
 
 public class Junction extends Node {
 
