@@ -2,7 +2,7 @@ package com.dus.taxe;
 import java.util.Random;
 
 
-public class Engine implements Resource {
+public class Engine implements Resource, Comparable<Engine> {
     private EngineType type;
 
     public enum EngineType { //enumerated type containing types of engine
@@ -59,5 +59,11 @@ public class Engine implements Resource {
     public void use (Train train) {
        train.setSpeed(type.speed);
     }
+
+    @Override
+    public int compareTo(Engine engine) {
+        return (this.getName().compareTo(engine.getName()));
+    }
+
 
 }
