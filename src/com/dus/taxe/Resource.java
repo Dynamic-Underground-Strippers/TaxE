@@ -6,6 +6,6 @@ public interface Resource {
 
     public String getDescription();
 
-    public void use (Train train);
+    public void use(Train train);
 
 }
