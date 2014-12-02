@@ -26,8 +26,7 @@ public abstract class Node {
     }
 
     public String toString(){
-        String retStr = Integer.toString(id) + "," + location.toString() + "," + name;
-        return retStr;
+		return Integer.toString(id) + "," + location.toString() + "," + name;
     }
 
 

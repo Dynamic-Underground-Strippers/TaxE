@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -34,22 +35,57 @@ public class GUI extends JFrame {
 		gc.setGoals(new Goal[]{new Goal("Goal 1", "Description 1", 100, null, null), new Goal("Goal 2", "Description 2", 200, null, null), new Goal("Goal 2", "Description 2", 300, null, null)});
 		addGuiElement(gc);
 		addKeyListener(new KeyListener() {
+			@Override
 			public void keyTyped(KeyEvent e) {
 			}
 
+			@Override
 			public void keyPressed(KeyEvent e) {
 			}
 
+			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
 				}
 			}
 		});
+		addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for (Node n : map.listOfNodes) {
+					if (Point.distance(e.getX(), e.getY(), n.getLocation().getX() * getWidth(), n.getLocation().getY() * getHeight()) < 10) {
+						System.out.println(n);
+					}
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+		});
 		addMouseMotionListener(new MouseMotionListener() {
+			@Override
 			public void mouseDragged(MouseEvent e) {
 			}
 
+			@Override
 			public void mouseMoved(MouseEvent e) {
 				for (GuiElement guiElement : guiElements) {
 					guiElement.mouseMoved(e);
@@ -76,7 +112,7 @@ public class GUI extends JFrame {
 		g.setColor(Color.MAGENTA);
 		if (map != null) {
 			for (Node n : map.listOfNodes) {
-				g.fillOval((int) (n.getLocation().getX() * getWidth()), (int) (n.getLocation().getY() * getHeight()), 20, 20);
+				g.fillOval((int) (n.getLocation().getX() * getWidth()) - 10, (int) (n.getLocation().getY() * getHeight()) - 10, 20, 20);
 			}
 		}
 		graphics.drawImage(image, 0, 0, this);
