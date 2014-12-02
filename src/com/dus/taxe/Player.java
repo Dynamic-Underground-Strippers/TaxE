@@ -92,7 +92,7 @@ public class Player {
     public int randomUnstartedGoal () {
         for (int i = 2; i >= 0; i--) {
             if (currentGoals.get(i).getCurrentTrain() != null) {
-                return i;
+                return i;//
             }
         }
         return -1;
