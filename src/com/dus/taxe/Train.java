@@ -1,6 +1,7 @@
 package com.dus.taxe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Train {
 
@@ -39,13 +40,15 @@ public class Train {
     public void setEngine(Engine engine) {
         engine.use(this);
         this.engine = engine;
-        for (Upgrade upgrade :this.upgrades){
-            if (upgrade.getReapply()){
+        for (Upgrade upgrade :this.upgrades) {
+            if (upgrade.getReapply()) {
                 this.upgrades.remove(upgrade);
                 upgrade.use(this);
                 this.upgrades.add(upgrade);
             }
         }
+        Collections.sort(this.upgrades);
+
     }
 
     public void setFrozen(boolean frozen) {
