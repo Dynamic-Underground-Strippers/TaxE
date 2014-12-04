@@ -1,15 +1,14 @@
 package com.dus.taxe;
 
+import java.util.Comparator;
 import java.util.Random;
 
-//TODO: Create method to randomly generate an upgrade
-
-public class Upgrade implements Resource {
+public class Upgrade implements Resource, Comparable<Upgrade> {
     private UpgradeType type;
 
     public enum UpgradeType { //enumerated type containing types of engine
         //UpgradeType (String name, String description, boolean reapply)
-        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains! - only one per train", true), //apply to trains
+        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains!", true), //apply to trains
         //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle", false), //apply to trains should be implemented with obstacles
         teleport ("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
         //obstacle,
@@ -35,7 +34,7 @@ public class Upgrade implements Resource {
 
     public Upgrade() { //Create upgrade with random upgrade type
         Random rand = new Random();
-        int chance = rand.nextInt(100);
+        int chance = rand.nextInt(100) + 1; //random number between 1 and 100
         if (chance < 50){
             this.type = UpgradeType.doubleSpeed;
         } else {
@@ -89,6 +88,10 @@ public class Upgrade implements Resource {
                     }
                     train.setEngineer(true);
                     break;*/
+                 default:
+                     //throw exception
+                     //upgrade not found
+                     break;
              }
 
          }
@@ -107,5 +110,11 @@ public class Upgrade implements Resource {
         */}
 
     }
+
+    @Override
+    public int compareTo(Upgrade upgrade) {
+        return (this.getName().compareTo(upgrade.getName()));
+    }
+
 
 }
