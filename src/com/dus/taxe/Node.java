@@ -1,7 +1,5 @@
 package com.dus.taxe;
 
-import com.dus.taxe.gui.Point;
-
 public abstract class Node {
     private final int id;
     private final Point location;
