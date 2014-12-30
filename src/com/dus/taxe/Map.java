@@ -70,6 +70,7 @@ public class Map {
                 }
                 Goal tempGoal = new Goal(Integer.valueOf(goalJSON.get("points").toString()),startNode,endNode);
                 loadedGoals.add(tempGoal);
+                this.possibleGoals=loadedGoals;
             }
         } catch (Exception e) {
             e.printStackTrace();
