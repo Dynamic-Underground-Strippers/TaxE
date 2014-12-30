@@ -17,6 +17,7 @@ public class Map {
         fileNames.add("nodes.json");
         ArrayList<Node> loadedNodes = new ArrayList<Node>();
         ArrayList<ArrayList<Connection>> loadedConnections = new ArrayList<ArrayList<Connection>>();
+        ArrayList<Goal> loadedGoals = new ArrayList<Goal>();
         JSONParser parser = new JSONParser();
         try {
             Random rand = new Random();
@@ -25,6 +26,7 @@ public class Map {
             JSONObject mapList = (JSONObject) obj;
             JSONArray nodeList = (JSONArray) mapList.get("nodes");
             JSONArray connectionList = (JSONArray) mapList.get("connections");
+            JSONArray goalList = (JSONArray) mapList.get("goals");
 
             for (int i =0; i<nodeList.size();i++){
                 JSONObject nodeJSON = (JSONObject) nodeList.get(i);
@@ -55,6 +57,20 @@ public class Map {
                 }
             }
             this.listOfNodes = loadedNodes;
+            for (int i =0; i<goalList.size();i++){
+                JSONObject goalJSON = (JSONObject) nodeList.get(i);
+                Node startNode=null;
+                Node endNode=null;
+                for (Node node: loadedNodes){
+                    if (node.getName().equals(goalJSON.get("start"))){
+                        startNode = node;
+                    } if (node.getName().equals(goalJSON.get("end"))){
+                        endNode = node;
+                    }
+                }
+                Goal tempGoal = new Goal(Integer.valueOf(goalJSON.get("points").toString()),startNode,endNode);
+                loadedGoals.add(tempGoal);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

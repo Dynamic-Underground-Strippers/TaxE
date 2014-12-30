@@ -1,16 +1,14 @@
 package com.dus.taxe;
 
 public class Goal {
-    private final String description;
-    private final Node end;
-    private final String name;
-    private final int points;
-    private final Node start;
+    private String description;
+    private Node end;
+    private int points;
+    private Node start;
     private Train currentTrain;
 
-    public Goal(String name, String description, int points, Node start, Node end) {
-        this.name = name;
-        this.description = description;
+    public Goal(int points, Node start, Node end) {
+        this.description = "Move a train from " + this.start.getName() + " to " + this.end.getName();
         this.points = points;
         this.start = start;
         this.end = end;
@@ -27,10 +25,6 @@ public class Goal {
 
     public Node getEnd() {
         return end;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getPoints() {
