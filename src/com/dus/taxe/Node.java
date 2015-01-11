@@ -1,18 +1,16 @@
 package com.dus.taxe;
 
-import java.awt.*;
+import com.dus.taxe.gui.Point;
 
 public abstract class Node {
     private final int id;
     private final Point location;
     private final String name;
-    private Obstacle obstacle;
 
-    public Node(int id, String name, Point location, Obstacle obstacle) {
+    public Node(int id, String name, Point location) {
         this.id = id;
         this.name = name;
         this.location = location;
-        this.obstacle = obstacle;
     }
 
     public int getId() {
@@ -27,11 +25,10 @@ public abstract class Node {
         return name;
     }
 
-    public Obstacle getObstacle() {
-        return obstacle;
+    public String toString(){
+		return Integer.toString(id) + "," + location.toString() + "," + name;
     }
 
-    public void setObstacle(Obstacle obstacle) {
-        this.obstacle = obstacle;
-    }
+
 }
+

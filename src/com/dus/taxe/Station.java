@@ -1,10 +1,10 @@
 package com.dus.taxe;
 
-import java.awt.*;
+import com.dus.taxe.gui.Point;
 
 public class Station extends Node {
 
-    public Station(int id, String name, Point location, Obstacle obstacle) {
-        super(id, name, location, obstacle);
+    public Station(int id, String name, Point location) {
+        super(id, name, location);
     }
 }
