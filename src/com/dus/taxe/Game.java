@@ -19,24 +19,8 @@ public class Game {
 
     public static void main(String [ ] args)
     {
-//        Station station1 = new Station(0,"Zero",new Point(1400,600));
-//        Station station2 = new Station(1,"One", new Point(1600,1000));
-        Connection connection1 = new Connection(10);
-        Connection[][] connections = new Connection[2][2];
-        connections[0][1] = connection1;
-        connections[1][0] = connection1;
-        ArrayList<Node> listOfNodes = new ArrayList<Node>();
-//        listOfNodes.add(station1);
-//        listOfNodes.add(station2);
-        ArrayList<Goal> possibleGoals = new ArrayList<Goal>();
-        Map map1 = new Map(listOfNodes,connections,possibleGoals);
-        Game game1 = new Game(map1);
-
-		// load the GUI
-		GuiController.init(new GUI());
-		// load the map into the GUI
-		GuiController.setMap(map1);
-
+        GuiController.init(new GUI());
+        GuiController.setMap(new Map());
         //Player presses start game button
         //Game asks for player's names
        /* currentPlayer = new Player(GetNameFromGUIInput);
