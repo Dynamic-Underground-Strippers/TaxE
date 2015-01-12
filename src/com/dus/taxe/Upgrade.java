@@ -1,6 +1,5 @@
 package com.dus.taxe;
 
-import java.util.Comparator;
 import java.util.Random;
 
 public class Upgrade implements Resource, Comparable<Upgrade> {
@@ -8,9 +7,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 
     public enum UpgradeType { //enumerated type containing types of engine
         //UpgradeType (String name, String description, boolean reapply)
-        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains!", true), //apply to trains
+        DOUBLE_SPEED("Double Speed", "This upgrade doubles the speed of one of your trains!", true), //apply to trains
         //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle", false), //apply to trains should be implemented with obstacles
-        teleport ("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
+        TELEPORT("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
         //obstacle,
         //removeObstacle,
         ;
@@ -36,9 +35,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
         Random rand = new Random();
         int chance = rand.nextInt(100) + 1; //random number between 1 and 100
         if (chance < 50){
-            this.type = UpgradeType.doubleSpeed;
+            this.type = UpgradeType.DOUBLE_SPEED;
         } else {
-            this.type = UpgradeType.teleport;
+            this.type = UpgradeType.TELEPORT;
         }
     }
 
@@ -78,7 +77,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
              //throw exception - can't have 2 of an upgrade applied
          } else {
              switch (type) {
-                 case doubleSpeed:
+                 case DOUBLE_SPEED:
                      train.setSpeed(train.getSpeed() * 2);
                      break;
 
@@ -99,7 +98,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
      }
 
     public void use (Train train, Node node){
-        if (this.type == UpgradeType.teleport){
+        if (this.type == UpgradeType.TELEPORT){
             /*if(node is in trains route) { //can teleport only on nodes contained in the route.
                 /*set current node to new node
             }else{
