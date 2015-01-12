@@ -60,8 +60,4 @@ public class Game {
     public int getTurn() {
         return this.turn;
     }
-    private Map chooseRandomMap(){
-        //Random map is found in this subroutine
-        return null;
-    }
 }
