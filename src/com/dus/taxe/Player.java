@@ -14,7 +14,7 @@ public class Player {
     private ArrayList<Goal> currentGoals;
     private ArrayList<Upgrade> upgradeInventory;
     private ArrayList<Engine> engineInventory;
-    private ArrayList<Train> currentTrains;
+    private ArrayList<Train> currentTrains = new ArrayList<Train>();
 
 
     public Player(String name) {
@@ -25,9 +25,11 @@ public class Player {
         this.engineInventory = new ArrayList<Engine>();
     }
 
-
+    public int trainSize (){
+        return currentTrains.size();
+    }
     public void addTrain(){
-        if (currentTrains.size()<3){
+        if (this.trainSize()<3){
             currentTrains.add(new Train());
         }
     }
@@ -118,6 +120,10 @@ public class Player {
         return null;
     }
 
+    public int upgradeSize(){
+        return upgradeInventory.size();
+
+    }
     public Upgrade discardRandUpgrade()
     {
         //This method removes a random upgrade from the list, provided the player has maximum number
@@ -126,16 +132,8 @@ public class Player {
         {
             int randomIndex=new Random().nextInt(upgradeInventory.size());
             Upgrade discardedUpgrade= upgradeInventory.get(randomIndex);
-
-            for (int i = randomIndex; i<upgradeInventory.size()-1; i++)
-            {
-                upgradeInventory.set(i, upgradeInventory.get(i+1));
-            }
-
-            {
-                return discardedUpgrade;
-            }
-
+            upgradeInventory.remove(randomIndex);
+            return discardRandUpgrade();
 
         }
         return null;
