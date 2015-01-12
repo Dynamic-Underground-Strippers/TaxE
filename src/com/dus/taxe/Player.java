@@ -90,6 +90,7 @@ public class Player {
 
 
     public int randomUnstartedGoal () {
+
         for (int i = 2; i >= 0; i--) {
             if (currentGoals.get(i).getCurrentTrain() != null) {
                 return i;
@@ -99,21 +100,14 @@ public class Player {
     }
 
     public Goal discardUnstartedGoal(){
-        if (! this.hasMaxUpgrades() && randomUnstartedGoal()!=-1)
+        if (! this.hasMaxGoals() && randomUnstartedGoal()!=-1)
         {
             int randomIndex=randomUnstartedGoal();
             Goal discardedGoal= currentGoals.get(randomIndex);
 
-            for (int i = randomIndex; i<currentGoals.size()-1; i++)
-            {
-                currentGoals.set(i, currentGoals.get(i+1));
-            }
+            currentGoals.remove(randomIndex);
 
-            {
-                return discardedGoal;
-            }
-
-
+            return discardedGoal;
         }
         return null;
     }
