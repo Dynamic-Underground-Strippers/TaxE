@@ -1,12 +1,12 @@
 package com.dus.taxe;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
-
-import org.json.simple.*;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 
 public class Map {
     public ArrayList<Node> listOfNodes;

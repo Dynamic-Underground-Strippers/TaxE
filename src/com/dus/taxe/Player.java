@@ -1,7 +1,6 @@
 package com.dus.taxe;
 
 import java.util.ArrayList;
-import java.lang.Object;
 import java.util.Random;
 
 
@@ -195,5 +194,9 @@ public class Player {
     }
 
     public void selectRandomUpgrade() {
+    }
+
+    public ArrayList<Goal> getCurrentGoals() {
+        return currentGoals;
     }
 }

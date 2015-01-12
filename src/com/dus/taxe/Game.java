@@ -3,8 +3,6 @@ package com.dus.taxe;
 import com.dus.taxe.gui.GUI;
 import com.dus.taxe.gui.GuiController;
 
-import java.util.ArrayList;
-
 public class Game {
     private static final int maxPoints = 1000;
     private static int turn;
@@ -59,5 +57,9 @@ public class Game {
 
     public int getTurn() {
         return this.turn;
+    }
+
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }
