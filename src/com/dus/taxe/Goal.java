@@ -8,15 +8,19 @@ public class Goal {
     private Train currentTrain;
 
     public Goal(int points, Node start, Node end) {
-        this.description = "Move a train from " + this.start.getName() + " to " + this.end.getName();
         this.points = points;
         this.start = start;
         this.end = end;
+        this.description = "Move a train from " + this.start.getName() + " to " + this.end.getName();
         this.currentTrain = null;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public void setCurrentTrain(Train currentTrain) {
+        this.currentTrain = currentTrain;
     }
 
     public Train getCurrentTrain(){

@@ -14,7 +14,7 @@ public class Train {
     private Route route;
 
     public Train() {
-        this.engine = new Engine(Engine.EngineType.handCart);
+        this.engine = new Engine(Engine.EngineType.HAND_CART);
         this.speed = this.engine.getSpeed();
     }
 
