@@ -86,7 +86,7 @@ public class Route{
             }else{
                 return;
             }
-            
+
             int leftDistance = left - (totalDistance-distanceAlongConnection);
             //as we are in the next node (i.e. new connection) the distance will now be zero
             this.distanceAlongConnection = 0;
