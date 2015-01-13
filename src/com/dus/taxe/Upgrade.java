@@ -75,6 +75,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
      public void use (Train train) {
          if (train.hasUpgrade(type.name)) {
              //throw exception - can't have 2 of an upgrade applied
+			 throw new UnsupportedOperationException("Cannot apply more than one of the same upgrade to a train");
          } else {
              switch (type) {
                  case DOUBLE_SPEED:
