@@ -21,22 +21,6 @@ public class Game {
     {
         GuiController.init(new GUI());
         GuiController.setMap(new Map());
-        //Player presses start game button
-        //Game asks for player's names
-       /* currentPlayer = new Player(GetNameFromGUIInput);
-        otherPlayer = new Player(GetNameFromGUIInput);*/
-        //Loads map from storage of different maps
-        //Game starts, enters playing loop
-//        while ((currentPlayer.getPoints() < maxPoints) && (otherPlayer.getPoints() < maxPoints)){
-            //While the players' have less than the max score then the game keeps playing
-            //Need some kind of timer here to time the turn
-            currentPlayer.addGoal(currentMap.getRandomGoal());
-            //TODO: Give player 2 resources: System to include assign resources randomly based on weightings
-            //TODO: Work out how the hell we are going to store all possible resources and goals
-//            endTurn();
-//        }
-
-//        endGame();
     }
 
     public static void endGame() {
@@ -49,10 +33,17 @@ public class Game {
         currentPlayer = otherPlayer;
         otherPlayer = temp;
     }
-
+    public static void newTurn(){
+        currentPlayer.addGoal(currentMap.getRandomGoal());
+        currentPlayer.giveRandomEngine();
+        currentPlayer.giveRandomUpgrade();
+    }
     public static void endTurn() {
         //TODO: Make trains move on their route
         currentPlayer.completeGoals();
+        if (currentPlayer.getPoints() >= maxPoints){
+            endGame();
+        }
         swapPlayers();
         turn += 1;
     }

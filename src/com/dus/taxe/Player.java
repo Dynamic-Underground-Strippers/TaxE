@@ -82,12 +82,15 @@ public class Player {
     }
 
     public void giveRandomEngine(){
-        this.engineInventory.add(new Engine());
+        if (!this.hasMaxEngines()) {
+            this.engineInventory.add(new Engine());
+        }
     }
 
     public void giveRandomUpgrade(){ //Need to come up with more upgrades
-        this.upgradeInventory.add(new Upgrade());
-
+        if (!this.hasMaxUpgrades()) {
+            this.upgradeInventory.add(new Upgrade());
+        }
     }
 
 
