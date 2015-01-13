@@ -1,108 +1,49 @@
 package com.dus.taxe.gui;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 
-public abstract class GuiElement extends Rect {
-	private ArrayList<GuiElement> children = new ArrayList<GuiElement>();
-	private boolean mouseHover = false;
-	private GuiElement parent;
-	private int zIndex;
+public abstract class GuiElement {
+	Rect bounds = new Rect();
+	private boolean animationRunning;
+	private Rect animationTargetBounds;
+	private float animationSpeed;
 
-	public GuiElement(int x, int y, int width, int height) {
-		super(x, y, width, height);
+	public GuiElement(Rect bounds) {
+		this.bounds = bounds;
 	}
 
-	public void draw(Graphics graphics) {
-		HashMap<Integer, ArrayList<GuiElement>> map = new HashMap<Integer, ArrayList<GuiElement>>();
-		ArrayList<Integer> indices = new ArrayList<Integer>();
-		for (GuiElement child : children) {
-			if (!indices.contains(child.getZIndex())) {
-				indices.add(child.getZIndex());
-				map.put(child.getZIndex(), new ArrayList<GuiElement>());
+	public abstract void click(MouseEvent e);
+
+	public abstract void draw(Graphics graphics);
+
+	public abstract void mouseMoved(MouseEvent e);
+
+	public void lerpBounds(Rect targetBounds, float speed) {
+		animationRunning = true;
+		animationTargetBounds = targetBounds;
+		animationSpeed = speed;
+	}
+
+	public boolean isAnimationRunning() {
+		return animationRunning;
+	}
+
+	public final void update() {
+		if (animationRunning) {
+			bounds.x += (animationTargetBounds.x - bounds.x) * animationSpeed;
+			bounds.y += (animationTargetBounds.y - bounds.y) * animationSpeed;
+			bounds.width += (animationTargetBounds.width - bounds.width) * animationSpeed;
+			bounds.height += (animationTargetBounds.height - bounds.height) * animationSpeed;
+			GUI.self.repaint();
+			if (Math.abs(bounds.x - animationTargetBounds.x) < 1 &&
+					Math.abs(bounds.y - animationTargetBounds.y) < 1 &&
+					Math.abs(bounds.width - animationTargetBounds.width) < 1 &&
+					Math.abs(bounds.height - animationTargetBounds.height) < 1) {
+				animationRunning = false;
+				bounds = animationTargetBounds;
+				return;
 			}
-			map.get(child.getZIndex()).add(child);
 		}
-		Collections.sort(indices);
-		for (Integer i : indices) {
-			for (GuiElement guiElement : map.get(i)) {
-				guiElement.draw(graphics);
-			}
-		}
-	}
-
-	public GuiElement getParent() {
-		return parent;
-	}
-
-	public int getZIndex() {
-		return zIndex;
-	}
-
-	protected void mouseMoved(MouseEvent e) {
-		if (contains(e.getPoint())) {
-			if (!mouseHover) {
-				onMouseOver();
-			}
-			mouseHover = true;
-		} else {
-			if (mouseHover) {
-				onMouseOut();
-			}
-			mouseHover = false;
-		}
-		for (GuiElement child : children) {
-			child.mouseMoved(e);
-		}
-	}
-
-	public final void addChild(GuiElement child) {
-		child.setParent(this);
-		children.add(child);
-	}
-
-	protected void onMouseOver() {
-	}
-
-	protected void onMouseOut() {
-	}
-
-	public void setParent(GuiElement parent) {
-		this.parent = parent;
-	}
-
-	public GuiElement getChild(int index) {
-		return children.get(index);
-	}
-
-	public boolean contains(Point point) {
-		return contains(point.x, point.y);
-	}
-
-	public boolean contains(float x, float y) {
-		float w = width;
-		float h = height;
-		if (w < 0 || h < 0) {
-			// At least one of the dimensions is negative...
-			return false;
-		}
-		// Note: if either dimension is zero, tests below must return false...
-		float x2 = this.x + (parent == null ? 0 : parent.x);
-		float y2 = this.y + (parent == null ? 0 : parent.y);
-		if (x < x2 || y < y2) {
-			return false;
-		}
-		w += x2;
-		h += y2;
-		//    overflow || intersect
-		return ((w < x2 || w > x) && (h < y2 || h > y));
-	}
-
-	public void setZIndex(int zIndex) {
-		this.zIndex = zIndex;
 	}
 }

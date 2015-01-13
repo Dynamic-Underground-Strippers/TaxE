@@ -1,7 +1,5 @@
 package com.dus.taxe;
 
-import com.dus.taxe.gui.Point;
-
 public abstract class Node {
     private final int id;
     private final Point location;
@@ -26,8 +24,7 @@ public abstract class Node {
     }
 
     public String toString(){
-        String retStr = Integer.toString(id) + "," + location.toString() + "," + name;
-        return retStr;
+		return Integer.toString(id) + "," + location.toString() + "," + name;
     }
 
 
