@@ -1,5 +1,6 @@
 package com.dus.taxe;
 
+import java.util.Comparator;
 import java.util.Random;
 
 public class Upgrade implements Resource, Comparable<Upgrade> {
@@ -7,9 +8,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 
     public enum UpgradeType { //enumerated type containing types of engine
         //UpgradeType (String name, String description, boolean reapply)
-        DOUBLE_SPEED("Double Speed", "This upgrade doubles the speed of one of your trains!", true), //apply to trains
+        doubleSpeed ("Double Speed", "This upgrade doubles the speed of one of your trains!", true), //apply to trains
         //engineer ("Engineer","Carrying an engineer allows you to instantly repair an obstacle", false), //apply to trains should be implemented with obstacles
-        TELEPORT("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
+        teleport ("Teleport", "Brings a train to a Station instantly", false)// use on train, modifies route and current node
         //obstacle,
         //removeObstacle,
         ;
@@ -35,9 +36,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
         Random rand = new Random();
         int chance = rand.nextInt(100) + 1; //random number between 1 and 100
         if (chance < 50){
-            this.type = UpgradeType.DOUBLE_SPEED;
+            this.type = UpgradeType.doubleSpeed;
         } else {
-            this.type = UpgradeType.TELEPORT;
+            this.type = UpgradeType.teleport;
         }
     }
 
@@ -75,9 +76,10 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
      public void use (Train train) {
          if (train.hasUpgrade(type.name)) {
              //throw exception - can't have 2 of an upgrade applied
+             throw new UnsupportedOperationException("Cannot apply more than one of the same upgrade to a train");
          } else {
              switch (type) {
-                 case DOUBLE_SPEED:
+                 case doubleSpeed:
                      train.setSpeed(train.getSpeed() * 2);
                      break;
 
@@ -98,7 +100,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
      }
 
     public void use (Train train, Node node){
-        if (this.type == UpgradeType.TELEPORT){
+        if (this.type == UpgradeType.teleport){
             /*if(node is in trains route) { //can teleport only on nodes contained in the route.
                 /*set current node to new node
             }else{
