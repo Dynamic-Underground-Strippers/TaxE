@@ -35,11 +35,13 @@ public class Game {
     }
     public static void newTurn(){
         currentPlayer.addGoal(currentMap.getRandomGoal());
+        // Need to somehow add in GUI validation here
         currentPlayer.giveRandomEngine();
         currentPlayer.giveRandomUpgrade();
     }
     public static void endTurn() {
-        //TODO: Make trains move on their route
+        currentPlayer.moveTrains();
+        //This will instantly move their trains, may want to have some kind of animation?
         currentPlayer.completeGoals();
         if (currentPlayer.getPoints() >= maxPoints){
             endGame();
