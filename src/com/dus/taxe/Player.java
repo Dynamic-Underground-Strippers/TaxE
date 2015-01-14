@@ -50,6 +50,11 @@ public class Player {
         return currentTrains.get(i);
     }
 
+    public void moveTrains(){
+        for (Train train: currentTrains){
+            train.moveTrain();
+        }
+    }
 
     public boolean hasMaxUpgrades()
     {
