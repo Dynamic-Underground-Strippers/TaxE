@@ -10,10 +10,10 @@ import java.util.Random;
 public class Player {
     private final String name;
     private int points;
-    private ArrayList<Goal> currentGoals;
-    private ArrayList<Upgrade> upgradeInventory;
-    private ArrayList<Engine> engineInventory;
-    private ArrayList<Train> currentTrains;
+    private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
+    private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
+    private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
+    private ArrayList<Train> currentTrains = new ArrayList<Train>();
 
 
     public Player(String name) {

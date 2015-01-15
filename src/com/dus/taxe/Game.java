@@ -19,6 +19,7 @@ public class Game {
     {
         GuiController.init(new GUI());
         GuiController.setMap(new Map());
+        currentPlayer = new Player("Test Player 1");
         //Player presses start game button
         //Game asks for player's names
        /* currentPlayer = new Player(GetNameFromGUIInput);

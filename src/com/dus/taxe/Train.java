@@ -18,7 +18,7 @@ public class Train {
         this.speed = this.engine.getSpeed();
     }
 
-    public void associateRoute(Route route){
+    public void setRoute(Route route){
         this.route = route;
     }
 

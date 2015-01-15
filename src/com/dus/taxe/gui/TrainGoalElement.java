@@ -2,16 +2,15 @@ package com.dus.taxe.gui;
 
 import com.dus.taxe.Goal;
 
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class TrainGoalElement extends GuiElement {
     private Goal goal;
-    private Image image;
+    private BufferedImage image;
 
     public TrainGoalElement(Rect bounds) {
         super(bounds);
@@ -20,19 +19,20 @@ public class TrainGoalElement extends GuiElement {
     @Override
     public void click(MouseEvent e) {
         if (!isAnimationRunning()) {
-            if (bounds.x == -600) {
-                lerpBounds(new Rect(0, bounds.y, bounds.width, bounds.height), 0.075f);
+            if (bounds.x == -490) {
+                slerpBounds(new Rect(0, bounds.y, bounds.width, bounds.height), 0.075f);
             } else {
-                lerpBounds(new Rect(-600, bounds.y, bounds.width, bounds.height), 0.075f);
+                slerpBounds(new Rect(-490, bounds.y, bounds.width, bounds.height), 0.075f);
             }
         }
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(Graphics2D graphics) {
         if (image != null) {
-            graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
-                    (int) bounds.height, GUI.self);
+//            graphics.drawImage(image.getSubimage((int) srcBounds.x, (int) srcBounds.y, (int) srcBounds.width,
+//                    (int) srcBounds.height), (int) bounds.x, (int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
+            graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
         }
     }
 
@@ -52,20 +52,39 @@ public class TrainGoalElement extends GuiElement {
         } else {
             switch (goal.getCurrentTrain().getEngine().getType()) {
                 case HAND_CART:
-                    image = new ImageIcon(getClass().getClassLoader().getResource("electric_side.png")).getImage();
-
+                    try {
+                        image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case STEAM:
-                    image = new ImageIcon(getClass().getClassLoader().getResource("steam_side.png")).getImage();
+                    try {
+                        image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case DIESEL:
-                    image = new ImageIcon(getClass().getClassLoader().getResource("diesel_side.png")).getImage();
+                    try {
+                        image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case ELECTRIC:
-                    image = new ImageIcon(getClass().getClassLoader().getResource("electric_side.png")).getImage();
+                    try {
+                        image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case ROCKET:
-                    image = new ImageIcon(getClass().getClassLoader().getResource("electric_side.png")).getImage();
+                    try {
+                        image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }

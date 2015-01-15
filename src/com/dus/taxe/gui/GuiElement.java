@@ -1,49 +1,45 @@
 package com.dus.taxe.gui;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public abstract class GuiElement {
-	Rect bounds = new Rect();
-	private boolean animationRunning;
-	private Rect animationTargetBounds;
-	private float animationSpeed;
+    Rect bounds = new Rect();
+    Rect srcBounds = new Rect();
 
-	public GuiElement(Rect bounds) {
-		this.bounds = bounds;
-	}
+    public GuiElement(Rect bounds) {
+        this(bounds, bounds);
+    }
 
-	public abstract void click(MouseEvent e);
+    public GuiElement(Rect bounds, Rect srcBounds) {
+        this.bounds = bounds;
+        this.srcBounds = srcBounds;
+    }
 
-	public abstract void draw(Graphics graphics);
+    public abstract void click(MouseEvent e);
 
-	public abstract void mouseMoved(MouseEvent e);
+    public abstract void draw(Graphics2D graphics);
 
-	public void lerpBounds(Rect targetBounds, float speed) {
-		animationRunning = true;
-		animationTargetBounds = targetBounds;
-		animationSpeed = speed;
-	}
+    public abstract void mouseMoved(MouseEvent e);
 
-	public boolean isAnimationRunning() {
-		return animationRunning;
-	}
+    public void slerpBounds(Rect targetBounds, float speed) {
+        bounds.animationRunning = true;
+        bounds.animationTargetBounds = targetBounds;
+        bounds.animationSpeed = speed;
+    }
 
-	public final void update() {
-		if (animationRunning) {
-			bounds.x += (animationTargetBounds.x - bounds.x) * animationSpeed;
-			bounds.y += (animationTargetBounds.y - bounds.y) * animationSpeed;
-			bounds.width += (animationTargetBounds.width - bounds.width) * animationSpeed;
-			bounds.height += (animationTargetBounds.height - bounds.height) * animationSpeed;
-			GUI.self.repaint();
-			if (Math.abs(bounds.x - animationTargetBounds.x) < 1 &&
-					Math.abs(bounds.y - animationTargetBounds.y) < 1 &&
-					Math.abs(bounds.width - animationTargetBounds.width) < 1 &&
-					Math.abs(bounds.height - animationTargetBounds.height) < 1) {
-				animationRunning = false;
-				bounds = animationTargetBounds;
-				return;
-			}
-		}
-	}
+    public void slerpSrcBounds(Rect targetBounds, float speed) {
+        srcBounds.animationRunning = true;
+        srcBounds.animationTargetBounds = targetBounds;
+        srcBounds.animationSpeed = speed;
+    }
+
+    public boolean isAnimationRunning() {
+        return bounds.animationRunning || srcBounds.animationRunning;
+    }
+
+    public final void update() {
+        bounds.update();
+        srcBounds.update();
+    }
 }

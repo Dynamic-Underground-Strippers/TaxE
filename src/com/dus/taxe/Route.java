@@ -21,7 +21,6 @@ public class Route{
         this.length = findTotalDistance();
     }
 
-
     public int getCurrentNode(){
         return this.indexOfCurrentNode;
     }

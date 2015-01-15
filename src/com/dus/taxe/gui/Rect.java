@@ -7,6 +7,9 @@ public class Rect {
     public float y;
     public float width;
     public float height;
+    boolean animationRunning;
+    Rect animationTargetBounds;
+    float animationSpeed;
 
     public Rect() {
         this(0, 0, 0, 0);
@@ -38,5 +41,29 @@ public class Rect {
         } else {
             return false;
         }
+    }
+
+    public final void update() {
+        if (animationRunning) {
+            x += (animationTargetBounds.x - x) * animationSpeed * (GUI.frameTime / 32f);
+            y += (animationTargetBounds.y - y) * animationSpeed * (GUI.frameTime / 32f);
+            width += (animationTargetBounds.width - width) * animationSpeed * (GUI.frameTime / 32f);
+            height += (animationTargetBounds.height - height) * animationSpeed * (GUI.frameTime / 32f);
+            GUI.self.repaint();
+            if (Math.abs(x - animationTargetBounds.x) < 1 &&
+                    Math.abs(y - animationTargetBounds.y) < 1 &&
+                    Math.abs(width - animationTargetBounds.width) < 1 &&
+                    Math.abs(height - animationTargetBounds.height) < 1) {
+                animationRunning = false;
+                x = animationTargetBounds.x;
+                y = animationTargetBounds.y;
+                width = animationTargetBounds.width;
+                height = animationTargetBounds.height;
+            }
+        }
+    }
+
+    public String toString() {
+        return "Rect(x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + ")";
     }
 }
