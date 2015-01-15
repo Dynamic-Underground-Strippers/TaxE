@@ -38,63 +38,45 @@ public class Route{
         this.distanceAlongConnection = distance;
     }
 
+    public void setTrain(Train train){
+        this.train = train;
+    }
+
     public void updateDistanceAlongConnection(){
-        //calculate the length of the connection
         int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
-        //calculate train's speed
-        int distancePerTurn = train.getSpeed()/60; //for one minute turns
-        //if the distance travelled is less than then the total, just update the variable
-        if (this.distanceAlongConnection + distancePerTurn < totalDistance){
-            this.distanceAlongConnection+=distancePerTurn;
-            return;
+        int speedPerTurn = (int)(train.getSpeed()/60f); //for one minute turns
+        if (this.distanceAlongConnection + speedPerTurn < totalDistance){
+            this.distanceAlongConnection+=speedPerTurn;
         }else{
-            //else move to the next node
-            //if there is one
             if(indexOfCurrentNode < listOfNodes.size()-1){
                 this.indexOfCurrentNode+=1;
             }else{
                 return;
             }
-            //calculate distance left to travel
-            int leftDistance = distancePerTurn - (totalDistance - distanceAlongConnection);
-            //as we are on a new connection the travelled distance is 0
             this.distanceAlongConnection = 0;
-            //we need to check if we can travel more.
-            //If we can't we are done.
+            int leftDistance = distanceAlongConnection+speedPerTurn-totalDistance;
             if (leftDistance == 0){
                 return;
             }else{
-                //else we repeat
                 updateDistanceAlongConnection(leftDistance);
             }
         }
     }
-    //update the distance travelled along the current connection (recursive version for distances that cover more than one node)
-    //left is the distance (calculated in a previous call) that need to be travelled.
+
     public void updateDistanceAlongConnection(int left){
-        //calculate the length of the connection
         int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
-        //if the already travelled distance plus the just travelled distance is less than the total distance
-        //the updated travelled distance will be just the the sum of the two
         if (this.distanceAlongConnection + left < totalDistance){
             this.distanceAlongConnection+=left;
-            return;
         }else{
-            //else the train will move to the next node in the route (but only if there one!)
             if(indexOfCurrentNode < listOfNodes.size()-1){
                 this.indexOfCurrentNode+=1;
             }else{
                 return;
             }
-
-            int leftDistance = left - (totalDistance-distanceAlongConnection);
-            //as we are in the next node (i.e. new connection) the distance will now be zero
             this.distanceAlongConnection = 0;
-            //we need to check if we can travel more.
-            //if we can't we are done
+            int leftDistance = distanceAlongConnection+left-totalDistance;
             if (leftDistance == 0){
                 return;
-            //if we need to travel more we can just repeat the process
             }else{
                 updateDistanceAlongConnection(leftDistance);
             }
@@ -140,11 +122,9 @@ public class Route{
 
     private int findTotalDistance(){
         // Finds the total length of the route
-        // initialize variable
         int totalDistance = 0;
-        //adds the lenght of every connection between nodes in the route
         for (int i = 0; i < (listOfNodes.size() - 1); i++) {
-           totalDistance += Game.currentMap.findDistance(listOfNodes.get(i),listOfNodes.get(i+1));
+            totalDistance += Game.currentMap.findDistance(listOfNodes.get(i),listOfNodes.get(i+1));
         }
         return totalDistance;
     }
@@ -153,7 +133,7 @@ public class Route{
         // Represents the route as a string
         String retStr = "";
         for (int i = 0; i < (listOfNodes.size()); i++) {
-           retStr = retStr + listOfNodes.get(i).toString() + " ";
+            retStr = retStr + listOfNodes.get(i).toString() + " ";
         }
         return retStr;
     }
