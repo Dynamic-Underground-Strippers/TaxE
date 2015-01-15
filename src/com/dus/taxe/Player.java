@@ -147,17 +147,7 @@ public class Player {
         {
             int randomIndex=new Random().nextInt(engineInventory.size());
             Engine discardedEngine= engineInventory.get(randomIndex);
-
-            for (int i=randomIndex; i<engineInventory.size()-1; i++)
-            {
-                engineInventory.set(i, engineInventory.get(i+1));
-            }
-
-            {
-                return discardedEngine;
-            }
-
-
+            engineInventory.remove(randomIndex);
 
         }
         return null;
