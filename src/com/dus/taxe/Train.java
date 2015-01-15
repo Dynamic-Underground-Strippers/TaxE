@@ -74,7 +74,9 @@ public class Train {
         return false;
     }
 
-
+    public void moveTrain(){
+        this.route.updateDistanceAlongConnection();
+    }
     public Route getRoute() {
         return route;
     }

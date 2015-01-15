@@ -98,7 +98,10 @@ public class Map {
     public Node retrieveNode(int index){
         //returns a node based on index;
         return listOfNodes.get(index);
-
     }
 
+    public Goal getRandomGoal(){
+        int randomIndex=new Random().nextInt(possibleGoals.size());
+        return possibleGoals.get(randomIndex);
+    }
 }

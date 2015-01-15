@@ -50,6 +50,11 @@ public class Player {
         return currentTrains.get(i);
     }
 
+    public void moveTrains(){
+        for (Train train: currentTrains){
+            train.moveTrain();
+        }
+    }
 
     public boolean hasMaxUpgrades()
     {
@@ -82,12 +87,15 @@ public class Player {
     }
 
     public void giveRandomEngine(){
-        this.engineInventory.add(new Engine());
+        if (!this.hasMaxEngines()) {
+            this.engineInventory.add(new Engine());
+        }
     }
 
     public void giveRandomUpgrade(){ //Need to come up with more upgrades
-        this.upgradeInventory.add(new Upgrade());
-
+        if (!this.hasMaxUpgrades()) {
+            this.upgradeInventory.add(new Upgrade());
+        }
     }
 
 
@@ -100,24 +108,14 @@ public class Player {
         return -1;
     }
 
-    public Goal discardUnstartedGoal(){
-        if (! this.hasMaxUpgrades() && randomUnstartedGoal()!=-1)
-        {
-            int randomIndex=randomUnstartedGoal();
-            Goal discardedGoal= currentGoals.get(randomIndex);
-
-            for (int i = randomIndex; i<currentGoals.size()-1; i++)
-            {
-                currentGoals.set(i, currentGoals.get(i+1));
-            }
-
-            {
-                return discardedGoal;
-            }
-
-
+    public Goal discardUnstartedGoal() {
+        int randomIndex = randomUnstartedGoal();
+        Goal discardedGoal = null;
+        if (randomIndex!=-1) {
+            discardedGoal = currentGoals.get(randomIndex);
+            currentGoals.remove(randomIndex);
         }
-        return null;
+        return discardedGoal;
     }
 
     public int upgradeSize(){
@@ -171,6 +169,12 @@ public class Player {
     }
 
     public void selectRandomEngine() {
+    }
+
+    public void addGoal(Goal goal){
+        if (!hasMaxGoals()){
+            currentGoals.add(goal);
+        }
     }
 
     public void completeGoals(){

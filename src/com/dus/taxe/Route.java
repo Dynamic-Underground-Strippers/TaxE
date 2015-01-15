@@ -40,7 +40,7 @@ public class Route{
 
     public void updateDistanceAlongConnection(){
         int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
-        int speedPerTurn = train.getSpeed()/60; //for one minute turns
+        int speedPerTurn = train.getSpeed();
         if (this.distanceAlongConnection + speedPerTurn < totalDistance){
             this.distanceAlongConnection+=speedPerTurn;
         }else{
