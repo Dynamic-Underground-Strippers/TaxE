@@ -188,4 +188,7 @@ public class Player {
 
     public void selectRandomUpgrade() {
     }
+    public ArrayList<Goal> getCurrentGoals(){
+        return this.currentGoals;
+    }
 }
