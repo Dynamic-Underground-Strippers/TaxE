@@ -1,32 +1,39 @@
 package com.dus.taxe;
 
 public abstract class Node {
-    private final int id;
-    private final Point location;
-    private final String name;
+	private final int id;
+	private final Point location;
+	private final String name;
 
-    public Node(int id, String name, Point location) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-    }
+	public Node(int id, String name, Point location) {
+		this.id = id;
+		this.name = name;
+		this.location = location;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public Point getLocation() {
-        return location;
-    }
+	public Point getLocation() {
+		return location;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String toString(){
+	public String toString() {
 		return Integer.toString(id) + "," + location.toString() + "," + name;
-    }
+	}
 
-
+	public boolean equals(Object other) {
+		if (other instanceof Node) {
+			Node n = (Node) other;
+			return n.id == id;
+		} else {
+			return false;
+		}
+	}
 }
 

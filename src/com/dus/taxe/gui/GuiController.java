@@ -14,5 +14,6 @@ public class GuiController {
 		gui.repaint();
 	}
 
-	public static void displayMessage(String message) {}
+	public static void displayMessage(String message) {
+	}
 }
