@@ -53,4 +53,7 @@ public class Game {
     public int getTurn() {
         return this.turn;
     }
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
 }
