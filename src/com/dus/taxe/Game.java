@@ -49,7 +49,9 @@ public class Game {
         swapPlayers();
         turn += 1;
     }
-
+    public static Player getCurrentPlayer(){
+        return currentPlayer;
+    }
     public int getTurn() {
         return this.turn;
     }

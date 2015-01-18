@@ -170,7 +170,9 @@ public class Player {
 
     public void selectRandomEngine() {
     }
-
+    public ArrayList<Goal> getCurrentGoals(){
+        return this.currentGoals;
+    }
     public void addGoal(Goal goal){
         if (!hasMaxGoals()){
             currentGoals.add(goal);
