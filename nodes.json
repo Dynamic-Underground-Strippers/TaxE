@@ -1,1 +1,288 @@
-{"goals":[{"start":"London","points":300,"end":"Durka Durka Stan"},{"start":"Paris","points":10,"end":"London"},{"start":"London","points":250,"end":"Stockholm"},{"start":"Rome","points":170,"end":"London"}],"nodes":[{"location":"(0.43680555,0.3888889)","name":"London","type":"Station"},{"location":"(0.44166666,0.4311594)","name":"Channel Tunnel","type":"Junction"},{"location":"(0.4486111,0.49516907)","name":"Paris","type":"Station"},{"location":"(0.4298611,0.7173913)","name":"Andorra La Vela","type":"Junction"},{"location":"(0.45208332,0.6932367)","name":"Monaco","type":"Station"},{"location":"(0.26041666,0.7983092)","name":"Porto","type":"Station"},{"location":"(0.61180556,0.76449275)","name":"Rome","type":"Station"},{"location":"(0.56666666,0.22705314)","name":"Copenhagen","type":"Station"},{"location":"(0.5847222,0.3888889)","name":"Berlin","type":"Station"},{"location":"(0.4923611,0.4263285)","name":"Antwerp","type":"Station"},{"location":"(0.625,0.06642512)","name":"Stockholm","type":"Station"},{"location":"(0.5701389,0.6086956)","name":"Milan","type":"Station"},{"location":"(0.65555555,0.4758454)","name":"Durka Durka Stan","type":"Station"}],"connections":[[null,50,null,null,null,null,null,null,null,null,null,null,null],[50,null,120,null,null,null,null,null,null,null,null,null,null],[null,120,null,300,240,null,null,null,null,60,null,300,null],[null,null,300,null,60,230,null,null,null,null,null,null,null],[null,null,240,60,null,null,null,null,null,null,null,150,null],[null,null,null,230,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,130,null],[null,null,null,null,null,null,null,null,120,null,220,null,null],[null,null,null,null,null,null,null,120,null,140,null,null,60],[null,null,60,null,null,null,null,null,140,null,null,290,null],[null,null,null,null,null,null,null,220,null,null,null,null,null],[null,null,300,null,150,null,130,null,null,290,null,null,120],[null,null,null,null,null,null,null,null,60,null,null,120,null]]}
+{
+  "goals": [
+    {
+      "start": "London",
+      "points": 300,
+      "end": "Durka Durka Stan"
+    },
+    {
+      "start": "Paris",
+      "points": 10,
+      "end": "London"
+    },
+    {
+      "start": "London",
+      "points": 250,
+      "end": "Stockholm"
+    },
+    {
+      "start": "Rome",
+      "points": 170,
+      "end": "London"
+    }
+  ],
+  "nodes": [
+    {
+      "location": "(0.43680555,0.3888889)",
+      "name": "London",
+      "type": "Station"
+    },
+    {
+      "location": "(0.44166666,0.4311594)",
+      "name": "Channel Tunnel",
+      "type": "Junction"
+    },
+    {
+      "location": "(0.4486111,0.49516907)",
+      "name": "Paris",
+      "type": "Station"
+    },
+    {
+      "location": "(0.4298611,0.7173913)",
+      "name": "Andorra La Vela",
+      "type": "Junction"
+    },
+    {
+      "location": "(0.45208332,0.6932367)",
+      "name": "Monaco",
+      "type": "Station"
+    },
+    {
+      "location": "(0.26041666,0.7983092)",
+      "name": "Porto",
+      "type": "Station"
+    },
+    {
+      "location": "(0.61180556,0.76449275)",
+      "name": "Rome",
+      "type": "Station"
+    },
+    {
+      "location": "(0.56666666,0.22705314)",
+      "name": "Copenhagen",
+      "type": "Station"
+    },
+    {
+      "location": "(0.5847222,0.3888889)",
+      "name": "Berlin",
+      "type": "Station"
+    },
+    {
+      "location": "(0.4923611,0.4263285)",
+      "name": "Antwerp",
+      "type": "Station"
+    },
+    {
+      "location": "(0.625,0.06642512)",
+      "name": "Stockholm",
+      "type": "Station"
+    },
+    {
+      "location": "(0.5701389,0.6086956)",
+      "name": "Milan",
+      "type": "Station"
+    },
+    {
+      "location": "(0.65555555,0.4758454)",
+      "name": "Durka Durka Stan",
+      "type": "Station"
+    }
+  ],
+  "connections": [
+    [
+      null,
+      50,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      50,
+      null,
+      120,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      120,
+      null,
+      300,
+      240,
+      null,
+      null,
+      null,
+      null,
+      60,
+      null,
+      300,
+      null
+    ],
+    [
+      null,
+      null,
+      300,
+      null,
+      60,
+      230,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      240,
+      60,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      150,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      230,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      130,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      120,
+      null,
+      220,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      120,
+      null,
+      140,
+      null,
+      null,
+      60
+    ],
+    [
+      null,
+      null,
+      60,
+      null,
+      null,
+      null,
+      null,
+      null,
+      140,
+      null,
+      null,
+      290,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      220,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      300,
+      null,
+      150,
+      null,
+      130,
+      null,
+      null,
+      290,
+      null,
+      null,
+      120
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      60,
+      null,
+      null,
+      120,
+      null
+    ]
+  ]
+}

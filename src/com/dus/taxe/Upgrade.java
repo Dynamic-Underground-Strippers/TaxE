@@ -87,7 +87,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 					break;
 
                 /*case engineer:
-                    if(train.hasUpgrade("engineer")){
+					if(train.hasUpgrade("engineer")){
                         //Throw exception
                     }
                     train.setEngineer(true);
