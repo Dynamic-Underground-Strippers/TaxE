@@ -54,8 +54,9 @@ public class GUI extends JFrame {
 	private ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
 	private ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 
-	public GUI() {
+	public GUI(Map map) {
 		self = this;
+		this.map = map;
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
 		stationImage = new ImageIcon(getClass().getClassLoader().getResource("StationRed.png"))
 				.getImage();
@@ -63,7 +64,7 @@ public class GUI extends JFrame {
 		trains[0].setEngine(new Engine(Engine.EngineType.STEAM));
 		trains[1].setEngine(new Engine(Engine.EngineType.DIESEL));
 		trains[2].setEngine(new Engine(Engine.EngineType.ELECTRIC));
-		Goal[] goals = {new Goal(100, map.retrieveNode(0),
+		Goal[] goals = {new Goal(100, this.map.retrieveNode(0),
 				new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
 						new Goal(200, new Station(0, "Place 1", new com.dus.taxe.Point(0, 0)),
 								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
@@ -107,7 +108,7 @@ public class GUI extends JFrame {
 		addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (Node n : map.listOfNodes) {
+				for (Node n : GUI.this.map.listOfNodes) {
 					if (Point.distance(e.getX(), e.getY(), n.getLocation().getX() * getWidth(),
 							n.getLocation().getY() * getHeight()) < 10) {
 						if (tempRouteNodes.isEmpty()) {
@@ -118,7 +119,7 @@ public class GUI extends JFrame {
 							}
 						} else {
 							Connection c;
-							if ((c = map.connections[n.getId()][n.getId()]) != null) {
+							if ((c = GUI.this.map.connections[n.getId()][n.getId()]) != null) {
 								tempRouteNodes.add(n);
 								tempRouteConnections.add(c);
 							}

@@ -25,6 +25,10 @@ public class Player {
         this.engineInventory = new ArrayList<Engine>();
     }
 
+    public ArrayList<Goal> getCurrentGoals() {
+        return currentGoals;
+    }
+
     public int trainSize (){
         return currentTrains.size();
     }
