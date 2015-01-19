@@ -48,7 +48,7 @@ public class GUI extends JFrame {
         font = baseFont.deriveFont(16f);
         //noinspection ConstantConditions
         mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
-        for (Node n : map.listOfNodes) {
+        for (Node n : map.getListOfNodes()) {
             addGuiElement(new NodeElement(n));
         }
         trainGoalElements = new TrainGoalElement[]{
@@ -204,9 +204,9 @@ public class GUI extends JFrame {
         if (map != null) {
             g.setColor(Color.BLACK);
             g.setStroke(trackStroke);
-            for (int i = 0; i < map.connections.length; i++) {
+            for (int i = 0; i < map.getConnections().length; i++) {
                 for (int j = 0; j <= i; j++) {
-                    if (map.connections[i][j] != null) {
+                    if (map.getConnections()[i][j] != null) {
                         g.drawLine((int) (map.retrieveNode(i).getLocation().getX() * Screen.WIDTH),
                                 (int) (map.retrieveNode(i).getLocation().getY() * Screen.HEIGHT),
                                 (int) (map.retrieveNode(j).getLocation().getX() * Screen.WIDTH),

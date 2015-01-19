@@ -88,10 +88,10 @@ public class Player {
 
 	public Goal generateGoal() {
 		Goal g;
-		Node start = Game.currentMap.retrieveNode(new Random().nextInt(Game.currentMap.listOfNodes.size()));
-		Node end = Game.currentMap.retrieveNode(new Random().nextInt(Game.currentMap.listOfNodes.size()));
+		Node start = Game.currentMap.getRandomNode();
+		Node end = Game.currentMap.getRandomNode();
 		while (start.getId() == end.getId()){
-			end = Game.currentMap.retrieveNode(new Random().nextInt(Game.currentMap.listOfNodes.size()));
+			end = Game.currentMap.getRandomNode();
 		}
 		g = new Goal(start,end);
 		return g;
