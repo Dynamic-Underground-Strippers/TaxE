@@ -16,8 +16,8 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 		//removeObstacle,
 		;
 
-		private String name; //name variable internal to enumerated type
 		private String description; //description variable internal to enumerated type
+		private String name; //name variable internal to enumerated type
 		private boolean reapply; //true if upgrade must be reapplied for new engine
 
 		private UpgradeType(String name, String description,
@@ -44,25 +44,25 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 		}
 	}
 
-
-	public UpgradeType getType() {
-		return type;
-	}
-
-	public String getName() {
-		return type.name;
+	@Override
+	public int compareTo(Upgrade upgrade) {
+		return (this.getName().compareTo(upgrade.getName()));
 	}
 
 	public String getDescription() {
 		return type.description;
 	}
 
+	public String getName() {
+		return type.name;
+	}
+
 	public boolean getReapply() {
 		return type.reapply;
 	}
 
-	public void setType(UpgradeType type) {//Why would this ever be used??
-		this.type = type;
+	public UpgradeType getType() {
+		return type;
 	}
 
     /*
@@ -77,6 +77,10 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
     *
     * */
 
+	public void setType(UpgradeType type) {//Why would this ever be used??
+		this.type = type;
+	}
+
 	public void use(Train train) {
 		if (train.hasUpgrade(type.name)) {
 			//throw exception - can't have 2 of an upgrade applied
@@ -85,41 +89,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 				case DOUBLE_SPEED:
 					train.setSpeed(train.getSpeed() * 2);
 					break;
-
-                /*case engineer:
-                    if(train.hasUpgrade("engineer")){
-                        //Throw exception
-                    }
-                    train.setEngineer(true);
-                    break;*/
-				default:
-					//throw exception
-					//upgrade not found
-					break;
 			}
 
 		}
-
 	}
-
-	public void use(Train train, Node node) {
-		if (this.type == UpgradeType.TELEPORT) {
-            /*if(node is in trains route) { //can teleport only on nodes contained in the route.
-                /*set current node to new node
-            }else{
-                //throw exception
-            }
-        }else{
-            //throw exception -- cannot be called for any upgrade that isn't teleport
-        */
-		}
-
-	}
-
-	@Override
-	public int compareTo(Upgrade upgrade) {
-		return (this.getName().compareTo(upgrade.getName()));
-	}
-
 
 }

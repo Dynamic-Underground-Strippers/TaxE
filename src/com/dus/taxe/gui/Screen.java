@@ -1,8 +1,8 @@
 package com.dus.taxe.gui;
 
-import java.awt.Toolkit;
+import java.awt.*;
 
-public class Screen {
-	public static final int WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	public static final int HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+class Screen {
+    public static final int HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    public static final int WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 }

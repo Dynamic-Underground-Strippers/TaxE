@@ -1,95 +1,129 @@
 package com.dus.taxe.gui;
 
-import com.dus.taxe.Goal;
-
-import java.awt.Cursor;
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import com.dus.taxe.Engine;
+import com.dus.taxe.Engine.EngineType;
+import com.dus.taxe.Game;
+import com.dus.taxe.Train;
+import com.dus.taxe.Upgrade;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class TrainGoalElement extends GuiElement {
-	private Goal goal;
-	private BufferedImage image;
+    private static HashMap<EngineType, Image> images;
+    private ButtonElement editRoute;
+    private Train train;
 
-	public TrainGoalElement(Rect bounds) {
-		super(bounds);
-	}
+    public TrainGoalElement(Rect bounds) {
+        super(bounds);
+        if (images == null) {
+            images = new HashMap<EngineType, Image>();
+            try {
+                images.put(EngineType.HAND_CART,
+                        ImageIO.read(getClass().getResourceAsStream("/handcart_side.png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                images.put(EngineType.STEAM,
+                        ImageIO.read(getClass().getResourceAsStream("/steam_side.png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                images.put(EngineType.DIESEL,
+                        ImageIO.read(getClass().getResourceAsStream("/diesel_side.png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                images.put(EngineType.ELECTRIC,
+                        ImageIO.read(getClass().getResourceAsStream("/electric_side.png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                images.put(EngineType.ROCKET,
+                        ImageIO.read(getClass().getResourceAsStream("/electric_side.png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	@Override
-	public void click(MouseEvent e) {
-		if (!isAnimationRunning()) {
-			if (bounds.x == -490) {
-				slerpBounds(new Rect(0, bounds.y, bounds.width, bounds.height), 0.075f);
-			} else {
-				slerpBounds(new Rect(-490, bounds.y, bounds.width, bounds.height), 0.075f);
-			}
-		}
-	}
+    @Override
+    public void draw(Graphics2D graphics) {
+        editRoute.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
+                bounds.height / 3f);
+        if (train != null && images.get(train.getEngine().getType()) != null) {
+            graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
+                    (int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
+        }
+    }
 
-	@Override
-	public void draw(Graphics2D graphics) {
-		if (image != null) {
-//            graphics.drawImage(image.getSubimage((int) srcBounds.x, (int) srcBounds.y, (int) srcBounds.width,
-//                    (int) srcBounds.height), (int) bounds.x, (int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
-			graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
-					(int) bounds.height, GUI.self);
-		}
-	}
+    public Train getTrain() {
+        return train;
+    }
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		GUI.self.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-	}
+    public void setTrain(Train train) {
+        this.train = train;
+    }
 
-	public Goal getGoal() {
-		return goal;
-	}
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        GUI.self.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
 
-	public void setGoal(Goal goal) {
-		this.goal = goal;
-		if (goal == null || goal.getCurrentTrain() == null) {
-			image = null;
-		} else {
-			switch (goal.getCurrentTrain().getEngine().getType()) {
-				case HAND_CART:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case STEAM:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case DIESEL:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case ELECTRIC:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case ROCKET:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-			}
-		}
-	}
+    @Override
+    public void onClick(MouseEvent e) {
+        if (!isAnimationRunning()) {
+            if (bounds.x == -490) {
+                slerpBounds(new Rect(0, bounds.y, bounds.width, bounds.height), 0.075f);
+            } else {
+                slerpBounds(new Rect(-490, bounds.y, bounds.width, bounds.height), 0.075f);
+            }
+        }
+    }
+
+    @Override
+    public void onMouseDown(MouseEvent e) {
+
+    }
+
+    @Override
+    public void onMouseUp(MouseEvent e) {
+        if (GUI.draggingRect != null && GUI.draggingImage != null && GUI.draggingResource != null) {
+            if (GUI.draggingResource instanceof Engine) {
+                train.setEngine((Engine) GUI.draggingResource);
+                Game.getCurrentPlayer().removeEngine((Engine) GUI.draggingResource);
+                GUI.draggingRect = null;
+                GUI.draggingImage = null;
+                GUI.draggingResource = null;
+            }
+            if (GUI.draggingResource instanceof Upgrade) {
+                train.addUpgrade((Upgrade) GUI.draggingResource);
+                Game.getCurrentPlayer().removeUpgrade((Upgrade) GUI.draggingResource);
+                GUI.draggingRect = null;
+                GUI.draggingImage = null;
+                GUI.draggingResource = null;
+            }
+        }
+        GUI.self.repaint();
+    }
+
+    void setEditRouteButton() {
+        editRoute = new ButtonElement(
+                new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
+                        bounds.height / 3f), "edit.png", new Runnable() {
+            public void run() {
+                GUI.settingRoute = true;
+
+            }
+        });
+        editRoute.setTooltip("Set Route");
+        GUI.self.addGuiElement(editRoute);
+    }
 }
