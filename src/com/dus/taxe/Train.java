@@ -9,7 +9,6 @@ public class Train {
 
 	private Engine engine = new Engine(EngineType.HAND_CART);
 	private boolean engineer;
-	private boolean frozen;
 	private Goal goal;
 	private Route route;
 	private int speed;
@@ -96,6 +95,6 @@ public class Train {
 	}
 
 	public void setFrozen(boolean frozen) {
-		this.frozen = frozen;
+		boolean frozen1 = frozen;
 	}
 }

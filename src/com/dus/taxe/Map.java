@@ -12,9 +12,9 @@ public class Map {
 	public Connection[][] connections;
 	public ArrayList<Node> listOfNodes;
 	public ArrayList<Goal> possibleGoals;
-	private ArrayList<String> fileNames = new ArrayList<String>();
 
 	public Map() {
+		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add("nodes.json");
 		ArrayList<Node> loadedNodes = new ArrayList<Node>();
 		ArrayList<ArrayList<Connection>> loadedConnections = new ArrayList<ArrayList<Connection>>();
@@ -73,8 +73,7 @@ public class Map {
 						endNode = node;
 					}
 				}
-				Goal tempGoal = new Goal(Integer.valueOf(goalJSON.get("points").toString()),
-						startNode, endNode);
+				Goal tempGoal = new Goal(startNode, endNode);
 				loadedGoals.add(tempGoal);
 				this.possibleGoals = loadedGoals;
 			}
@@ -101,10 +100,6 @@ public class Map {
 
 	}
 
-	public Goal getRandomGoal() {
-		int randomIndex = new Random().nextInt(possibleGoals.size());
-		return possibleGoals.get(randomIndex);
-	}
 
 	public Node retrieveNode(int index) {
 		//returns a node based on index;

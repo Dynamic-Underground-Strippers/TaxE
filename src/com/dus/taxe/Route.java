@@ -71,15 +71,6 @@ public class Route {
 		return true;
 	}
 
-/*    public boolean isBlocked() {
-        // Returns whether or not the route is blocked by an obstacle
-        for (int i = 0; i < (listOfNodes.size() - 1); i++) {
-            if (Game.currentMap.checkObstruction(listOfNodes.get(i),listOfNodes.get(i+1))) {
-                return true;
-            }
-        }
-        return false;
-    }*/
 
 	private void setRoute(ArrayList<Node> newNodes) {
 		// Sets the listOfNodes to be equal to the list passed in the constructor

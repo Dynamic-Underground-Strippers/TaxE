@@ -54,7 +54,6 @@ public class GUI extends JFrame {
 	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
 	private final BufferedImage image;
 	private final Image mapImage;
-	private final ResourceContainer resourceContainer;
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
 	static Font baseFont;
@@ -87,7 +86,7 @@ public class GUI extends JFrame {
 			trainGoalElements[i].setEditRouteButton();
 		}
 		addGuiElement(new SolidColourRect(new Rect(0, 0, 110, Screen.HEIGHT), Color.white));
-		resourceContainer = new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640));
+		ResourceContainer resourceContainer = new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640));
 		addGuiElement(resourceContainer);
 		addGuiElement(new GoalsContainer(new Rect(10, 10, 900, 200)));
 		addKeyListener(new KeyListener() {
