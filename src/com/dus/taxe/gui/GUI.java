@@ -98,6 +98,9 @@ public class GUI extends JFrame {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
+				} else if(e.getKeyCode() == KeyEvent.VK_E){
+					Game.endTurn();
+					Game.newTurn();
 				}
 			}
 
@@ -257,7 +260,7 @@ public class GUI extends JFrame {
 
 	public void setPlayer(Player player) {
 //		resourceContainer.removeAllResources();
-		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
+		for (int i = 0; i < player.getCurrentTrains().size(); i++) {
 			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
 		}
 //		for (Engine e : player.getEngineInventory()) {
