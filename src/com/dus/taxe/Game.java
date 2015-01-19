@@ -1,56 +1,72 @@
 package com.dus.taxe;
 
 import com.dus.taxe.gui.GUI;
-import com.dus.taxe.gui.GuiController;
 
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Game {
-    private static final int maxPoints = 1000;
-    private static int turn;
-    public static Map currentMap;
-    private static Player currentPlayer;
-    private static Player otherPlayer;
+	private static final int maxPoints = 1000;
+	public static Map currentMap;
+	private static Player currentPlayer;
+	private static Player otherPlayer;
+	private static int turn;
 
-    public Game(Map currentMap){
-        this.turn = 0;
-        this.currentMap = currentMap;
-    }
+	public Game(Map currentMap) {
+		turn = 0;
+		Game.currentMap = currentMap;
+	}
 
-    public static void main(String [ ] args)
-    {
-        GuiController.init(new GUI());
-        GuiController.setMap(new Map());
-    }
+	public static void endGame() {
+		System.out.println("Congratulations " + currentPlayer.getName());
+	}
 
-    public static void endGame() {
-        System.out.println("Congratulations " + currentPlayer.getName());
-    }
+	public static void endTurn() {
+		currentPlayer.moveTrains();
+		//This will instantly move their trains, may want to have some kind of animation?
+		currentPlayer.completeGoals();
+		if (currentPlayer.getPoints() >= maxPoints) {
+			endGame();
+		}
+		swapPlayers();
+		turn += 1;
+	}
 
-    private static void swapPlayers(){
-        Player temp;
-        temp = currentPlayer;
-        currentPlayer = otherPlayer;
-        otherPlayer = temp;
-    }
-    public static void newTurn(){
-        currentPlayer.addGoal(currentMap.getRandomGoal());
-        // Need to somehow add in GUI validation here
-        currentPlayer.giveRandomEngine();
-        currentPlayer.giveRandomUpgrade();
-    }
-    public static void endTurn() {
-        currentPlayer.moveTrains();
-        //This will instantly move their trains, may want to have some kind of animation?
-        currentPlayer.completeGoals();
-        if (currentPlayer.getPoints() >= maxPoints){
-            endGame();
-        }
-        swapPlayers();
-        turn += 1;
-    }
+	public static Player getCurrentPlayer() {
+		return currentPlayer;
+	}
 
-    public int getTurn() {
-        return this.turn;
-    }
+	public static void main(String[] args) {
+		Map m = new Map();
+		String s;
+		if ((s = JOptionPane.showInputDialog("Enter player 1's name:")) == null) {
+			currentPlayer = new Player("Player 1", m);
+		} else {
+			currentPlayer = new Player(s, m);
+		}
+		if ((s = JOptionPane.showInputDialog("Enter player 2's name:")) == null) {
+			otherPlayer = new Player("Player 2", m);
+		} else {
+			otherPlayer = new Player(s, m);
+		}
+		new GUI(m).setPlayer(currentPlayer);
+	}
+
+	public static void newTurn() {
+		currentPlayer.addGoal(currentMap.getRandomGoal());
+		// Need to somehow add in GUI validation here
+		currentPlayer.giveRandomEngine();
+		currentPlayer.giveRandomUpgrade();
+	}
+
+	private static void swapPlayers() {
+		Player temp;
+		temp = currentPlayer;
+		currentPlayer = otherPlayer;
+		otherPlayer = temp;
+		GUI.self.setPlayer(currentPlayer);
+	}
+
+	public int getTurn() {
+		return this.turn;
+	}
 }

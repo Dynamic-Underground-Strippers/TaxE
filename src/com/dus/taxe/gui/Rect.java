@@ -2,14 +2,14 @@ package com.dus.taxe.gui;
 
 import java.awt.Point;
 
-public class Rect {
+class Rect {
+	public float height;
+	public float width;
 	public float x;
 	public float y;
-	public float width;
-	public float height;
 	boolean animationRunning;
-	Rect animationTargetBounds;
 	float animationSpeed;
+	Rect animationTargetBounds;
 
 	public Rect() {
 		this(0, 0, 0, 0);
@@ -22,7 +22,7 @@ public class Rect {
 		this.height = height;
 	}
 
-	public boolean contains(float x, float y) {
+	boolean contains(float x, float y) {
 		return x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height;
 	}
 
@@ -41,6 +41,10 @@ public class Rect {
 		} else {
 			return false;
 		}
+	}
+
+	public String toString() {
+		return "Rect(x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + ")";
 	}
 
 	public final void update() {
@@ -62,9 +66,5 @@ public class Rect {
 				height = animationTargetBounds.height;
 			}
 		}
-	}
-
-	public String toString() {
-		return "Rect(x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + ")";
 	}
 }

@@ -1,20 +1,18 @@
 package com.dus.taxe.gui;
 
 import com.dus.taxe.Connection;
-import com.dus.taxe.Engine;
-import com.dus.taxe.Engine.EngineType;
 import com.dus.taxe.Game;
 import com.dus.taxe.Goal;
 import com.dus.taxe.Map;
 import com.dus.taxe.Node;
-import com.dus.taxe.Station;
-import com.dus.taxe.Train;
-import com.dus.taxe.Upgrade;
-import com.dus.taxe.Upgrade.UpgradeType;
+import com.dus.taxe.Player;
+import com.dus.taxe.Resource;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -30,6 +28,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -38,61 +39,47 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class GUI extends JFrame {
-	public static GUI self;
-	Image mapImage;
-	Image stationImage;
-	ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
-	Map map;
-	ResourceContainer resourceContainer;
+	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
 	private static final float X_SCALE = Screen.WIDTH / 1920f;
 	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
-	public static long frameTime = 0;
+	private static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
+	public static GUI self;
+	static Image draggingImage;
+	static Rect draggingRect;
+	static Resource draggingResource;
+	static long frameTime = 0;
+	static boolean settingRoute = false;
 	private static long lastFrame = 0;
-	private BasicStroke solidStroke = new BasicStroke(3);
-	private BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
+	private static Map map;
+	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
+	private final BufferedImage image;
+	private final Image mapImage;
+	private final ResourceContainer resourceContainer;
+	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
-	private ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
-	private ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
+	private Font font;
+	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
-	public GUI() {
+	public GUI(Map map) {
 		self = this;
+		GUI.map = map;
+		//noinspection ConstantConditions
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
-		stationImage = new ImageIcon(getClass().getClassLoader().getResource("StationRed.png"))
-				.getImage();
-		Train[] trains = {new Train(), new Train(), new Train()};
-		trains[0].setEngine(new Engine(Engine.EngineType.STEAM));
-		trains[1].setEngine(new Engine(Engine.EngineType.DIESEL));
-		trains[2].setEngine(new Engine(Engine.EngineType.ELECTRIC));
-		Goal[] goals = {new Goal(100, map.retrieveNode(0),
-				new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
-						new Goal(200, new Station(0, "Place 1", new com.dus.taxe.Point(0, 0)),
-								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
-						new Goal(300, new Station(0, "Place 1", new com.dus.taxe.Point(0, 0)),
-								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0)))};
-		TrainGoalElement[] trainGoalElements = {
+		for (Node n : map.listOfNodes) {
+			addGuiElement(new NodeElement(n));
+		}
+		trainGoalElements = new TrainGoalElement[]{
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 620, 900, 150)),
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 413, 900, 150)),
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 207, 900, 150))};
 		for (int i = 0; i < 3; i++) {
-			goals[i].setCurrentTrain(trains[i]);
-			trainGoalElements[i].setGoal(goals[i]);
 			addGuiElement(trainGoalElements[i]);
+			trainGoalElements[i].setEditRouteButton();
 		}
 		addGuiElement(new SolidColourRect(new Rect(0, 0, 110, Screen.HEIGHT), Color.white));
 		resourceContainer = new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640));
-		resourceContainer.addResource(new Engine(EngineType.HAND_CART));
-		resourceContainer.addResource(new Engine(EngineType.STEAM));
-		resourceContainer.addResource(new Engine(EngineType.ELECTRIC));
-		resourceContainer.addResource(new Upgrade(UpgradeType.DOUBLE_SPEED));
-		resourceContainer.addResource(new Upgrade(UpgradeType.TELEPORT));
-		resourceContainer.addResource(new Upgrade(UpgradeType.DOUBLE_SPEED));
-		resourceContainer.addResource(new Upgrade(UpgradeType.TELEPORT));
 		addGuiElement(resourceContainer);
 		addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-
 			@Override
 			public void keyPressed(KeyEvent e) {
 			}
@@ -103,11 +90,15 @@ public class GUI extends JFrame {
 					System.exit(0);
 				}
 			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
 		});
 		addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (Node n : map.listOfNodes) {
+				for (Node n : GUI.map.listOfNodes) {
 					if (Point.distance(e.getX(), e.getY(), n.getLocation().getX() * getWidth(),
 							n.getLocation().getY() * getHeight()) < 10) {
 						if (tempRouteNodes.isEmpty()) {
@@ -118,7 +109,7 @@ public class GUI extends JFrame {
 							}
 						} else {
 							Connection c;
-							if ((c = map.connections[n.getId()][n.getId()]) != null) {
+							if ((c = GUI.map.connections[n.getId()][n.getId()]) != null) {
 								tempRouteNodes.add(n);
 								tempRouteConnections.add(c);
 							}
@@ -128,20 +119,11 @@ public class GUI extends JFrame {
 				Collections.reverse(guiElements);
 				for (GuiElement guiElement : guiElements) {
 					if (guiElement.bounds.contains(e.getPoint())) {
-						guiElement.click(e);
+						guiElement.onClick(e);
+						break;
 					}
 				}
 				Collections.reverse(guiElements);
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
 			}
 
 			@Override
@@ -153,11 +135,41 @@ public class GUI extends JFrame {
 			public void mouseExited(MouseEvent e) {
 
 			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Collections.reverse(guiElements);
+				for (GuiElement guiElement : guiElements) {
+					if (guiElement.bounds.contains(e.getPoint())) {
+						guiElement.onMouseDown(e);
+						break;
+					}
+				}
+				Collections.reverse(guiElements);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Collections.reverse(guiElements);
+				for (GuiElement guiElement : guiElements) {
+					if (guiElement.bounds.contains(e.getPoint())) {
+						guiElement.onMouseUp(e);
+						break;
+					}
+				}
+				Collections.reverse(guiElements);
+				GUI.draggingRect = null;
+				GUI.draggingImage = null;
+				GUI.draggingResource = null;
+			}
 		});
 		addMouseMotionListener(new MouseMotionListener() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-
+				if (draggingRect != null && draggingImage != null) {
+					draggingRect.x = e.getX() - draggingRect.width / 2f;
+					draggingRect.y = e.getY() - draggingRect.height / 2f;
+				}
 			}
 
 			@Override
@@ -165,8 +177,10 @@ public class GUI extends JFrame {
 				boolean found = false;
 				for (GuiElement guiElement : guiElements) {
 					if (guiElement.bounds.contains(e.getPoint())) {
-						guiElement.mouseMoved(e);
+						guiElement.mouseMovedInternal(e);
 						found = true;
+					} else {
+						guiElement.mouseMovedExternal(e);
 					}
 				}
 				if (!found) {
@@ -182,15 +196,28 @@ public class GUI extends JFrame {
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		GraphicsConfiguration config = device.getDefaultConfiguration();
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT,
+					new FileInputStream(new File("src/font" + ".ttf"))).deriveFont(16f);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	BufferedImage image;
+	public void addGuiElement(GuiElement guiElement) {
+		guiElements.add(guiElement);
+		repaint();
+	}
 
 	public void paint(Graphics graphics) {
+		if (image == null) return;
 		frameTime = System.currentTimeMillis() - lastFrame;
 		lastFrame = System.currentTimeMillis();
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		int imageWidth = (int) ((float) mapImage.getWidth(this) *
@@ -209,29 +236,33 @@ public class GUI extends JFrame {
 					}
 				}
 			}
-			for (Node n : map.listOfNodes) {
-				g.drawImage(stationImage, (int) (n.getLocation().getX() * getWidth()) - 15,
-						(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30, GUI.self);
-				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
-					if (goal.getStart().equals(n)) {
-						g.setColor(Color.green);
-						g.setStroke(solidStroke);
-						g.drawOval((int) (n.getLocation().getX() * getWidth()) - 15,
-								(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30);
-					}
-				}
-			}
 		}
 		for (GuiElement guiElement : guiElements) {
 			guiElement.update();
 			guiElement.draw(g);
 		}
+		if (draggingRect != null && draggingImage != null) {
+			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
+					(int) draggingRect.width, (int) draggingRect.height, this);
+		} else {
+			for (GuiElement guiElement : guiElements) {
+				guiElement.drawTooltip(g);
+			}
+		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();
 	}
 
-	public void addGuiElement(GuiElement guiElement) {
-		guiElements.add(guiElement);
-		repaint();
+	public void setPlayer(Player player) {
+//		resourceContainer.removeAllResources();
+		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
+			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
+		}
+//		for (Engine e : player.getEngineInventory()) {
+//			resourceContainer.addResource(e);
+//		}
+//		for (Upgrade u : player.getUpgradeInventory()) {
+//			resourceContainer.addResource(u);
+//		}
 	}
 }

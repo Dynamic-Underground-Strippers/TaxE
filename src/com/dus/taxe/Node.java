@@ -11,6 +11,15 @@ public abstract class Node {
 		this.location = location;
 	}
 
+	public boolean equals(Object other) {
+		if (other instanceof Node) {
+			Node n = (Node) other;
+			return n.id == id;
+		} else {
+			return false;
+		}
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -25,15 +34,6 @@ public abstract class Node {
 
 	public String toString() {
 		return Integer.toString(id) + "," + location.toString() + "," + name;
-	}
-
-	public boolean equals(Object other) {
-		if (other instanceof Node) {
-			Node n = (Node) other;
-			return n.id == id;
-		} else {
-			return false;
-		}
 	}
 }
 

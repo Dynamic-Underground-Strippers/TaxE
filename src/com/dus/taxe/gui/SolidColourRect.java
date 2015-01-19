@@ -13,11 +13,6 @@ public class SolidColourRect extends GuiElement {
 	}
 
 	@Override
-	public void click(MouseEvent e) {
-
-	}
-
-	@Override
 	public void draw(Graphics2D graphics) {
 		graphics.setColor(colour);
 		graphics.fillRect((int) bounds.x, (int) bounds.y, (int) bounds.width, (int) bounds.height);
@@ -25,6 +20,21 @@ public class SolidColourRect extends GuiElement {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onClick(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onMouseDown(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onMouseUp(MouseEvent e) {
 
 	}
 }
