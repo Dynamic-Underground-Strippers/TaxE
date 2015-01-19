@@ -1,8 +1,12 @@
 package com.dus.taxe.gui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 abstract class GuiElement {
 	Rect bounds = new Rect();
@@ -67,5 +71,20 @@ abstract class GuiElement {
 
 	public final void update() {
 		bounds.update();
+	}
+
+	protected String[] wrapText(String text, int maxWidth, Graphics graphics, Font font) {
+		String[] split = text.split(" ");
+		ArrayList<String> sections = new ArrayList<String>();
+		String temp = "";
+		FontMetrics fm = graphics.getFontMetrics(font);
+		for (String s : split) {
+			if (fm.stringWidth(temp) - 1 + fm.stringWidth(s) > maxWidth) {
+				sections.add(temp.substring(0, temp.length() - 1));
+				temp = "";
+			}
+			temp += s + " ";
+		}
+		return sections.toArray(new String[sections.size()]);
 	}
 }

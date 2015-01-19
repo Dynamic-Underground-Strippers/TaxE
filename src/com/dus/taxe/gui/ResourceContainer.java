@@ -64,6 +64,7 @@ public class ResourceContainer extends GuiElement {
 		}
 	}
 
+
 	@Override
 	public void draw(Graphics2D graphics) {
 		graphics.setColor(backgroundColour);
