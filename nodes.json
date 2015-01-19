@@ -3,7 +3,7 @@
     {
       "start": "London",
       "points": 300,
-      "end": "Durka Durka Stan"
+      "end": "Vienna"
     },
     {
       "start": "Paris",
@@ -84,7 +84,7 @@
     },
     {
       "location": "(0.65555555,0.4758454)",
-      "name": "Durka Durka Stan",
+      "name": "Vienna",
       "type": "Station"
     }
   ],
