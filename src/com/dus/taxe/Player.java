@@ -9,12 +9,12 @@ import java.util.Random;
 //TODO: Implement basic trains: storing them, check max for each; implement discarding random upgrade and engines and unstarted goals
 public class Player {
 	private final String name;
+	private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
+	private ArrayList<Train> currentTrains = new ArrayList<Train>();
+	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
 	private Map map;
 	private int points;
-	private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
 	private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
-	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
-	private ArrayList<Train> currentTrains = new ArrayList<Train>();
 
 
 	public Player(String name, Map map) {
@@ -33,12 +33,15 @@ public class Player {
 		}
 	}
 
-	public ArrayList<Goal> getCurrentGoals() {
-		return currentGoals;
+	public void addGoal(Goal goal) {
+		if (!hasMaxGoals()) {
+			currentGoals.add(goal);
+		}
 	}
 
-	public int trainSize() {
-		return currentTrains.size();
+	public void addPoints(int points) {
+
+		this.points += points;
 	}
 
 	public void addTrain() {
@@ -47,8 +50,88 @@ public class Player {
 		}
 	}
 
-	public void removeTrain(int i) {
-		currentTrains.remove(i);
+	public void completeGoals() {
+		for (Goal g : currentGoals) {
+			for (Train t : currentTrains) {
+				if (t.getGoal().equals(g) && t.hasCompletedGoal()) {
+					addPoints(g.getPoints());
+					currentGoals.remove(g);
+				}
+			}
+		}
+	}
+
+	public Engine discardRandEngine() {
+		//This method removes a random engine from the list, provided the player has maximum number
+		//of upgrades, and returns it.
+		if (this.hasMaxEngines()) {
+			int randomIndex = new Random().nextInt(engineInventory.size());
+			Engine discardedEngine = engineInventory.get(randomIndex);
+			engineInventory.remove(randomIndex);
+
+		}
+		return null;
+	}
+
+	public Upgrade discardRandUpgrade() {
+		//This method removes a random upgrade from the list, provided the player has maximum number
+		//of upgrades, and returns it.
+		if (this.hasMaxUpgrades()) {
+			int randomIndex = new Random().nextInt(upgradeInventory.size());
+			Upgrade discardedUpgrade = upgradeInventory.get(randomIndex);
+			upgradeInventory.remove(randomIndex);
+			return discardRandUpgrade();
+
+		}
+		return null;
+	}
+
+	public Goal discardUnstartedGoal() {
+		ArrayList<Goal> discardable = new ArrayList<Goal>();
+		for (Goal g : currentGoals) {
+			for (Train t : currentTrains) {
+				if (!g.equals(t.getGoal())) {
+					discardable.add(g);
+				}
+			}
+		}
+		Goal discardedGoal = discardable.get((int) (Math.random() * discardable.size()));
+		return discardedGoal;
+	}
+
+	public void generateGoals() {
+		Goal g;
+		while (!hasMaxGoals()) {
+			if (!currentGoals.contains(g = map.getRandomGoal())) {
+				currentGoals.add(g);
+			}
+		}
+	}
+
+	public ArrayList<Goal> getCurrentGoals() {
+		return currentGoals;
+	}
+
+	public ArrayList<Train> getCurrentTrains() {
+		return currentTrains;
+	}
+
+	public ArrayList<Engine> getEngineInventory() {
+		return engineInventory;
+	}
+
+	public String getName() {
+
+		return this.name;
+	}
+
+	public int getPoints() {
+
+		return this.points;
+	}
+
+	public Train getTrain(int i) {
+		return currentTrains.get(i);
 	}
 
 	public int getTrainIndex(Train t) {
@@ -59,23 +142,20 @@ public class Player {
 		return currentTrains;
 	}
 
-	public Train getTrain(int i) {
-		return currentTrains.get(i);
+	public ArrayList<Upgrade> getUpgradeInventory() {
+		return upgradeInventory;
 	}
 
-	public void moveTrains() {
-		for (Train train : currentTrains) {
-			train.moveTrain();
+	public void giveRandomEngine() {
+		if (!this.hasMaxEngines()) {
+			this.engineInventory.add(new Engine());
 		}
 	}
 
-	public boolean hasMaxUpgrades() {
-		if (upgradeInventory.size() == 4) {
-			return true;
-
+	public void giveRandomUpgrade() { //Need to come up with more upgrades
+		if (!this.hasMaxUpgrades()) {
+			this.upgradeInventory.add(new Upgrade());
 		}
-		return false;
-
 	}
 
 	public boolean hasMaxEngines() {
@@ -94,126 +174,45 @@ public class Player {
 		return false;
 	}
 
-	public void giveRandomEngine() {
-		if (!this.hasMaxEngines()) {
-			this.engineInventory.add(new Engine());
-		}
-	}
-
-	public void giveRandomUpgrade() { //Need to come up with more upgrades
-		if (!this.hasMaxUpgrades()) {
-			this.upgradeInventory.add(new Upgrade());
-		}
-	}
-
-	public Goal discardUnstartedGoal() {
-		ArrayList<Goal> discardable = new ArrayList<Goal>();
-		for (Goal g : currentGoals) {
-			for (Train t : currentTrains) {
-				if (!g.equals(t.getGoal())) {
-					discardable.add(g);
-				}
-			}
-		}
-		Goal discardedGoal = discardable.get((int) (Math.random() * discardable.size()));
-		return discardedGoal;
-	}
-
-	public int upgradeSize() {
-		return upgradeInventory.size();
-
-	}
-
-	public Upgrade discardRandUpgrade() {
-		//This method removes a random upgrade from the list, provided the player has maximum number
-		//of upgrades, and returns it.
-		if (this.hasMaxUpgrades()) {
-			int randomIndex = new Random().nextInt(upgradeInventory.size());
-			Upgrade discardedUpgrade = upgradeInventory.get(randomIndex);
-			upgradeInventory.remove(randomIndex);
-			return discardRandUpgrade();
+	public boolean hasMaxUpgrades() {
+		if (upgradeInventory.size() == 4) {
+			return true;
 
 		}
-		return null;
+		return false;
+
 	}
 
-	public Engine discardRandEngine() {
-		//This method removes a random engine from the list, provided the player has maximum number
-		//of upgrades, and returns it.
-		if (this.hasMaxEngines()) {
-			int randomIndex = new Random().nextInt(engineInventory.size());
-			Engine discardedEngine = engineInventory.get(randomIndex);
-			engineInventory.remove(randomIndex);
-
+	public void moveTrains() {
+		for (Train train : currentTrains) {
+			train.moveTrain();
 		}
-		return null;
-	}
-
-
-	public String getName() {
-
-		return this.name;
-	}
-
-	public int getPoints() {
-
-		return this.points;
-	}
-
-	public void addPoints(int points) {
-
-		this.points += points;
-	}
-
-	public void selectRandomEngine() {
-	}
-
-	public void addGoal(Goal goal) {
-		if (!hasMaxGoals()) {
-			currentGoals.add(goal);
-		}
-	}
-
-	public void completeGoals() {
-		for (Goal g : currentGoals) {
-			for (Train t : currentTrains) {
-				if (t.getGoal().equals(g) && t.hasCompletedGoal()) {
-					addPoints(g.getPoints());
-					currentGoals.remove(g);
-				}
-			}
-		}
-	}
-
-	public void selectRandomUpgrade() {
-	}
-
-	public void generateGoals() {
-		Goal g;
-		while (!hasMaxGoals()) {
-			if (!currentGoals.contains(g = map.getRandomGoal())) {
-				currentGoals.add(g);
-			}
-		}
-	}
-
-	public ArrayList<Engine> getEngineInventory() {
-		return engineInventory;
-	}
-
-	public ArrayList<Upgrade> getUpgradeInventory() {
-		return upgradeInventory;
-	}
-
-	public ArrayList<Train> getCurrentTrains() {
-		return currentTrains;
 	}
 
 	public void removeEngine(Engine engine) {
 		engineInventory.remove(engine);
 	}
 
+	public void removeTrain(int i) {
+		currentTrains.remove(i);
+	}
+
 	public void removeUpgrade(Upgrade upgrade) {
 		upgradeInventory.remove(upgrade);
+	}
+
+	public void selectRandomEngine() {
+	}
+
+	public void selectRandomUpgrade() {
+	}
+
+	public int trainSize() {
+		return currentTrains.size();
+	}
+
+	public int upgradeSize() {
+		return upgradeInventory.size();
+
 	}
 }

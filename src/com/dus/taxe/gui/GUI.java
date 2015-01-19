@@ -39,25 +39,26 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class GUI extends JFrame {
-	public static GUI self;
-	private final Image mapImage;
-	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
-	private static Map map;
-	private final ResourceContainer resourceContainer;
+	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
 	private static final float X_SCALE = Screen.WIDTH / 1920f;
 	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
+	private static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
+	public static GUI self;
+	static Image draggingImage;
+	static Rect draggingRect;
+	static Resource draggingResource;
 	static long frameTime = 0;
+	static boolean settingRoute = false;
 	private static long lastFrame = 0;
+	private static Map map;
+	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
+	private final BufferedImage image;
+	private final Image mapImage;
+	private final ResourceContainer resourceContainer;
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
-	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
-	private static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
-	static boolean settingRoute = false;
-	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 	private Font font;
-	static Rect draggingRect;
-	static Image draggingImage;
-	static Resource draggingResource;
+	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
 	public GUI(Map map) {
 		self = this;
@@ -80,10 +81,6 @@ public class GUI extends JFrame {
 		addGuiElement(resourceContainer);
 		addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-
-			@Override
 			public void keyPressed(KeyEvent e) {
 			}
 
@@ -92,6 +89,10 @@ public class GUI extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
 				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
 			}
 		});
 		addMouseListener(new MouseListener() {
@@ -126,6 +127,16 @@ public class GUI extends JFrame {
 			}
 
 			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
 			public void mousePressed(MouseEvent e) {
 				Collections.reverse(guiElements);
 				for (GuiElement guiElement : guiElements) {
@@ -150,16 +161,6 @@ public class GUI extends JFrame {
 				GUI.draggingRect = null;
 				GUI.draggingImage = null;
 				GUI.draggingResource = null;
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
 			}
 		});
 		addMouseMotionListener(new MouseMotionListener() {
@@ -205,20 +206,10 @@ public class GUI extends JFrame {
 		}
 	}
 
-	public void setPlayer(Player player) {
-//		resourceContainer.removeAllResources();
-		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
-			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
-		}
-//		for (Engine e : player.getEngineInventory()) {
-//			resourceContainer.addResource(e);
-//		}
-//		for (Upgrade u : player.getUpgradeInventory()) {
-//			resourceContainer.addResource(u);
-//		}
+	public void addGuiElement(GuiElement guiElement) {
+		guiElements.add(guiElement);
+		repaint();
 	}
-
-	private final BufferedImage image;
 
 	public void paint(Graphics graphics) {
 		if (image == null) return;
@@ -262,8 +253,16 @@ public class GUI extends JFrame {
 		repaint();
 	}
 
-	public void addGuiElement(GuiElement guiElement) {
-		guiElements.add(guiElement);
-		repaint();
+	public void setPlayer(Player player) {
+//		resourceContainer.removeAllResources();
+		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
+			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
+		}
+//		for (Engine e : player.getEngineInventory()) {
+//			resourceContainer.addResource(e);
+//		}
+//		for (Upgrade u : player.getUpgradeInventory()) {
+//			resourceContainer.addResource(u);
+//		}
 	}
 }

@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 
 abstract class GuiElement {
 	Rect bounds = new Rect();
+	private boolean hovering = false;
 	private Rect srcBounds = new Rect();
 	private String tooltip;
-	private boolean hovering = false;
 
 	GuiElement(Rect bounds) {
 		this(bounds, bounds);
@@ -18,12 +18,6 @@ abstract class GuiElement {
 		this.bounds = bounds;
 		this.srcBounds = srcBounds;
 	}
-
-	public abstract void onClick(MouseEvent e);
-
-	public abstract void onMouseDown(MouseEvent e);
-
-	public abstract void onMouseUp(MouseEvent e);
 
 	public abstract void draw(Graphics2D graphics);
 
@@ -46,6 +40,14 @@ abstract class GuiElement {
 		return tooltip;
 	}
 
+	void setTooltip(String tooltip) {
+		this.tooltip = tooltip;
+	}
+
+	boolean isAnimationRunning() {
+		return bounds.animationRunning || srcBounds.animationRunning;
+	}
+
 	protected abstract void mouseMoved(MouseEvent e);
 
 	public void mouseMovedExternal(MouseEvent e) {
@@ -57,9 +59,11 @@ abstract class GuiElement {
 		mouseMoved(e);
 	}
 
-	void setTooltip(String tooltip) {
-		this.tooltip = tooltip;
-	}
+	public abstract void onClick(MouseEvent e);
+
+	public abstract void onMouseDown(MouseEvent e);
+
+	public abstract void onMouseUp(MouseEvent e);
 
 	void slerpBounds(Rect targetBounds, float speed) {
 		bounds.animationRunning = true;
@@ -71,10 +75,6 @@ abstract class GuiElement {
 		srcBounds.animationRunning = true;
 		srcBounds.animationTargetBounds = targetBounds;
 		srcBounds.animationSpeed = speed;
-	}
-
-	boolean isAnimationRunning() {
-		return bounds.animationRunning || srcBounds.animationRunning;
 	}
 
 	public final void update() {

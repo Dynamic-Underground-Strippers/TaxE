@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
-	public ArrayList<Node> listOfNodes;
 	public Connection[][] connections;
+	public ArrayList<Node> listOfNodes;
 	public ArrayList<Goal> possibleGoals;
 	private ArrayList<String> fileNames = new ArrayList<String>();
 
@@ -101,13 +101,13 @@ public class Map {
 
 	}
 
-	public Node retrieveNode(int index) {
-		//returns a node based on index;
-		return listOfNodes.get(index);
-	}
-
 	public Goal getRandomGoal() {
 		int randomIndex = new Random().nextInt(possibleGoals.size());
 		return possibleGoals.get(randomIndex);
+	}
+
+	public Node retrieveNode(int index) {
+		//returns a node based on index;
+		return listOfNodes.get(index);
 	}
 }

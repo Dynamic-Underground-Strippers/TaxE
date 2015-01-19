@@ -16,9 +16,9 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class TrainGoalElement extends GuiElement {
+	private static HashMap<EngineType, Image> images;
 	private ButtonElement editRoute;
 	private Train train;
-	private static HashMap<EngineType, Image> images;
 
 	public TrainGoalElement(Rect bounds) {
 		super(bounds);
@@ -57,8 +57,27 @@ public class TrainGoalElement extends GuiElement {
 		}
 	}
 
+	@Override
+	public void draw(Graphics2D graphics) {
+		editRoute.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
+				bounds.height / 3f);
+		if (train != null && images.get(train.getEngine().getType()) != null) {
+			graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
+					(int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
+		}
+	}
+
 	public Train getTrain() {
 		return train;
+	}
+
+	public void setTrain(Train train) {
+		this.train = train;
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		GUI.self.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
 	@Override
@@ -96,25 +115,6 @@ public class TrainGoalElement extends GuiElement {
 			}
 		}
 		GUI.self.repaint();
-	}
-
-	@Override
-	public void draw(Graphics2D graphics) {
-		editRoute.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
-				bounds.height / 3f);
-		if (train != null && images.get(train.getEngine().getType()) != null) {
-			graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
-					(int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
-		}
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		GUI.self.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-	}
-
-	public void setTrain(Train train) {
-		this.train = train;
 	}
 
 	void setEditRouteButton() {

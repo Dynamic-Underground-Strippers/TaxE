@@ -9,28 +9,16 @@ public class Train {
 
 	private Engine engine = new Engine(EngineType.HAND_CART);
 	private boolean engineer;
-	private int speed;
 	private boolean frozen;
+	private Goal goal;
+	private Route route;
+	private int speed;
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
 	private ArrayList<Node> visitedNodes = new ArrayList<Node>();
-	private Route route;
-	private Goal goal;
 
 	public Train() {
 		this.engine = new Engine(Engine.EngineType.HAND_CART);
 		this.speed = this.engine.getSpeed();
-	}
-
-	public void associateRoute(Route route) {
-		this.route = route;
-	}
-
-	public Goal getGoal() {
-		return goal;
-	}
-
-	public int getSpeed() {
-		return speed;
 	}
 
 	public void addUpgrade(Upgrade upgrade) {
@@ -38,16 +26,8 @@ public class Train {
 		upgrades.add(upgrade);
 	}
 
-	public boolean hasCompletedGoal() {
-		return visitedNodes.get(visitedNodes.size() - 1).equals(goal.getEnd());
-	}
-
-	public void setGoal(Goal goal) {
-		this.goal = goal;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void associateRoute(Route route) {
+		this.route = route;
 	}
 
 	public Engine getEngine() {
@@ -68,8 +48,24 @@ public class Train {
 
 	}
 
-	public void setFrozen(boolean frozen) {
-		this.frozen = frozen;
+	public Goal getGoal() {
+		return goal;
+	}
+
+	public void setGoal(Goal goal) {
+		this.goal = goal;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 
 	public ArrayList<Upgrade> getUpgrades() {
@@ -80,6 +76,10 @@ public class Train {
 	public ArrayList<Node> getVisitedNodes() {
 		//returns nodes for GUI
 		return this.visitedNodes;
+	}
+
+	public boolean hasCompletedGoal() {
+		return visitedNodes.get(visitedNodes.size() - 1).equals(goal.getEnd());
 	}
 
 	public boolean hasUpgrade(String name) {
@@ -95,7 +95,7 @@ public class Train {
 		this.route.updateDistanceAlongConnection();
 	}
 
-	public Route getRoute() {
-		return route;
+	public void setFrozen(boolean frozen) {
+		this.frozen = frozen;
 	}
 }

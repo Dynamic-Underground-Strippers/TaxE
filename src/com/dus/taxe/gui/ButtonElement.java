@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 
 public class ButtonElement extends GuiElement {
-	private Image image;
 	private Runnable action;
+	private Image image;
 
 	public ButtonElement(Rect bounds, String imageName, Runnable action) {
 		super(bounds);
@@ -17,6 +17,19 @@ public class ButtonElement extends GuiElement {
 			//noinspection ConstantConditions
 			image = new ImageIcon(getClass().getClassLoader().getResource(imageName)).getImage();
 		}
+	}
+
+	@Override
+	public void draw(Graphics2D graphics) {
+		if (image != null) {
+			graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
+					(int) bounds.height, GUI.self);
+		}
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+
 	}
 
 	@Override
@@ -31,19 +44,6 @@ public class ButtonElement extends GuiElement {
 
 	@Override
 	public void onMouseUp(MouseEvent e) {
-
-	}
-
-	@Override
-	public void draw(Graphics2D graphics) {
-		if (image != null) {
-			graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
-					(int) bounds.height, GUI.self);
-		}
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
 
 	}
 }

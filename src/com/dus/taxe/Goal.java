@@ -14,6 +14,15 @@ public class Goal {
 				"Move a train from " + this.start.getName() + " to " + this.end.getName();
 	}
 
+	public boolean equals(Object other) {
+		if (other instanceof Goal) {
+			Goal g = (Goal) other;
+			return start.equals(g.start) && end.equals(g.end) && points == g.points;
+		} else {
+			return false;
+		}
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -28,15 +37,6 @@ public class Goal {
 
 	public Node getStart() {
 		return start;
-	}
-
-	public boolean equals(Object other) {
-		if (other instanceof Goal) {
-			Goal g = (Goal) other;
-			return start.equals(g.start) && end.equals(g.end) && points == g.points;
-		} else {
-			return false;
-		}
 	}
 }
 

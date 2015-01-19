@@ -14,8 +14,8 @@ public class Engine implements Resource, Comparable<Engine> {
 		ELECTRIC("Electric Engine", "", 75),
 		ROCKET("Rocket Engine", "", 100);
 
-		private String name; //name variable internal to enumerated type
 		private String description; //description variable internal to enumerated type
+		private String name; //name variable internal to enumerated type
 		private int speed; //speed variable internal to enumerated type
 
 		private EngineType(String name, String description,
@@ -45,28 +45,28 @@ public class Engine implements Resource, Comparable<Engine> {
 		}
 	}
 
-	public String getName() {
-		return this.type.name;
+	@Override
+	public int compareTo(Engine engine) {
+		return (this.getName().compareTo(engine.getName()));
 	}
 
 	public String getDescription() {
 		return this.type.description;
 	}
 
+	public String getName() {
+		return this.type.name;
+	}
+
 	public int getSpeed() {
 		return this.type.speed;
 	}
 
-	public void use(Train train) {
-		train.setSpeed(type.speed);
-	}
-
-	@Override
-	public int compareTo(Engine engine) {
-		return (this.getName().compareTo(engine.getName()));
-	}
-
 	public EngineType getType() {
 		return type;
+	}
+
+	public void use(Train train) {
+		train.setSpeed(type.speed);
 	}
 }

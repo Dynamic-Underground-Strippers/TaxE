@@ -3,13 +3,13 @@ package com.dus.taxe.gui;
 import java.awt.Point;
 
 class Rect {
+	public float height;
+	public float width;
 	public float x;
 	public float y;
-	public float width;
-	public float height;
 	boolean animationRunning;
-	Rect animationTargetBounds;
 	float animationSpeed;
+	Rect animationTargetBounds;
 
 	public Rect() {
 		this(0, 0, 0, 0);
@@ -43,6 +43,10 @@ class Rect {
 		}
 	}
 
+	public String toString() {
+		return "Rect(x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + ")";
+	}
+
 	public final void update() {
 		if (animationRunning) {
 			x += (animationTargetBounds.x - x) * animationSpeed * (GUI.frameTime / 32f);
@@ -62,9 +66,5 @@ class Rect {
 				height = animationTargetBounds.height;
 			}
 		}
-	}
-
-	public String toString() {
-		return "Rect(x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + ")";
 	}
 }

@@ -15,12 +15,12 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 public class ResourceContainer extends GuiElement {
-	private final Rect[] engineRects = new Rect[3];
-	private final Rect[] upgradeRects = new Rect[4];
-	private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
-	private final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
 	private static final int PADDING = 10;
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
+	private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
+	private final Rect[] engineRects = new Rect[3];
+	private final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
+	private final Rect[] upgradeRects = new Rect[4];
 
 	public ResourceContainer(Rect bounds) {
 		super(bounds);
@@ -65,41 +65,6 @@ public class ResourceContainer extends GuiElement {
 	}
 
 	@Override
-	public void onClick(MouseEvent e) {
-	}
-
-	@Override
-	public void onMouseDown(MouseEvent e) {
-		Point p = e.getPoint();
-		p.x -= bounds.x;
-		p.y -= bounds.y;
-		for (int i = 0; i < Game.getCurrentPlayer().getEngineInventory().size(); i++) {
-			if (engineRects[i].contains(p)) {
-				GUI.draggingRect = new Rect(engineRects[i].x + bounds.x,
-						engineRects[i].y + bounds.y, engineRects[i].width, engineRects[i].height);
-				GUI.draggingImage = engineImages
-						.get(Game.getCurrentPlayer().getEngineInventory().get(i).getType());
-				GUI.draggingResource = Game.getCurrentPlayer().getEngineInventory().get(i);
-			}
-		}
-		for (int i = 0; i < Game.getCurrentPlayer().getUpgradeInventory().size(); i++) {
-			if (upgradeRects[i].contains(p)) {
-				GUI.draggingRect = new Rect(upgradeRects[i].x + bounds.x,
-						upgradeRects[i].y + bounds.y, upgradeRects[i].width,
-						upgradeRects[i].height);
-				GUI.draggingImage = upgradeImages
-						.get(Game.getCurrentPlayer().getUpgradeInventory().get(i).getType());
-				GUI.draggingResource = Game.getCurrentPlayer().getUpgradeInventory().get(i);
-			}
-		}
-	}
-
-	@Override
-	public void onMouseUp(MouseEvent e) {
-
-	}
-
-	@Override
 	public void draw(Graphics2D graphics) {
 		graphics.setColor(backgroundColour);
 		graphics.fillRoundRect((int) bounds.x, (int) bounds.y, (int) bounds.width,
@@ -138,6 +103,41 @@ public class ResourceContainer extends GuiElement {
 			}
 		}
 		GUI.self.setCursor(Cursor.DEFAULT_CURSOR);
+	}
+
+	@Override
+	public void onClick(MouseEvent e) {
+	}
+
+	@Override
+	public void onMouseDown(MouseEvent e) {
+		Point p = e.getPoint();
+		p.x -= bounds.x;
+		p.y -= bounds.y;
+		for (int i = 0; i < Game.getCurrentPlayer().getEngineInventory().size(); i++) {
+			if (engineRects[i].contains(p)) {
+				GUI.draggingRect = new Rect(engineRects[i].x + bounds.x,
+						engineRects[i].y + bounds.y, engineRects[i].width, engineRects[i].height);
+				GUI.draggingImage = engineImages
+						.get(Game.getCurrentPlayer().getEngineInventory().get(i).getType());
+				GUI.draggingResource = Game.getCurrentPlayer().getEngineInventory().get(i);
+			}
+		}
+		for (int i = 0; i < Game.getCurrentPlayer().getUpgradeInventory().size(); i++) {
+			if (upgradeRects[i].contains(p)) {
+				GUI.draggingRect = new Rect(upgradeRects[i].x + bounds.x,
+						upgradeRects[i].y + bounds.y, upgradeRects[i].width,
+						upgradeRects[i].height);
+				GUI.draggingImage = upgradeImages
+						.get(Game.getCurrentPlayer().getUpgradeInventory().get(i).getType());
+				GUI.draggingResource = Game.getCurrentPlayer().getUpgradeInventory().get(i);
+			}
+		}
+	}
+
+	@Override
+	public void onMouseUp(MouseEvent e) {
+
 	}
 
 //	public void addResource(Resource resource) {
