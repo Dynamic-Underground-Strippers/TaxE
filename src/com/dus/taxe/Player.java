@@ -8,14 +8,12 @@ public class Player {
 	private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
 	private ArrayList<Train> currentTrains = new ArrayList<Train>();
 	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
-	private Map map;
 	private int points;
 	private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
 
 
-	public Player(String name, Map map) {
+	public Player(String name) {
 		this.name = name;
-		this.map = map;
 		this.points = 0;
 		addTrains();
 		addGoal();
@@ -90,10 +88,10 @@ public class Player {
 
 	public Goal generateGoal() {
 		Goal g;
-		Node start = map.retrieveNode(new Random().nextInt(map.listOfNodes.size()));
-		Node end = map.retrieveNode(new Random().nextInt(map.listOfNodes.size()));
+		Node start = Game.currentMap.retrieveNode(new Random().nextInt(Game.currentMap.listOfNodes.size()));
+		Node end = Game.currentMap.retrieveNode(new Random().nextInt(Game.currentMap.listOfNodes.size()));
 		while (start.getId() == end.getId()){
-			end = map.retrieveNode(new Random().nextInt(map.listOfNodes.size()));
+			end = Game.currentMap.retrieveNode(new Random().nextInt(Game.currentMap.listOfNodes.size()));
 		}
 		g = new Goal(start,end);
 		return g;
