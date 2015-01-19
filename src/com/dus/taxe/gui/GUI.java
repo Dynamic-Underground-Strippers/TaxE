@@ -57,12 +57,22 @@ public class GUI extends JFrame {
 	private final ResourceContainer resourceContainer;
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
+	static Font baseFont;
 	private Font font;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
 	public GUI(Map map) {
 		self = this;
 		GUI.map = map;
+		try {
+			baseFont = Font.createFont(Font.TRUETYPE_FONT,
+					new FileInputStream(new File("src/font" + ".ttf")));
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		font = baseFont.deriveFont(16f);
 		//noinspection ConstantConditions
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
 		for (Node n : map.listOfNodes) {
@@ -79,6 +89,7 @@ public class GUI extends JFrame {
 		addGuiElement(new SolidColourRect(new Rect(0, 0, 110, Screen.HEIGHT), Color.white));
 		resourceContainer = new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640));
 		addGuiElement(resourceContainer);
+		addGuiElement(new GoalsContainer(new Rect(10, 10, 900, 200)));
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -196,14 +207,6 @@ public class GUI extends JFrame {
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		GraphicsConfiguration config = device.getDefaultConfiguration();
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(new File("src/font" + ".ttf"))).deriveFont(16f);
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void addGuiElement(GuiElement guiElement) {
