@@ -16,6 +16,8 @@ import com.dus.taxe.Upgrade.UpgradeType;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -31,6 +33,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -54,6 +59,7 @@ public class GUI extends JFrame {
 	static ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	static boolean settingRoute = false;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
+	private Font font;
 
 	public GUI(Map map) {
 		self = this;
@@ -187,6 +193,16 @@ public class GUI extends JFrame {
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		GraphicsConfiguration config = device.getDefaultConfiguration();
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
+		try {
+			System.out.println(new File("src/font.ttf").exists());
+			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src/font" +
+					".ttf"))).deriveFont(16f);
+//			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setPlayer(Player player) {
@@ -209,6 +225,7 @@ public class GUI extends JFrame {
 		lastFrame = System.currentTimeMillis();
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		int imageWidth = (int) ((float) mapImage.getWidth(this) *
