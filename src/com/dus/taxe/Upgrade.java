@@ -81,20 +81,6 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 		this.type = type;
 	}
 
-	public void use(Train train, Node node) {
-		if (this.type == UpgradeType.TELEPORT) {
-			/*if(node is in trains route) { //can teleport only on nodes contained in the route.
-                /*set current node to new node
-            }else{
-                //throw exception
-            }
-        }else{
-            //throw exception -- cannot be called for any upgrade that isn't teleport
-        */
-		}
-
-	}
-
 	public void use(Train train) {
 		if (train.hasUpgrade(type.name)) {
 			//throw exception - can't have 2 of an upgrade applied
@@ -103,22 +89,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 				case DOUBLE_SPEED:
 					train.setSpeed(train.getSpeed() * 2);
 					break;
-
-                /*case engineer:
-					if(train.hasUpgrade("engineer")){
-                        //Throw exception
-                    }
-                    train.setEngineer(true);
-                    break;*/
-				default:
-					//throw exception
-					//upgrade not found
-					break;
 			}
 
 		}
-
 	}
-
 
 }
