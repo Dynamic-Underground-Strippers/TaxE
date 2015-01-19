@@ -17,9 +17,7 @@ public class Player {
 		this.name = name;
 		this.map = map;
 		this.points = 0;
-		for (int i = 0; i < 3; i++) {
-			addTrain();
-		}
+		addTrains();
 		addGoal();
 		giveRandomEngine();
 		giveRandomUpgrade();
@@ -31,13 +29,12 @@ public class Player {
 		}
 	}
 
-	public void addPoints() {
-
+	public void addPoint() {
 		this.points += 1;
 	}
 
-	public void addTrain() {
-		if (this.trainSize() < 3) {
+	public void addTrains() {
+		while (currentTrains.size()<3){
 			currentTrains.add(new Train());
 		}
 	}
@@ -45,8 +42,8 @@ public class Player {
 	public void completeGoals() {
 		for (Goal g : currentGoals) {
 			for (Train t : currentTrains) {
-				if (t.getGoal().equals(g) && t.hasCompletedGoal()) {
-					addPoints();
+				if ((t.getGoal() !=null) && (t.getGoal().equals(g) && t.hasCompletedGoal())) {
+					addPoint();
 					currentGoals.remove(g);
 				}
 			}
@@ -191,7 +188,4 @@ public class Player {
 		upgradeInventory.remove(upgrade);
 	}
 
-	public int trainSize() {
-		return currentTrains.size();
-	}
 }
