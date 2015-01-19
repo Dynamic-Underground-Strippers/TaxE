@@ -39,14 +39,14 @@ public class Game {
 		Map m = new Map();
 		String s;
 		if ((s = JOptionPane.showInputDialog("Enter player 1's name:")) == null) {
-			currentPlayer = new Player("Player 1", m);
+			currentPlayer = new Player("Player 1");
 		} else {
-			currentPlayer = new Player(s, m);
+			currentPlayer = new Player(s);
 		}
 		if ((s = JOptionPane.showInputDialog("Enter player 2's name:")) == null) {
-			otherPlayer = new Player("Player 2", m);
+			otherPlayer = new Player("Player 2");
 		} else {
-			otherPlayer = new Player(s, m);
+			otherPlayer = new Player(s);
 		}
 		new GUI(m).setPlayer(currentPlayer);
 	}
