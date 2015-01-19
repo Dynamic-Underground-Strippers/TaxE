@@ -91,7 +91,18 @@ public class Train {
 
 	public void moveTrain() {
 		if (this.route!=null) {
-			this.route.updateDistanceAlongConnection();
+			boolean teleport = false;
+			for (int i =0; i<upgrades.size();i++){
+				if (upgrades.get(i).getName() == "Teleport"){
+					teleport = true;
+				}
+			}
+			if (teleport){
+				this.route.useTeleport();
+			}else{
+				this.route.updateDistanceAlongConnection();
+			}
+
 		}
 	}
 
