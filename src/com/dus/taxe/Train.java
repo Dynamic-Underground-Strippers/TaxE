@@ -8,8 +8,6 @@ import java.util.Collections;
 public class Train {
 
 	private Engine engine = new Engine(EngineType.HAND_CART);
-	private boolean engineer;
-	private boolean frozen;
 	private Goal goal;
 	private Route route;
 	private int speed;
@@ -92,10 +90,23 @@ public class Train {
 	}
 
 	public void moveTrain() {
-		this.route.updateDistanceAlongConnection();
+		if (this.route!=null) {
+			boolean teleport = false;
+			for (int i =0; i<upgrades.size();i++){
+				if (upgrades.get(i).getName() == "Teleport"){
+					teleport = true;
+				}
+			}
+			if (teleport){
+				this.route.useTeleport();
+			}else{
+				this.route.updateDistanceAlongConnection();
+			}
+
+		}
 	}
 
 	public void setFrozen(boolean frozen) {
-		this.frozen = frozen;
+		boolean frozen1 = frozen;
 	}
 }

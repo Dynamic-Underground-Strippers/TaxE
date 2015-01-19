@@ -24,7 +24,7 @@ public class Game {
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
 		currentPlayer.completeGoals();
-		if (currentPlayer.getPoints() >= maxPoints) {
+		if (turn==20) {
 			endGame();
 		}
 		swapPlayers();
@@ -52,7 +52,7 @@ public class Game {
 	}
 
 	public static void newTurn() {
-		currentPlayer.addGoal(currentMap.getRandomGoal());
+		currentPlayer.addGoal();
 		// Need to somehow add in GUI validation here
 		currentPlayer.giveRandomEngine();
 		currentPlayer.giveRandomUpgrade();
