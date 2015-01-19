@@ -7,16 +7,10 @@ import java.awt.event.MouseEvent;
 abstract class GuiElement {
 	Rect bounds = new Rect();
 	private boolean hovering = false;
-	private Rect srcBounds = new Rect();
 	private String tooltip;
 
 	GuiElement(Rect bounds) {
-		this(bounds, bounds);
-	}
-
-	private GuiElement(Rect bounds, Rect srcBounds) {
 		this.bounds = bounds;
-		this.srcBounds = srcBounds;
 	}
 
 	public abstract void draw(Graphics2D graphics);
@@ -45,7 +39,7 @@ abstract class GuiElement {
 	}
 
 	boolean isAnimationRunning() {
-		return bounds.animationRunning || srcBounds.animationRunning;
+		return bounds.animationRunning;
 	}
 
 	protected abstract void mouseMoved(MouseEvent e);
@@ -71,14 +65,7 @@ abstract class GuiElement {
 		bounds.animationSpeed = speed;
 	}
 
-	public void slerpSrcBounds(Rect targetBounds, float speed) {
-		srcBounds.animationRunning = true;
-		srcBounds.animationTargetBounds = targetBounds;
-		srcBounds.animationSpeed = speed;
-	}
-
 	public final void update() {
 		bounds.update();
-		srcBounds.update();
 	}
 }
