@@ -19,7 +19,11 @@ public abstract class GuiElement {
 		this.srcBounds = srcBounds;
 	}
 
-	public abstract void click(MouseEvent e);
+	public abstract void onClick(MouseEvent e);
+
+	public abstract void onMouseDown(MouseEvent e);
+
+	public abstract void onMouseUp(MouseEvent e);
 
 	public abstract void draw(Graphics2D graphics);
 

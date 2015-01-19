@@ -2,14 +2,13 @@ package com.dus.taxe.gui;
 
 import com.dus.taxe.Connection;
 import com.dus.taxe.Engine;
-import com.dus.taxe.Engine.EngineType;
 import com.dus.taxe.Game;
 import com.dus.taxe.Goal;
 import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
+import com.dus.taxe.Resource;
 import com.dus.taxe.Upgrade;
-import com.dus.taxe.Upgrade.UpgradeType;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -49,7 +48,7 @@ public class GUI extends JFrame {
 	ResourceContainer resourceContainer;
 	private static final float X_SCALE = Screen.WIDTH / 1920f;
 	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
-	public static long frameTime = 0;
+	static long frameTime = 0;
 	private static long lastFrame = 0;
 	private BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
@@ -58,6 +57,9 @@ public class GUI extends JFrame {
 	static boolean settingRoute = false;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 	private Font font;
+	static Rect draggingRect;
+	static Image draggingImage;
+	static Resource draggingResource;
 
 	public GUI(Map map) {
 		self = this;
@@ -76,13 +78,6 @@ public class GUI extends JFrame {
 		}
 		addGuiElement(new SolidColourRect(new Rect(0, 0, 110, Screen.HEIGHT), Color.white));
 		resourceContainer = new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640));
-		resourceContainer.addResource(new Engine(EngineType.HAND_CART));
-		resourceContainer.addResource(new Engine(EngineType.STEAM));
-		resourceContainer.addResource(new Engine(EngineType.ELECTRIC));
-		resourceContainer.addResource(new Upgrade(UpgradeType.DOUBLE_SPEED));
-		resourceContainer.addResource(new Upgrade(UpgradeType.TELEPORT));
-		resourceContainer.addResource(new Upgrade(UpgradeType.DOUBLE_SPEED));
-		resourceContainer.addResource(new Upgrade(UpgradeType.TELEPORT));
 		addGuiElement(resourceContainer);
 		addKeyListener(new KeyListener() {
 			@Override
@@ -124,7 +119,8 @@ public class GUI extends JFrame {
 				Collections.reverse(guiElements);
 				for (GuiElement guiElement : guiElements) {
 					if (guiElement.bounds.contains(e.getPoint())) {
-						guiElement.click(e);
+						guiElement.onClick(e);
+						break;
 					}
 				}
 				Collections.reverse(guiElements);
@@ -132,12 +128,26 @@ public class GUI extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-
+				Collections.reverse(guiElements);
+				for (GuiElement guiElement : guiElements) {
+					if (guiElement.bounds.contains(e.getPoint())) {
+						guiElement.onMouseDown(e);
+						break;
+					}
+				}
+				Collections.reverse(guiElements);
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-
+				Collections.reverse(guiElements);
+				for (GuiElement guiElement : guiElements) {
+					if (guiElement.bounds.contains(e.getPoint())) {
+						guiElement.onMouseUp(e);
+						break;
+					}
+				}
+				Collections.reverse(guiElements);
 			}
 
 			@Override
@@ -153,7 +163,10 @@ public class GUI extends JFrame {
 		addMouseMotionListener(new MouseMotionListener() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-
+				if (draggingRect != null && draggingImage != null) {
+					draggingRect.x = e.getX() - draggingRect.width / 2f;
+					draggingRect.y = e.getY() - draggingRect.height / 2f;
+				}
 			}
 
 			@Override
@@ -181,10 +194,8 @@ public class GUI extends JFrame {
 		GraphicsConfiguration config = device.getDefaultConfiguration();
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
 		try {
-			System.out.println(new File("src/font.ttf").exists());
 			font = Font.createFont(Font.TRUETYPE_FONT,
 					new FileInputStream(new File("src/font" + ".ttf"))).deriveFont(16f);
-//			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -232,25 +243,18 @@ public class GUI extends JFrame {
 					}
 				}
 			}
-//			for (Node n : map.listOfNodes) {
-//				g.drawImage(stationImage, (int) (n.getLocation().getX() * getWidth()) - 15,
-//						(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30, GUI.self);
-//				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
-//					if (goal.getStart().equals(n)) {
-//						g.setColor(Color.green);
-//						g.setStroke(solidStroke);
-//						g.drawOval((int) (n.getLocation().getX() * getWidth()) - 15,
-//								(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30);
-//					}
-//				}
-//			}
 		}
 		for (GuiElement guiElement : guiElements) {
 			guiElement.update();
 			guiElement.draw(g);
 		}
-		for (GuiElement guiElement : guiElements) {
-			guiElement.drawTooltip(g);
+		if (draggingRect != null && draggingImage != null) {
+			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
+					(int) draggingRect.width, (int) draggingRect.height, this);
+		} else {
+			for (GuiElement guiElement : guiElements) {
+				guiElement.drawTooltip(g);
+			}
 		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();

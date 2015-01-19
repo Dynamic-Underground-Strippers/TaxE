@@ -19,8 +19,18 @@ public class ButtonElement extends GuiElement {
 	}
 
 	@Override
-	public void click(MouseEvent e) {
+	public void onClick(MouseEvent e) {
 		if (action != null) action.run();
+	}
+
+	@Override
+	public void onMouseDown(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onMouseUp(MouseEvent e) {
+
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package com.dus.taxe.gui;
 
+import com.dus.taxe.Engine;
 import com.dus.taxe.Train;
+import com.dus.taxe.Upgrade;
 
 import java.awt.Cursor;
 import java.awt.Graphics2D;
@@ -20,7 +22,7 @@ public class TrainGoalElement extends GuiElement {
 	}
 
 	@Override
-	public void click(MouseEvent e) {
+	public void onClick(MouseEvent e) {
 		if (!isAnimationRunning()) {
 			if (bounds.x == -490) {
 				slerpBounds(new Rect(0, bounds.y, bounds.width, bounds.height), 0.075f);
@@ -28,6 +30,26 @@ public class TrainGoalElement extends GuiElement {
 				slerpBounds(new Rect(-490, bounds.y, bounds.width, bounds.height), 0.075f);
 			}
 		}
+	}
+
+	@Override
+	public void onMouseDown(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onMouseUp(MouseEvent e) {
+		System.out.println(train.getEngine().getType());
+		if (GUI.draggingRect != null && GUI.draggingImage != null && GUI.draggingResource != null) {
+			if (GUI.draggingResource instanceof Engine) {
+				train.setEngine((Engine) GUI.draggingResource);
+			}
+			if (GUI.draggingResource instanceof Upgrade) {
+				train.addUpgrade((Upgrade) GUI.draggingResource);
+			}
+		}
+		System.out.println(train.getEngine().getType());
+		GUI.self.repaint();
 	}
 
 	@Override

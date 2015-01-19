@@ -32,7 +32,17 @@ public class NodeElement extends GuiElement {
 	}
 
 	@Override
-	public void click(MouseEvent e) {
+	public void onClick(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onMouseDown(MouseEvent e) {
+
+	}
+
+	@Override
+	public void onMouseUp(MouseEvent e) {
 
 	}
 

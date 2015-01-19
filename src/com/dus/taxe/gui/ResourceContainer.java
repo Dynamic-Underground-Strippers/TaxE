@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
@@ -61,7 +62,36 @@ public class ResourceContainer extends GuiElement {
 	}
 
 	@Override
-	public void click(MouseEvent e) {
+	public void onClick(MouseEvent e) {
+	}
+
+	@Override
+	public void onMouseDown(MouseEvent e) {
+		Point p = e.getPoint();
+		p.x -= bounds.x;
+		p.y -= bounds.y;
+		for (int i = 0; i < engineRects.length; i++) {
+			if (engines[i] != null && engineRects[i].contains(p)) {
+				GUI.draggingRect = new Rect(engineRects[i].x + bounds.x,
+						engineRects[i].y + bounds.y, engineRects[i].width, engineRects[i].height);
+				GUI.draggingImage = engineImages.get(engines[i].getType());
+				GUI.draggingResource = engines[i];
+			}
+		}
+		for (int i = 0; i < upgradeRects.length; i++) {
+			if (upgrades[i] != null && upgradeRects[i].contains(p)) {
+				GUI.draggingRect = new Rect(upgradeRects[i].x + bounds.x,
+						upgradeRects[i].y + bounds.y, upgradeRects[i].width,
+						upgradeRects[i].height);
+				GUI.draggingImage = upgradeImages.get(upgrades[i].getType());
+				GUI.draggingResource = upgrades[i];
+			}
+		}
+	}
+
+	@Override
+	public void onMouseUp(MouseEvent e) {
+
 	}
 
 	@Override
@@ -87,14 +117,17 @@ public class ResourceContainer extends GuiElement {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		Point p = e.getPoint();
+		p.x -= bounds.x;
+		p.y -= bounds.y;
 		for (Rect r : engineRects) {
-			if (r.contains(e.getPoint())) {
+			if (r.contains(p)) {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
 				return;
 			}
 		}
 		for (Rect r : upgradeRects) {
-			if (r.contains(e.getPoint())) {
+			if (r.contains(p)) {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
 				return;
 			}
