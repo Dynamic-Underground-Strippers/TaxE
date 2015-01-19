@@ -18,7 +18,6 @@ public class GUI extends JFrame {
     private static final float Y_SCALE = Screen.HEIGHT / 1080f;
     private static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
     public static GUI self;
-    static Font baseFont;
     static Image draggingImage;
     static Rect draggingRect;
     static Resource draggingResource;
@@ -31,6 +30,7 @@ public class GUI extends JFrame {
     private final Image mapImage;
     private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
             BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
+    static Font baseFont;
     private Font font;
     private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
@@ -71,6 +71,9 @@ public class GUI extends JFrame {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     System.exit(0);
+                } else if (e.getKeyCode() == KeyEvent.VK_E) {
+                    Game.endTurn();
+                    Game.newTurn();
                 }
             }
 
@@ -81,22 +84,20 @@ public class GUI extends JFrame {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                if (settingRoute) {
-//                    for (Node n : GUI.map.listOfNodes) {
-//                        if (Point.distance(e.getX(), e.getY(), n.getLocation().getX() * getWidth(),
-//                                n.getLocation().getY() * getHeight()) < 10) {
-//                            if (tempRouteNodes.isEmpty()) {
-//                                for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
-//                                    if (goal.getStart().equals(n)) {
-//                                        tempRouteNodes.add(n);
-//                                    }
-//                                }
-//                            } else {
-//                                Connection c;
-//                                if ((c = GUI.map.connections[n.getId()][n.getId()]) != null) {
+//                for (Node n : GUI.map.listOfNodes) {
+//                    if (Point.distance(e.getX(), e.getY(), n.getLocation().getX() * getWidth(),
+//                            n.getLocation().getY() * getHeight()) < 10) {
+//                        if (tempRouteNodes.isEmpty()) {
+//                            for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
+//                                if (goal.getStart().equals(n)) {
 //                                    tempRouteNodes.add(n);
-//                                    tempRouteConnections.add(c);
 //                                }
+//                            }
+//                        } else {
+//                            Connection c;
+//                            if ((c = GUI.map.connections[n.getId()][n.getId()]) != null) {
+//                                tempRouteNodes.add(n);
+//                                tempRouteConnections.add(c);
 //                            }
 //                        }
 //                    }
@@ -235,11 +236,5 @@ public class GUI extends JFrame {
         for (int i = 0; i < player.getCurrentTrains().size(); i++) {
             trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
         }
-//		for (Engine e : player.getEngineInventory()) {
-//			resourceContainer.addResource(e);
-//		}
-//		for (Upgrade u : player.getUpgradeInventory()) {
-//			resourceContainer.addResource(u);
-//		}
     }
 }
