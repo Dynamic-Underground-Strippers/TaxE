@@ -7,6 +7,7 @@ import com.dus.taxe.Game;
 import com.dus.taxe.Goal;
 import com.dus.taxe.Map;
 import com.dus.taxe.Node;
+import com.dus.taxe.Player;
 import com.dus.taxe.Station;
 import com.dus.taxe.Train;
 import com.dus.taxe.Upgrade;
@@ -51,13 +52,15 @@ public class GUI extends JFrame {
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
 	static ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
 	static ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
+	static boolean settingRoute = false;
+	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
 	public GUI(Map map) {
 		self = this;
 		this.map = map;
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
 		for (Node n : map.listOfNodes) {
-				addGuiElement(new NodeElement(n));
+			addGuiElement(new NodeElement(n));
 		}
 		Train[] trains = {new Train(), new Train(), new Train()};
 		trains[0].setEngine(new Engine(Engine.EngineType.STEAM));
@@ -69,7 +72,7 @@ public class GUI extends JFrame {
 								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
 						new Goal(300, new Station(0, "Place 1", new com.dus.taxe.Point(0, 0)),
 								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0)))};
-		TrainGoalElement[] trainGoalElements = {
+		trainGoalElements = new TrainGoalElement[]{
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 620, 900, 150)),
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 413, 900, 150)),
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 207, 900, 150))};
@@ -184,6 +187,19 @@ public class GUI extends JFrame {
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		GraphicsConfiguration config = device.getDefaultConfiguration();
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
+	}
+
+	public void setPlayer(Player player) {
+		resourceContainer.removeAllResources();
+		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
+			trainGoalElements[i].setGoal(player.getCurrentGoals().get(i));
+		}
+		for (Engine e : player.getEngineInventory()) {
+			resourceContainer.addResource(e);
+		}
+		for (Upgrade u : player.getUpgradeInventory()) {
+			resourceContainer.addResource(u);
+		}
 	}
 
 	BufferedImage image;

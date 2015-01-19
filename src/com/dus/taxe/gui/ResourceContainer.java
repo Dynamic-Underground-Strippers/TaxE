@@ -119,4 +119,9 @@ public class ResourceContainer extends GuiElement {
 			}
 		}
 	}
+
+	public void removeAllResources() {
+		engines = new Engine[3];
+		upgrades = new Upgrade[4];
+	}
 }

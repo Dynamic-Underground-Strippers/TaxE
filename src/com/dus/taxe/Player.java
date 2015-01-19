@@ -192,4 +192,12 @@ public class Player {
 			}
 		}
 	}
+
+	public ArrayList<Engine> getEngineInventory() {
+		return engineInventory;
+	}
+
+	public ArrayList<Upgrade> getUpgradeInventory() {
+		return upgradeInventory;
+	}
 }

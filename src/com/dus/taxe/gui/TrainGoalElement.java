@@ -13,9 +13,19 @@ import javax.imageio.ImageIO;
 public class TrainGoalElement extends GuiElement {
 	private Goal goal;
 	private BufferedImage image;
+	private ButtonElement editRoute;
 
 	public TrainGoalElement(Rect bounds) {
 		super(bounds);
+		editRoute = new ButtonElement(new Rect(bounds.x + 0.9f * bounds.width, bounds.y,
+				(bounds.height / 3f) * (600f / 218f), bounds.height / 3f), "edit.png", new Runnable
+				() {
+			public void run() {
+				GUI.settingRoute = true;
+
+			}
+		});
+		GUI.self.addGuiElement(editRoute);
 	}
 
 	@Override
@@ -32,8 +42,6 @@ public class TrainGoalElement extends GuiElement {
 	@Override
 	public void draw(Graphics2D graphics) {
 		if (image != null) {
-//            graphics.drawImage(image.getSubimage((int) srcBounds.x, (int) srcBounds.y, (int) srcBounds.width,
-//                    (int) srcBounds.height), (int) bounds.x, (int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
 			graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
 					(int) bounds.height, GUI.self);
 		}
@@ -56,21 +64,21 @@ public class TrainGoalElement extends GuiElement {
 			switch (goal.getCurrentTrain().getEngine().getType()) {
 				case HAND_CART:
 					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+						image = ImageIO.read(getClass().getResourceAsStream("/handcart_side.png"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 					break;
 				case STEAM:
 					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+						image = ImageIO.read(getClass().getResourceAsStream("/steam_side.png"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 					break;
 				case DIESEL:
 					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
+						image = ImageIO.read(getClass().getResourceAsStream("/diesel_side.png"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

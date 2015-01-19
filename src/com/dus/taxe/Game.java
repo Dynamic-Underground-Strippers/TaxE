@@ -33,7 +33,7 @@ public class Game {
 		} else {
 			otherPlayer = new Player(s, m);
 		}
-		new GUI(m);
+		new GUI(m).setPlayer(currentPlayer);
 	}
 
 	public static void endGame() {
@@ -45,6 +45,7 @@ public class Game {
 		temp = currentPlayer;
 		currentPlayer = otherPlayer;
 		otherPlayer = temp;
+		GUI.self.setPlayer(currentPlayer);
 	}
 
 	public static void newTurn() {
