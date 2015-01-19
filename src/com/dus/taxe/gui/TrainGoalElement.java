@@ -1,24 +1,64 @@
 package com.dus.taxe.gui;
 
 import com.dus.taxe.Engine;
+import com.dus.taxe.Engine.EngineType;
+import com.dus.taxe.Game;
 import com.dus.taxe.Train;
 import com.dus.taxe.Upgrade;
 
 import java.awt.Cursor;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 public class TrainGoalElement extends GuiElement {
-	private BufferedImage image;
 	private ButtonElement editRoute;
 	private Train train;
+	private static HashMap<EngineType, Image> images;
 
 	public TrainGoalElement(Rect bounds) {
 		super(bounds);
+		if (images == null) {
+			images = new HashMap<EngineType, Image>();
+			try {
+				images.put(EngineType.HAND_CART,
+						ImageIO.read(getClass().getResourceAsStream("/handcart_side.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				images.put(EngineType.STEAM,
+						ImageIO.read(getClass().getResourceAsStream("/steam_side.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				images.put(EngineType.DIESEL,
+						ImageIO.read(getClass().getResourceAsStream("/diesel_side.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				images.put(EngineType.ELECTRIC,
+						ImageIO.read(getClass().getResourceAsStream("/electric_side.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				images.put(EngineType.ROCKET,
+						ImageIO.read(getClass().getResourceAsStream("/electric_side.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public Train getTrain() {
+		return train;
 	}
 
 	@Override
@@ -39,16 +79,22 @@ public class TrainGoalElement extends GuiElement {
 
 	@Override
 	public void onMouseUp(MouseEvent e) {
-		System.out.println(train.getEngine().getType());
 		if (GUI.draggingRect != null && GUI.draggingImage != null && GUI.draggingResource != null) {
 			if (GUI.draggingResource instanceof Engine) {
 				train.setEngine((Engine) GUI.draggingResource);
+				Game.getCurrentPlayer().removeEngine((Engine) GUI.draggingResource);
+				GUI.draggingRect = null;
+				GUI.draggingImage = null;
+				GUI.draggingResource = null;
 			}
 			if (GUI.draggingResource instanceof Upgrade) {
 				train.addUpgrade((Upgrade) GUI.draggingResource);
+				Game.getCurrentPlayer().removeUpgrade((Upgrade) GUI.draggingResource);
+				GUI.draggingRect = null;
+				GUI.draggingImage = null;
+				GUI.draggingResource = null;
 			}
 		}
-		System.out.println(train.getEngine().getType());
 		GUI.self.repaint();
 	}
 
@@ -56,9 +102,9 @@ public class TrainGoalElement extends GuiElement {
 	public void draw(Graphics2D graphics) {
 		editRoute.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
 				bounds.height / 3f);
-		if (image != null) {
-			graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
-					(int) bounds.height, GUI.self);
+		if (train != null && images.get(train.getEngine().getType()) != null) {
+			graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
+					(int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
 		}
 	}
 
@@ -69,47 +115,6 @@ public class TrainGoalElement extends GuiElement {
 
 	public void setTrain(Train train) {
 		this.train = train;
-		if (train == null) {
-			image = null;
-		} else {
-			switch (train.getEngine().getType()) {
-				case HAND_CART:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/handcart_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case STEAM:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/steam_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case DIESEL:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/diesel_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case ELECTRIC:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-				case ROCKET:
-					try {
-						image = ImageIO.read(getClass().getResourceAsStream("/electric_side.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					break;
-			}
-		}
 	}
 
 	void setEditRouteButton() {

@@ -208,4 +208,12 @@ public class Player {
 	public ArrayList<Train> getCurrentTrains() {
 		return currentTrains;
 	}
+
+	public void removeEngine(Engine engine) {
+		engineInventory.remove(engine);
+	}
+
+	public void removeUpgrade(Upgrade upgrade) {
+		upgradeInventory.remove(upgrade);
+	}
 }

@@ -148,6 +148,9 @@ public class GUI extends JFrame {
 					}
 				}
 				Collections.reverse(guiElements);
+				GUI.draggingRect = null;
+				GUI.draggingImage = null;
+				GUI.draggingResource = null;
 			}
 
 			@Override
