@@ -4,17 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
-public abstract class GuiElement {
+abstract class GuiElement {
 	Rect bounds = new Rect();
-	Rect srcBounds = new Rect();
+	private Rect srcBounds = new Rect();
 	private String tooltip;
 	private boolean hovering = false;
 
-	public GuiElement(Rect bounds) {
+	GuiElement(Rect bounds) {
 		this(bounds, bounds);
 	}
 
-	public GuiElement(Rect bounds, Rect srcBounds) {
+	private GuiElement(Rect bounds, Rect srcBounds) {
 		this.bounds = bounds;
 		this.srcBounds = srcBounds;
 	}
@@ -46,7 +46,7 @@ public abstract class GuiElement {
 		return tooltip;
 	}
 
-	public abstract void mouseMoved(MouseEvent e);
+	protected abstract void mouseMoved(MouseEvent e);
 
 	public void mouseMovedExternal(MouseEvent e) {
 		hovering = false;
@@ -57,11 +57,11 @@ public abstract class GuiElement {
 		mouseMoved(e);
 	}
 
-	public void setTooltip(String tooltip) {
+	void setTooltip(String tooltip) {
 		this.tooltip = tooltip;
 	}
 
-	public void slerpBounds(Rect targetBounds, float speed) {
+	void slerpBounds(Rect targetBounds, float speed) {
 		bounds.animationRunning = true;
 		bounds.animationTargetBounds = targetBounds;
 		bounds.animationSpeed = speed;
@@ -73,7 +73,7 @@ public abstract class GuiElement {
 		srcBounds.animationSpeed = speed;
 	}
 
-	public boolean isAnimationRunning() {
+	boolean isAnimationRunning() {
 		return bounds.animationRunning || srcBounds.animationRunning;
 	}
 

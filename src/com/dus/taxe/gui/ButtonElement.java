@@ -14,6 +14,7 @@ public class ButtonElement extends GuiElement {
 		super(bounds);
 		this.action = action;
 		if (imageName != null) {
+			//noinspection ConstantConditions
 			image = new ImageIcon(getClass().getClassLoader().getResource(imageName)).getImage();
 		}
 	}

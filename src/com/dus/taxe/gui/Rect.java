@@ -2,7 +2,7 @@ package com.dus.taxe.gui;
 
 import java.awt.Point;
 
-public class Rect {
+class Rect {
 	public float x;
 	public float y;
 	public float width;
@@ -22,7 +22,7 @@ public class Rect {
 		this.height = height;
 	}
 
-	public boolean contains(float x, float y) {
+	boolean contains(float x, float y) {
 		return x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height;
 	}
 

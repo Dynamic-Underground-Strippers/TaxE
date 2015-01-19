@@ -1,14 +1,12 @@
 package com.dus.taxe.gui;
 
 import com.dus.taxe.Connection;
-import com.dus.taxe.Engine;
 import com.dus.taxe.Game;
 import com.dus.taxe.Goal;
 import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
 import com.dus.taxe.Resource;
-import com.dus.taxe.Upgrade;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -42,18 +40,18 @@ import javax.swing.WindowConstants;
 
 public class GUI extends JFrame {
 	public static GUI self;
-	Image mapImage;
-	ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
-	public static Map map;
-	ResourceContainer resourceContainer;
+	private final Image mapImage;
+	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
+	private static Map map;
+	private final ResourceContainer resourceContainer;
 	private static final float X_SCALE = Screen.WIDTH / 1920f;
 	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
 	static long frameTime = 0;
 	private static long lastFrame = 0;
-	private BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
+	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
-	static ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
-	static ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
+	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
+	private static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	static boolean settingRoute = false;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 	private Font font;
@@ -63,7 +61,8 @@ public class GUI extends JFrame {
 
 	public GUI(Map map) {
 		self = this;
-		this.map = map;
+		GUI.map = map;
+		//noinspection ConstantConditions
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
 		for (Node n : map.listOfNodes) {
 			addGuiElement(new NodeElement(n));
@@ -98,7 +97,7 @@ public class GUI extends JFrame {
 		addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (Node n : GUI.this.map.listOfNodes) {
+				for (Node n : GUI.map.listOfNodes) {
 					if (Point.distance(e.getX(), e.getY(), n.getLocation().getX() * getWidth(),
 							n.getLocation().getY() * getHeight()) < 10) {
 						if (tempRouteNodes.isEmpty()) {
@@ -109,7 +108,7 @@ public class GUI extends JFrame {
 							}
 						} else {
 							Connection c;
-							if ((c = GUI.this.map.connections[n.getId()][n.getId()]) != null) {
+							if ((c = GUI.map.connections[n.getId()][n.getId()]) != null) {
 								tempRouteNodes.add(n);
 								tempRouteConnections.add(c);
 							}
@@ -207,19 +206,19 @@ public class GUI extends JFrame {
 	}
 
 	public void setPlayer(Player player) {
-		resourceContainer.removeAllResources();
+//		resourceContainer.removeAllResources();
 		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
 			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
 		}
-		for (Engine e : player.getEngineInventory()) {
-			resourceContainer.addResource(e);
-		}
-		for (Upgrade u : player.getUpgradeInventory()) {
-			resourceContainer.addResource(u);
-		}
+//		for (Engine e : player.getEngineInventory()) {
+//			resourceContainer.addResource(e);
+//		}
+//		for (Upgrade u : player.getUpgradeInventory()) {
+//			resourceContainer.addResource(u);
+//		}
 	}
 
-	BufferedImage image;
+	private final BufferedImage image;
 
 	public void paint(Graphics graphics) {
 		if (image == null) return;

@@ -14,10 +14,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 
 public class NodeElement extends GuiElement {
-	private Node n;
+	private final Node n;
 	private static Image stationImage;
-	private BasicStroke solidStroke = new BasicStroke(3);
-	private BasicStroke dottedStroke = new BasicStroke(3, BasicStroke.CAP_BUTT,
+	private final BasicStroke solidStroke = new BasicStroke(3);
+	private final BasicStroke dottedStroke = new BasicStroke(3, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{3}, 0);
 
 	public NodeElement(Node n) {
@@ -25,6 +25,7 @@ public class NodeElement extends GuiElement {
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30));
 		this.n = n;
 		if (stationImage == null) {
+			//noinspection ConstantConditions
 			stationImage = new ImageIcon(getClass().getClassLoader().getResource("StationRed.png"))
 					.getImage();
 		}
