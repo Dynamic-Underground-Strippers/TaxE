@@ -16,7 +16,6 @@ public class ButtonElement extends GuiElement {
 		if (imageName != null) {
 			image = new ImageIcon(getClass().getClassLoader().getResource(imageName)).getImage();
 		}
-		System.out.println(bounds.width + ", " + bounds.height);
 	}
 
 	@Override

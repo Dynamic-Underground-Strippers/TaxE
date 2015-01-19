@@ -5,7 +5,6 @@ public class Goal {
 	private Node end;
 	private int points;
 	private Node start;
-	private Train currentTrain;
 
 	public Goal(int points, Node start, Node end) {
 		this.points = points;
@@ -13,19 +12,10 @@ public class Goal {
 		this.end = end;
 		this.description =
 				"Move a train from " + this.start.getName() + " to " + this.end.getName();
-		this.currentTrain = null;
 	}
 
 	public String getDescription() {
 		return description;
-	}
-
-	public void setCurrentTrain(Train currentTrain) {
-		this.currentTrain = currentTrain;
-	}
-
-	public Train getCurrentTrain() {
-		return this.currentTrain;
 	}
 
 	public Node getEnd() {
@@ -40,8 +30,13 @@ public class Goal {
 		return start;
 	}
 
-	public boolean isComplete() {
-		return currentTrain.getRoute().isComplete();
+	public boolean equals(Object other) {
+		if (other instanceof Goal) {
+			Goal g = (Goal) other;
+			return start.equals(g.start) && end.equals(g.end) && points == g.points;
+		} else {
+			return false;
+		}
 	}
 }
 

@@ -32,10 +32,9 @@ public abstract class GuiElement {
 					graphics.getFontMetrics().stringWidth(tooltip) + 20,
 					(int) (graphics.getFontMetrics().getHeight() * 1.2f));
 			graphics.setColor(Color.white);
-//			graphics.drawString(tooltip, bounds.x + bounds.width + 10 + 10,
-//					bounds.y + graphics.getFontMetrics().getHeight() * 1.1f);
-			graphics.drawString(tooltip, bounds.x + bounds.width + 10 + 10,
-					bounds.y + graphics.getFontMetrics().getHeight() * 1.3f);
+			graphics.drawString(tooltip, bounds.x + bounds.width + 20,
+					bounds.y + (bounds.height / 2f) +
+							(graphics.getFontMetrics().getHeight() * 0.3f));
 		}
 	}
 

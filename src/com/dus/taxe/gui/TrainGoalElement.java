@@ -1,6 +1,6 @@
 package com.dus.taxe.gui;
 
-import com.dus.taxe.Goal;
+import com.dus.taxe.Train;
 
 import java.awt.Cursor;
 import java.awt.Graphics2D;
@@ -11,21 +11,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class TrainGoalElement extends GuiElement {
-	private Goal goal;
 	private BufferedImage image;
 	private ButtonElement editRoute;
+	private Train train;
 
 	public TrainGoalElement(Rect bounds) {
 		super(bounds);
-		editRoute = new ButtonElement(new Rect(bounds.x + 0.9f * bounds.width, bounds.y,
-				(bounds.height / 3f) * (600f / 218f), bounds.height / 3f), "edit.png", new Runnable
-				() {
-			public void run() {
-				GUI.settingRoute = true;
-
-			}
-		});
-		GUI.self.addGuiElement(editRoute);
 	}
 
 	@Override
@@ -41,6 +32,8 @@ public class TrainGoalElement extends GuiElement {
 
 	@Override
 	public void draw(Graphics2D graphics) {
+		editRoute.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
+				bounds.height / 3f);
 		if (image != null) {
 			graphics.drawImage(image, (int) bounds.x, (int) bounds.y, (int) bounds.width,
 					(int) bounds.height, GUI.self);
@@ -52,16 +45,12 @@ public class TrainGoalElement extends GuiElement {
 		GUI.self.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
-	public Goal getGoal() {
-		return goal;
-	}
-
-	public void setGoal(Goal goal) {
-		this.goal = goal;
-		if (goal == null || goal.getCurrentTrain() == null) {
+	public void setTrain(Train train) {
+		this.train = train;
+		if (train == null) {
 			image = null;
 		} else {
-			switch (goal.getCurrentTrain().getEngine().getType()) {
+			switch (train.getEngine().getType()) {
 				case HAND_CART:
 					try {
 						image = ImageIO.read(getClass().getResourceAsStream("/handcart_side.png"));
@@ -99,5 +88,18 @@ public class TrainGoalElement extends GuiElement {
 					break;
 			}
 		}
+	}
+
+	void setEditRouteButton() {
+		editRoute = new ButtonElement(
+				new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
+						bounds.height / 3f), "edit.png", new Runnable() {
+			public void run() {
+				GUI.settingRoute = true;
+
+			}
+		});
+		editRoute.setTooltip("Set Route");
+		GUI.self.addGuiElement(editRoute);
 	}
 }

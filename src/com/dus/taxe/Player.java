@@ -21,7 +21,16 @@ public class Player {
 		this.name = name;
 		this.map = map;
 		this.points = 0;
+		for (int i = 0; i < 3; i++) {
+			addTrain();
+		}
 		generateGoals();
+		for (int i = 0; i < 3; i++) {
+			giveRandomEngine();
+		}
+		for (int i = 0; i < 4; i++) {
+			giveRandomUpgrade();
+		}
 	}
 
 	public ArrayList<Goal> getCurrentGoals() {
@@ -97,23 +106,16 @@ public class Player {
 		}
 	}
 
-
-	public int randomUnstartedGoal() {
-		for (int i = 2; i >= 0; i--) {
-			if (currentGoals.get(i).getCurrentTrain() != null) {
-				return i;
+	public Goal discardUnstartedGoal() {
+		ArrayList<Goal> discardable = new ArrayList<Goal>();
+		for (Goal g : currentGoals) {
+			for (Train t : currentTrains) {
+				if (!g.equals(t.getGoal())) {
+					discardable.add(g);
+				}
 			}
 		}
-		return -1;
-	}
-
-	public Goal discardUnstartedGoal() {
-		int randomIndex = randomUnstartedGoal();
-		Goal discardedGoal = null;
-		if (randomIndex != -1) {
-			discardedGoal = currentGoals.get(randomIndex);
-			currentGoals.remove(randomIndex);
-		}
+		Goal discardedGoal = discardable.get((int) (Math.random() * discardable.size()));
 		return discardedGoal;
 	}
 
@@ -173,10 +175,12 @@ public class Player {
 	}
 
 	public void completeGoals() {
-		for (Goal goal : currentGoals) {
-			if (goal.isComplete()) {
-				addPoints(goal.getPoints());
-				currentGoals.remove(goal);
+		for (Goal g : currentGoals) {
+			for (Train t : currentTrains) {
+				if (t.getGoal().equals(g) && t.hasCompletedGoal()) {
+					addPoints(g.getPoints());
+					currentGoals.remove(g);
+				}
 			}
 		}
 	}
@@ -186,7 +190,7 @@ public class Player {
 
 	public void generateGoals() {
 		Goal g;
-		while(!hasMaxGoals()) {
+		while (!hasMaxGoals()) {
 			if (!currentGoals.contains(g = map.getRandomGoal())) {
 				currentGoals.add(g);
 			}
@@ -199,5 +203,9 @@ public class Player {
 
 	public ArrayList<Upgrade> getUpgradeInventory() {
 		return upgradeInventory;
+	}
+
+	public ArrayList<Train> getCurrentTrains() {
+		return currentTrains;
 	}
 }

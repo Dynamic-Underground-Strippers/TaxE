@@ -8,8 +8,6 @@ import com.dus.taxe.Goal;
 import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
-import com.dus.taxe.Station;
-import com.dus.taxe.Train;
 import com.dus.taxe.Upgrade;
 import com.dus.taxe.Upgrade.UpgradeType;
 
@@ -68,24 +66,13 @@ public class GUI extends JFrame {
 		for (Node n : map.listOfNodes) {
 			addGuiElement(new NodeElement(n));
 		}
-		Train[] trains = {new Train(), new Train(), new Train()};
-		trains[0].setEngine(new Engine(Engine.EngineType.STEAM));
-		trains[1].setEngine(new Engine(Engine.EngineType.DIESEL));
-		trains[2].setEngine(new Engine(Engine.EngineType.ELECTRIC));
-		Goal[] goals = {new Goal(100, this.map.retrieveNode(0),
-				new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
-						new Goal(200, new Station(0, "Place 1", new com.dus.taxe.Point(0, 0)),
-								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0))),
-						new Goal(300, new Station(0, "Place 1", new com.dus.taxe.Point(0, 0)),
-								new Station(0, "Place 2", new com.dus.taxe.Point(0, 0)))};
 		trainGoalElements = new TrainGoalElement[]{
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 620, 900, 150)),
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 413, 900, 150)),
 				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 207, 900, 150))};
 		for (int i = 0; i < 3; i++) {
-			goals[i].setCurrentTrain(trains[i]);
-			trainGoalElements[i].setGoal(goals[i]);
 			addGuiElement(trainGoalElements[i]);
+			trainGoalElements[i].setEditRouteButton();
 		}
 		addGuiElement(new SolidColourRect(new Rect(0, 0, 110, Screen.HEIGHT), Color.white));
 		resourceContainer = new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640));
@@ -195,8 +182,8 @@ public class GUI extends JFrame {
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
 		try {
 			System.out.println(new File("src/font.ttf").exists());
-			font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src/font" +
-					".ttf"))).deriveFont(16f);
+			font = Font.createFont(Font.TRUETYPE_FONT,
+					new FileInputStream(new File("src/font" + ".ttf"))).deriveFont(16f);
 //			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
@@ -208,7 +195,7 @@ public class GUI extends JFrame {
 	public void setPlayer(Player player) {
 		resourceContainer.removeAllResources();
 		for (int i = 0; i < player.getCurrentGoals().size(); i++) {
-			trainGoalElements[i].setGoal(player.getCurrentGoals().get(i));
+			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
 		}
 		for (Engine e : player.getEngineInventory()) {
 			resourceContainer.addResource(e);
@@ -221,6 +208,7 @@ public class GUI extends JFrame {
 	BufferedImage image;
 
 	public void paint(Graphics graphics) {
+		if (image == null) return;
 		frameTime = System.currentTimeMillis() - lastFrame;
 		lastFrame = System.currentTimeMillis();
 		Graphics2D g = (Graphics2D) image.getGraphics();

@@ -1,17 +1,20 @@
 package com.dus.taxe;
 
+import com.dus.taxe.Engine.EngineType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Train {
 
-	private Engine engine;
+	private Engine engine = new Engine(EngineType.HAND_CART);
 	private boolean engineer;
 	private int speed;
 	private boolean frozen;
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
 	private ArrayList<Node> visitedNodes = new ArrayList<Node>();
 	private Route route;
+	private Goal goal;
 
 	public Train() {
 		this.engine = new Engine(Engine.EngineType.HAND_CART);
@@ -22,6 +25,10 @@ public class Train {
 		this.route = route;
 	}
 
+	public Goal getGoal() {
+		return goal;
+	}
+
 	public int getSpeed() {
 		return speed;
 	}
@@ -29,6 +36,14 @@ public class Train {
 	public void addUpgrade(Upgrade upgrade) {
 		upgrade.use(this); //applies upgrade
 		upgrades.add(upgrade);
+	}
+
+	public boolean hasCompletedGoal() {
+		return visitedNodes.get(visitedNodes.size() - 1).equals(goal.getEnd());
+	}
+
+	public void setGoal(Goal goal) {
+		this.goal = goal;
 	}
 
 	public void setSpeed(int speed) {
