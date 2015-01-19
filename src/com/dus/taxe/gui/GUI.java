@@ -40,26 +40,25 @@ import javax.swing.WindowConstants;
 public class GUI extends JFrame {
 	public static GUI self;
 	Image mapImage;
-	Image stationImage;
 	ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
-	Map map;
+	public static Map map;
 	ResourceContainer resourceContainer;
 	private static final float X_SCALE = Screen.WIDTH / 1920f;
 	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
 	public static long frameTime = 0;
 	private static long lastFrame = 0;
-	private BasicStroke solidStroke = new BasicStroke(3);
 	private BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
-	private ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
-	private ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
+	static ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
+	static ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 
 	public GUI(Map map) {
 		self = this;
 		this.map = map;
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
-		stationImage = new ImageIcon(getClass().getClassLoader().getResource("StationRed.png"))
-				.getImage();
+		for (Node n : map.listOfNodes) {
+				addGuiElement(new NodeElement(n));
+		}
 		Train[] trains = {new Train(), new Train(), new Train()};
 		trains[0].setEngine(new Engine(Engine.EngineType.STEAM));
 		trains[1].setEngine(new Engine(Engine.EngineType.DIESEL));
@@ -166,8 +165,10 @@ public class GUI extends JFrame {
 				boolean found = false;
 				for (GuiElement guiElement : guiElements) {
 					if (guiElement.bounds.contains(e.getPoint())) {
-						guiElement.mouseMoved(e);
+						guiElement.mouseMovedInternal(e);
 						found = true;
+					} else {
+						guiElement.mouseMovedExternal(e);
 					}
 				}
 				if (!found) {
@@ -210,22 +211,25 @@ public class GUI extends JFrame {
 					}
 				}
 			}
-			for (Node n : map.listOfNodes) {
-				g.drawImage(stationImage, (int) (n.getLocation().getX() * getWidth()) - 15,
-						(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30, GUI.self);
-				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
-					if (goal.getStart().equals(n)) {
-						g.setColor(Color.green);
-						g.setStroke(solidStroke);
-						g.drawOval((int) (n.getLocation().getX() * getWidth()) - 15,
-								(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30);
-					}
-				}
-			}
+//			for (Node n : map.listOfNodes) {
+//				g.drawImage(stationImage, (int) (n.getLocation().getX() * getWidth()) - 15,
+//						(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30, GUI.self);
+//				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
+//					if (goal.getStart().equals(n)) {
+//						g.setColor(Color.green);
+//						g.setStroke(solidStroke);
+//						g.drawOval((int) (n.getLocation().getX() * getWidth()) - 15,
+//								(int) (n.getLocation().getY() * getHeight()) - 15, 30, 30);
+//					}
+//				}
+//			}
 		}
 		for (GuiElement guiElement : guiElements) {
 			guiElement.update();
 			guiElement.draw(g);
+		}
+		for (GuiElement guiElement : guiElements) {
+			guiElement.drawTooltip(g);
 		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();

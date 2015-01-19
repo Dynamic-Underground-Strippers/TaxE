@@ -9,19 +9,19 @@ import java.util.Random;
 //TODO: Implement basic trains: storing them, check max for each; implement discarding random upgrade and engines and unstarted goals
 public class Player {
 	private final String name;
+	private Map map;
 	private int points;
-	private ArrayList<Goal> currentGoals;
-	private ArrayList<Upgrade> upgradeInventory;
-	private ArrayList<Engine> engineInventory;
+	private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
+	private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
+	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
 	private ArrayList<Train> currentTrains = new ArrayList<Train>();
 
 
-	public Player(String name) {
+	public Player(String name, Map map) {
 		this.name = name;
+		this.map = map;
 		this.points = 0;
-		this.currentGoals = new ArrayList<Goal>();
-		this.upgradeInventory = new ArrayList<Upgrade>();
-		this.engineInventory = new ArrayList<Engine>();
+		generateGoals();
 	}
 
 	public ArrayList<Goal> getCurrentGoals() {
@@ -182,5 +182,14 @@ public class Player {
 	}
 
 	public void selectRandomUpgrade() {
+	}
+
+	public void generateGoals() {
+		Goal g;
+		while(!hasMaxGoals()) {
+			if (!currentGoals.contains(g = map.getRandomGoal())) {
+				currentGoals.add(g);
+			}
+		}
 	}
 }

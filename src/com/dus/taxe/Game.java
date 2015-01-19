@@ -21,18 +21,19 @@ public class Game {
 	}
 
 	public static void main(String[] args) {
+		Map m = new Map();
 		String s;
 		if ((s = JOptionPane.showInputDialog("Enter player 1's name:")) == null) {
-			currentPlayer = new Player("Player 1");
+			currentPlayer = new Player("Player 1", m);
 		} else {
-			currentPlayer = new Player(s);
+			currentPlayer = new Player(s, m);
 		}
 		if ((s = JOptionPane.showInputDialog("Enter player 2's name:")) == null) {
-			otherPlayer = new Player("Player 2");
+			otherPlayer = new Player("Player 2", m);
 		} else {
-			otherPlayer = new Player(s);
+			otherPlayer = new Player(s, m);
 		}
-		new GUI(new Map());
+		new GUI(m);
 	}
 
 	public static void endGame() {
