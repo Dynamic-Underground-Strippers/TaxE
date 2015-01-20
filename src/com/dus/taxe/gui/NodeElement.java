@@ -14,38 +14,39 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public class NodeElement extends GuiElement {
-	private static Image stationImage;
 	private static Image junctionImage;
+	private static Image stationImage;
 	private final BasicStroke dottedStroke = new BasicStroke(3, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{3}, 0);
+	private final boolean isJunction;
 	private final Node n;
 	private final BasicStroke solidStroke = new BasicStroke(3);
-	private final boolean isJunction;
 
 	public NodeElement(Node n) {
 		super(new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15 * GUI.scale,
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15 * GUI.scale, 30 * GUI.scale,
 				30 * GUI.scale));
 		this.n = n;
-		if (n instanceof Junction) {
-			isJunction = true;
-		} else {
-			isJunction = false;
-		}
+		isJunction = n instanceof Junction;
 		if (stationImage == null) {
-			//noinspection ConstantConditions
-			stationImage = new ImageIcon(getClass().getClassLoader().getResource("station.png"))
-					.getImage();
+			try {
+				stationImage = ImageIO.read(getClass().getResourceAsStream("/station.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		if (junctionImage == null) {
-			//noinspection ConstantConditions
-			junctionImage = new ImageIcon(getClass().getClassLoader().getResource("junction.png"))
-					.getImage();
+			try {
+				junctionImage = ImageIO.read(getClass().getResourceAsStream("/junction.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		setTooltip(n.getName());
 	}
