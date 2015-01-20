@@ -51,13 +51,23 @@ public class Player {
 	}
 
 	public void completeGoals() {
+		ArrayList<Goal> goalsToRemove = new ArrayList<Goal>();
+		ArrayList<Train> trainsToRemove = new ArrayList<Train>();
 		for (Goal g : currentGoals) {
 			for (Train t : currentTrains) {
 				if ((t.getGoal() !=null) && (t.getGoal().equals(g) && t.hasCompletedGoal())) {
+					System.out.println("Completed goal");
 					addPoint();
-					currentGoals.remove(g);
+					goalsToRemove.add(g);
+					trainsToRemove.add(t);
 				}
 			}
+		}
+		for (Goal g : goalsToRemove){
+			currentGoals.remove(g);
+		}
+		for (Train t : trainsToRemove){
+			currentTrains.remove(t);
 		}
 	}
 
