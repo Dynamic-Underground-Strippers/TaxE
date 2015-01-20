@@ -122,9 +122,6 @@ public class GUI extends JFrame {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
-				} else if (e.getKeyCode() == KeyEvent.VK_E) {
-					Game.endTurn();
-					Game.newTurn();
 				}
 			}
 
