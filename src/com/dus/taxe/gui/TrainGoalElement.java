@@ -15,16 +15,17 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TrainGoalElement extends GuiElement {
-	private static int count = 0;
 	private static HashMap<EngineType, Image> images;
-	private static Image redTrainIcon;
 	private final int index;
+	private static Image redTrainIcon;
 	private ButtonElement editRouteButton;
-	private Image icon;
 	private Train train;
+	private Image icon;
+	private static int count = 0;
 
 	public TrainGoalElement(Rect bounds, int index) {
 		super(bounds);
@@ -78,11 +79,8 @@ public class TrainGoalElement extends GuiElement {
 			e.printStackTrace();
 		}
 		if (redTrainIcon == null) {
-			try {
-				redTrainIcon = ImageIO.read(getClass().getResourceAsStream("/train_red.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			redTrainIcon = new ImageIcon(getClass().getClassLoader().getResource("train_red.png"))
+					.getImage();
 		}
 	}
 
@@ -193,16 +191,16 @@ public class TrainGoalElement extends GuiElement {
 		String image;
 		switch (index) {
 			case 0:
-				image = "/edit_blue.png";
+				image = "edit_blue.png";
 				break;
 			case 1:
-				image = "/edit_green.png";
+				image = "edit_green.png";
 				break;
 			case 2:
-				image = "/edit_pink.png";
+				image = "edit_pink.png";
 				break;
 			default:
-				image = "/edit.png";
+				image = "edit.png";
 				break;
 		}
 		boolean addToGUI = editRouteButton == null;
