@@ -30,10 +30,6 @@ abstract class GuiElement {
         }
     }
 
-    public String getTooltip() {
-        return tooltip;
-    }
-
     void setTooltip(String tooltip) {
         this.tooltip = tooltip;
     }

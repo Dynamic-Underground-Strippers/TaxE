@@ -70,7 +70,7 @@ public class Game {
 		GUI.self.setPlayer(currentPlayer);
 	}
 
-	public int getTurn() {
-		return this.turn;
+	public static int getTurn() {
+		return turn;
 	}
 }

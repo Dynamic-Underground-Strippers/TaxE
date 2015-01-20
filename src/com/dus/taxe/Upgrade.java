@@ -26,13 +26,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 			this.description = description;
 			this.reapply = reapply;
 		}
-
-
 	}
-
-	public Upgrade(UpgradeType type) { //Why would this ever be used??
-		this.setType(type);
-	} //Create upgrade with specified type
 
 	public Upgrade() { //Create upgrade with random upgrade type
 		Random rand = new Random();
@@ -76,10 +70,6 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
     * if called with a node or a connection as parameter allows to use obstacles related upgrades
     *
     * */
-
-	public void setType(UpgradeType type) {//Why would this ever be used??
-		this.type = type;
-	}
 
 	public void use(Train train) {
 		if (train.hasUpgrade(type.name)) {

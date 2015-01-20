@@ -299,7 +299,7 @@ public class GUI extends JFrame {
 		}
 		g.setFont(bigFont);
 		g.setColor(c);
-		g.drawString(Game.getCurrentPlayer().getName() + "'s turn", 10 * scale, 290 * scale);
+		g.drawString(Game.getCurrentPlayer().getName() + "'s turn: " + String.valueOf((int) Math.floor(Game.getTurn()/2)+1), 10 * scale, 290 * scale);
 		if (draggingRect != null && draggingImage != null) {
 			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
 					(int) draggingRect.width, (int) draggingRect.height, this);

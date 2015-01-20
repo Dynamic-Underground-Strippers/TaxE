@@ -97,8 +97,4 @@ public class Train {
 
 		}
 	}
-
-	public void setFrozen(boolean frozen) {
-		boolean frozen1 = frozen;
-	}
 }
