@@ -193,6 +193,10 @@ public class TrainGoalElement extends GuiElement {
 						bounds.height / 3f), image, new Runnable() {
 			public void run() {
 				GUI.settingRoute = true;
+				if (train.getRoute() != null) {
+					GUI.tempRouteNodes.add(train.getRoute().getCurrentNode());
+					GUI.tempRouteGoal = train.getGoal();
+				}
 				GUI.tempRouteTrainGoalElement = TrainGoalElement.this;
 			}
 		});
