@@ -190,6 +190,7 @@ public class GUI extends JFrame {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
+				reticuleRect = null;
 				boolean found = false;
 				for (GuiElement guiElement : guiElements) {
 					if (guiElement.bounds.contains(e.getPoint())) {
