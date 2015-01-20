@@ -1,10 +1,10 @@
 package com.dus.taxe;
 
 public class Point {
-	private float x;
-	private float y;
+	private final float x;
+	private final float y;
 
-	public Point(float x, float y) {
+	private Point(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}

@@ -1,9 +1,9 @@
 package com.dus.taxe;
 
 public class Goal {
-	private String description;
-	private Node end;
-	private Node start;
+	private final String description;
+	private final Node end;
+	private final Node start;
 
 	public Goal(Node start, Node end) {
 		this.start = start;

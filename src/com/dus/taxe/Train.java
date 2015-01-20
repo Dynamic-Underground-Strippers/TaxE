@@ -10,7 +10,7 @@ public class Train {
 	private Goal goal;
 	private Route route;
 	private int speed;
-	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
+	private final ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
 
 	public Train() {
 		this.engine = new Engine(Engine.EngineType.HAND_CART);
@@ -85,7 +85,7 @@ public class Train {
 		if (this.route!=null) {
 			boolean teleport = false;
 			for (int i =0; i<upgrades.size();i++){
-				if (upgrades.get(i).getName() == "Teleport"){
+				if (upgrades.get(i).getName().equals("Teleport")){
 					teleport = true;
 				}
 			}

@@ -3,8 +3,8 @@ package com.dus.taxe;
 import java.util.ArrayList;
 
 public class Route {
-	int length = 0; //Length of the route as a unit measurement
-	ArrayList<Node> listOfNodes;
+	private int length = 0; //Length of the route as a unit measurement
+	private ArrayList<Node> listOfNodes;
 	private int distanceAlongConnection;
 	private int indexOfCurrentNode;
 
@@ -49,7 +49,7 @@ public class Route {
 
 
 	public void updateDistanceAlongConnection(int speed) {
-		int totalDistance = 0;
+		int totalDistance=0;
 		if (indexOfCurrentNode < listOfNodes.size() - 1) {
 			totalDistance = Game.currentMap
 					.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
@@ -75,7 +75,7 @@ public class Route {
 		}
 	}
 
-	public void updateDistanceAlongConnectionRecursive(int left) {
+	void updateDistanceAlongConnectionRecursive(int left) {
 		int totalDistance = 0;
 		if (indexOfCurrentNode < listOfNodes.size() - 1) {
 			totalDistance = Game.currentMap

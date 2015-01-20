@@ -160,7 +160,7 @@ public class TrainGoalElement extends GuiElement {
 	public void onMouseUp(MouseEvent e) {
 		if (GUI.draggingRect != null && GUI.draggingImage != null && GUI.draggingResource != null) {
 			if (GUI.draggingResource instanceof Engine) {
-				if (!(train.getEngine().getName() == GUI.draggingResource.getName())) {
+				if (!(train.getEngine().getName().equals(GUI.draggingResource.getName()))) {
 					train.setEngine((Engine) GUI.draggingResource);
 					Game.getCurrentPlayer().removeEngine((Engine) GUI.draggingResource);
 					GUI.draggingRect = null;

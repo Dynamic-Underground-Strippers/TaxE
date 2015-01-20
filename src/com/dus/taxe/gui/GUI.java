@@ -64,9 +64,9 @@ public class GUI extends JFrame {
 	private static Image reticuleImage;
 	private final Color c = new Color(0, 0, 0, 0.8f);
 	private final Font bigFont;
-	Color trainBlue = new Color(84, 198, 198);
-	Color trainGreen = new Color(45, 242, 145);
-	Color trainPink = new Color(230, 113, 229);
+	private final Color trainBlue = new Color(84, 198, 198);
+	private final Color trainGreen = new Color(45, 242, 145);
+	private final Color trainPink = new Color(230, 113, 229);
 
 	public GUI(Map map) {
 		self = this;
@@ -299,7 +299,7 @@ public class GUI extends JFrame {
 		}
 		g.setFont(bigFont);
 		g.setColor(c);
-		g.drawString(Game.getCurrentPlayer().getName() + "'s turn: " + String.valueOf((int) Math.floor(Game.getTurn()/2)+1), 10 * scale, 290 * scale);
+		g.drawString(Game.getCurrentPlayer().getName() + "'s turn: " + String.valueOf((int) Math.floor(Game.getTurn() / 2) + 1), 10 * scale, 290 * scale);
 		if (draggingRect != null && draggingImage != null) {
 			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
 					(int) draggingRect.width, (int) draggingRect.height, this);

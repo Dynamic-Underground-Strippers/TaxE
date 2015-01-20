@@ -6,12 +6,12 @@ import java.util.Random;
 
 public class Player {
 	private final String name;
-	private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
-	private ArrayList<Train> currentTrains = new ArrayList<Train>();
-	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
+	private final ArrayList<Goal> currentGoals = new ArrayList<Goal>();
+	private final ArrayList<Train> currentTrains = new ArrayList<Train>();
+	private final ArrayList<Engine> engineInventory = new ArrayList<Engine>();
 	private int points;
-	private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
-	private ArrayList<String> messageList = new ArrayList<String>();
+	private final ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
+	private final ArrayList<String> messageList = new ArrayList<String>();
 
 	public Player(String name) {
 		this.name = name;
@@ -40,7 +40,7 @@ public class Player {
 		}
 	}
 
-	public void addPoint() {
+	void addPoint() {
 		this.points += 1;
 	}
 
@@ -72,7 +72,7 @@ public class Player {
 		}
 	}
 
-	public Engine discardRandEngine() {
+	Engine discardRandEngine() {
 		//This method removes a random engine from the list, provided the player has maximum number
 		//of upgrades, and returns it.
 		Engine discardedEngine = null;
@@ -90,7 +90,7 @@ public class Player {
 		}
 		messageList.clear();
 	}
-	public Upgrade discardRandUpgrade() {
+	Upgrade discardRandUpgrade() {
 		//This method removes a random upgrade from the list, provided the player has maximum number
 		//of upgrades, and returns it.
 		Upgrade discardedUpgrade = null;
@@ -103,7 +103,7 @@ public class Player {
 		return discardedUpgrade;
 	}
 
-	public Goal discardUnstartedGoal() {
+	Goal discardUnstartedGoal() {
 		ArrayList<Goal> discardable = new ArrayList<Goal>();
 		for (Goal g : currentGoals) {
 			for (Train t : currentTrains) {
@@ -117,7 +117,7 @@ public class Player {
 		return discardedGoal;
 	}
 
-	public Goal generateGoal() {
+	Goal generateGoal() {
 		Goal g;
 		Node start = Game.currentMap.getRandomNode();
 		Node end = Game.currentMap.getRandomNode();
@@ -206,7 +206,7 @@ public class Player {
 		}
 	}
 
-	public boolean hasMaxEngines() {
+	boolean hasMaxEngines() {
 		if (engineInventory.size() == 3) {
 			return true;
 
@@ -215,14 +215,14 @@ public class Player {
 
 	}
 
-	public boolean hasMaxGoals() {
+	boolean hasMaxGoals() {
 		if (currentGoals.size() == 3) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean hasMaxUpgrades() {
+	boolean hasMaxUpgrades() {
 		if (upgradeInventory.size() == 4) {
 			return true;
 

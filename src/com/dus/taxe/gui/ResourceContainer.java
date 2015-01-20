@@ -99,8 +99,8 @@ public class ResourceContainer extends GuiElement {
 		}
 	}
 
-	Rect hoverRect;
-	String hoverString;
+	private Rect hoverRect;
+	private String hoverString;
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
