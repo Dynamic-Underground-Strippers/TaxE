@@ -19,7 +19,7 @@ public class ResourceContainer extends GuiElement {
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
 	private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
 	private final Rect[] engineRects = new Rect[3];
-	private final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
+	static final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
 	private final Rect[] upgradeRects = new Rect[4];
 
 	public ResourceContainer(Rect bounds) {

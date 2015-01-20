@@ -92,7 +92,13 @@ public class TrainGoalElement extends GuiElement {
 				graphics.drawImage(icon, (int) (p.getX() * Screen.WIDTH - 15),
 						(int) (p.getY() * Screen.HEIGHT - 15), 30, 30, GUI.self);
 			}
-
+			int count = 0;
+			for (Upgrade u : train.getUpgrades()) {
+				graphics.drawImage(ResourceContainer.upgradeImages.get(u.getType()),
+						(int) (bounds.x + 130 * GUI.scale + (count++ * 120 * GUI.scale)),
+						(int) (bounds.y + ((bounds.height - 100 * GUI.scale) / 2f)),
+						(int) (100 * GUI.scale), (int) (100 * GUI.scale), GUI.self);
+			}
 		}
 	}
 
