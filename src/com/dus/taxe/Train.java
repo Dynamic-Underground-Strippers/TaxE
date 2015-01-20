@@ -100,7 +100,7 @@ public class Train {
 			if (teleport){
 				this.route.useTeleport();
 			}else{
-				this.route.updateDistanceAlongConnection();
+				this.route.updateDistanceAlongConnection(this.speed);
 			}
 
 		}

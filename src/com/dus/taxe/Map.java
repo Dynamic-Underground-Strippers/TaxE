@@ -109,8 +109,12 @@ public class Map {
 		return listOfNodes.get(index);
 	}
 
-	public Node getRandomNode() {
-		return listOfNodes.get(new Random().nextInt(listOfNodes.size()));
+	public Node getRandomNode(){
+		int randomIndex = new Random().nextInt(listOfNodes.size());
+		while (listOfNodes.get(randomIndex) instanceof Junction){
+			randomIndex = new Random().nextInt(listOfNodes.size());
+		}
+		return listOfNodes.get(randomIndex);
 	}
 
 	public ArrayList<Node> getListOfNodes() {
