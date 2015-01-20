@@ -20,7 +20,7 @@ public class Game {
 			winner = null;
 		}
 		if (winner == null){
-			JOptionPane.showMessageDialog(null, "Congratulations! It's a tie!" , "Game Over! Tie!", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Game Over! It's a tie!" , "Game Over! Tie!", JOptionPane.PLAIN_MESSAGE);
 		} else{
 			JOptionPane.showMessageDialog(null, "Congratulations " + winner.getName() + "! You are the winner!" , "Game Over! " + winner.getName()+ " wins!", JOptionPane.PLAIN_MESSAGE);
 		}
@@ -32,6 +32,7 @@ public class Game {
 		currentPlayer.completeGoals();
 		if (turn==20) {
 			endGame();
+
 		}
 		swapPlayers();
 		turn += 1;
