@@ -58,7 +58,7 @@ public class GUI extends JFrame {
 	static Font baseFont;
 	private final Font font;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
-	static Rect reticuleRect = new Rect();
+	static Rect reticuleRect;
 	private static Image reticuleImage;
 
 	public GUI(Map map) {
@@ -190,6 +190,7 @@ public class GUI extends JFrame {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
+				reticuleRect = null;
 				boolean found = false;
 				for (GuiElement guiElement : guiElements) {
 					if (guiElement.bounds.contains(e.getPoint())) {
@@ -258,20 +259,14 @@ public class GUI extends JFrame {
 			}
 		}
 		if (reticuleRect != null && reticuleImage != null) {
-			graphics.drawImage(reticuleImage, (int) reticuleRect.x, (int) reticuleRect.y,
+			g.drawImage(reticuleImage, (int) reticuleRect.x, (int) reticuleRect.y,
 					(int) reticuleRect.width, (int) reticuleRect.height, this);
-			graphics.setColor(Color.magenta);
-			graphics.drawRect((int) reticuleRect.x, (int) reticuleRect.y, (int) reticuleRect.width,
-					(int) reticuleRect.height);
-		} else {
-			System.out.println(reticuleRect + ", " + reticuleImage);
 		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();
 	}
 
 	public void setPlayer(Player player) {
-
 		for (int i = 0; i < player.getCurrentTrains().size(); i++) {
 			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));
 		}

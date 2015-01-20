@@ -74,60 +74,59 @@ public class Route {
 	private void setRoute(ArrayList<Node> newNodes) {
 		// Sets the listOfNodes to be equal to the list passed in the constructor
 		listOfNodes = newNodes;
-		System.out.println(listOfNodes.size());
 	}
 
 	public String toString() {
 		// Represents the route as a string
-		String retStr = "";
-		for (int i = 0; i < (listOfNodes.size()); i++) {
-			retStr = retStr + listOfNodes.get(i).toString() + " ";
-		}
-		return retStr;
+		return listOfNodes.toString();
 	}
 
 
-	public void updateDistanceAlongConnection(int speed){
-		int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
-		if (this.distanceAlongConnection + speed < totalDistance){
-			this.distanceAlongConnection+=speed;
-		}else{
-			if(indexOfCurrentNode < listOfNodes.size()-1){
-				this.indexOfCurrentNode+=1;
-			}else{
+	public void updateDistanceAlongConnection(int speed) {
+		int totalDistance = Game.currentMap
+				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
+						this.listOfNodes.get(this.indexOfCurrentNode + 1));
+		if (this.distanceAlongConnection + speed < totalDistance) {
+			this.distanceAlongConnection += speed;
+		} else {
+			if (indexOfCurrentNode < listOfNodes.size() - 1) {
+				this.indexOfCurrentNode += 1;
+			} else {
 				return;
 			}
 			this.distanceAlongConnection = 0;
-			int leftDistance = distanceAlongConnection+speed-totalDistance;
-			if (leftDistance == 0){
+			int leftDistance = distanceAlongConnection + speed - totalDistance;
+			if (leftDistance == 0) {
 				return;
-			}else{
+			} else {
 				updateDistanceAlongConnectionRecursive(leftDistance);
 			}
 		}
 	}
 
-	public void updateDistanceAlongConnectionRecursive(int left){
-		int totalDistance = Game.currentMap.findDistance(this.listOfNodes.get(this.indexOfCurrentNode), this.listOfNodes.get(this.indexOfCurrentNode+1));
-		if (this.distanceAlongConnection + left < totalDistance){
-			this.distanceAlongConnection+=left;
-		}else{
-			if(indexOfCurrentNode < listOfNodes.size()-1){
-				this.indexOfCurrentNode+=1;
-			}else{
+	public void updateDistanceAlongConnectionRecursive(int left) {
+		int totalDistance = Game.currentMap
+				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
+						this.listOfNodes.get(this.indexOfCurrentNode + 1));
+		if (this.distanceAlongConnection + left < totalDistance) {
+			this.distanceAlongConnection += left;
+		} else {
+			if (indexOfCurrentNode < listOfNodes.size() - 1) {
+				this.indexOfCurrentNode += 1;
+			} else {
 				return;
 			}
 			this.distanceAlongConnection = 0;
-			int leftDistance = distanceAlongConnection+left-totalDistance;
-			if (leftDistance == 0){
+			int leftDistance = distanceAlongConnection + left - totalDistance;
+			if (leftDistance == 0) {
 				return;
-			}else{
+			} else {
 				updateDistanceAlongConnection(leftDistance);
 			}
 		}
 	}
 
-	public void useTeleport(){
+	public void useTeleport() {
 		indexOfCurrentNode = listOfNodes.size();
 	}
 

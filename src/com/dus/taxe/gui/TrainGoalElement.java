@@ -61,8 +61,8 @@ public class TrainGoalElement extends GuiElement {
 
 	@Override
 	public void draw(Graphics2D graphics) {
-		editRouteButton.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
-				bounds.height / 3f);
+		editRouteButton.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y,
+				bounds.height / 3f, bounds.height / 3f);
 		editRouteButton.setTooltip(train.getRoute() == null ? "Set route" : "Edit route");
 		if (train != null && images.get(train.getEngine().getType()) != null) {
 			graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
@@ -80,7 +80,6 @@ public class TrainGoalElement extends GuiElement {
 
 	public void setTrain(Train train) {
 		this.train = train;
-		setEditRouteButton();
 	}
 
 	@Override
@@ -141,6 +140,7 @@ public class TrainGoalElement extends GuiElement {
 				image = "edit.png";
 				break;
 		}
+		boolean addToGUI = editRouteButton == null;
 		editRouteButton = new ButtonElement(
 				new Rect(bounds.x + 0.9f * bounds.width, bounds.y, bounds.height / 3f,
 						bounds.height / 3f), image, new Runnable() {
@@ -150,6 +150,6 @@ public class TrainGoalElement extends GuiElement {
 			}
 		});
 		editRouteButton.setTooltip("Set route");
-		GUI.self.addGuiElement(editRouteButton);
+		if (addToGUI) GUI.self.addGuiElement(editRouteButton);
 	}
 }
