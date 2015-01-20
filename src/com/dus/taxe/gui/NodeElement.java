@@ -112,6 +112,7 @@ public class NodeElement extends GuiElement {
 			if (GUI.tempRouteGoal != null && GUI.tempRouteGoal.getEnd().equals(n)) {
 				GUI.tempRouteTrainGoalElement.getTrain().setRoute(
 						new Route(new ArrayList<Node>(GUI.tempRouteNodes)));
+				GUI.tempRouteTrainGoalElement.getTrain().setGoal(GUI.tempRouteGoal);
 				GUI.tempRouteTrainGoalElement.getEditRouteButton().setTooltip("Edit route");
 				GUI.tempRouteGoal = null;
 				GUI.tempRouteTrainGoalElement = null;

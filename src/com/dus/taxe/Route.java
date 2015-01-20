@@ -36,8 +36,8 @@ public class Route {
 		return totalDistance;
 	}
 
-	public int getCurrentNode() {
-		return this.indexOfCurrentNode;
+	public Node getCurrentNode() {
+		return listOfNodes.get(indexOfCurrentNode);
 	}
 
 	public int getDistanceAlongConnection() {
