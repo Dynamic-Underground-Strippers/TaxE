@@ -15,14 +15,17 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TrainGoalElement extends GuiElement {
 	private static HashMap<EngineType, Image> images;
 	private final int index;
+	private static Image redTrainIcon;
 	private ButtonElement editRouteButton;
 	private Train train;
 	private Image icon;
+	private static int count = 0;
 
 	public TrainGoalElement(Rect bounds, int index) {
 		super(bounds);
@@ -75,6 +78,10 @@ public class TrainGoalElement extends GuiElement {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if (redTrainIcon == null) {
+			redTrainIcon = new ImageIcon(getClass().getClassLoader().getResource("train_red.png"))
+					.getImage();
+		}
 	}
 
 	@Override
@@ -86,6 +93,15 @@ public class TrainGoalElement extends GuiElement {
 			if (images.get(train.getEngine().getType()) != null) {
 				graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
 						(int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
+			}
+			if (count++ % 3 == 0) {
+				for (Train t : Game.getOtherPlayer().getCurrentTrains()) {
+					if (t.getRoute() != null) {
+						Point p = t.getRoute().getCurrentNode().getLocation();
+						graphics.drawImage(redTrainIcon, (int) (p.getX() * Screen.WIDTH - 15),
+								(int) (p.getY() * Screen.HEIGHT - 15), 30, 30, GUI.self);
+					}
+				}
 			}
 			if (icon != null && train.getRoute() != null) {
 				Point p = train.getRoute().getCurrentNode().getLocation();
@@ -156,7 +172,7 @@ public class TrainGoalElement extends GuiElement {
 							"Train Already Has That Engine", JOptionPane.PLAIN_MESSAGE);
 				}
 			} else if (GUI.draggingResource instanceof Upgrade) {
-				if (!train.hasUpgrade(((Upgrade) GUI.draggingResource).getName())) {
+				if (!train.hasUpgrade(GUI.draggingResource.getName())) {
 					train.addUpgrade((Upgrade) GUI.draggingResource);
 					Game.getCurrentPlayer().removeUpgrade((Upgrade) GUI.draggingResource);
 					GUI.draggingRect = null;

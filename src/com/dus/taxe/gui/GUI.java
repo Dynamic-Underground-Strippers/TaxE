@@ -304,6 +304,7 @@ public class GUI extends JFrame {
 			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
 					(int) draggingRect.width, (int) draggingRect.height, this);
 		} else {
+			g.setFont(font);
 			for (GuiElement guiElement : guiElements) {
 				guiElement.drawTooltip(g);
 			}
