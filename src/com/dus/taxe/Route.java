@@ -10,7 +10,6 @@ public class Route {
 	ArrayList<Node> listOfNodes;
 	private int distanceAlongConnection;
 	private int indexOfCurrentNode;
-	private Train train;
 
 	public Route(ArrayList<Node> newNodes) {
 		setRoute(newNodes);
@@ -86,50 +85,25 @@ public class Route {
 		return retStr;
 	}
 
-	public void updateDistanceAlongConnection() {
-		int totalDistance = Game.currentMap
-				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
-						this.listOfNodes.get(this.indexOfCurrentNode + 1));
-		int speedPerTurn = train.getSpeed();
-		if (this.distanceAlongConnection + speedPerTurn < totalDistance) {
-			this.distanceAlongConnection += speedPerTurn;
-		} else {
-			if (indexOfCurrentNode < listOfNodes.size() - 1) {
-				this.indexOfCurrentNode += 1;
-			} else {
-				return;
+	public void updateDistanceAlongConnection(int speed) {
+		if (Game.currentMap.getConnections()[listOfNodes.get(indexOfCurrentNode).getId()][listOfNodes.get(indexOfCurrentNode+1).getId()]
+				.getDistance()-distanceAlongConnection>speed){
+			distanceAlongConnection = Game.currentMap.getConnections()[listOfNodes.get(indexOfCurrentNode).getId()][listOfNodes.get(indexOfCurrentNode+1).getId()]
+					.getDistance()-distanceAlongConnection-speed;
+		}else{
+			int remainingSpeed;
+			remainingSpeed = speed - (Game.currentMap.getConnections()[listOfNodes.get(indexOfCurrentNode).getId()][listOfNodes.get(indexOfCurrentNode+1).getId()]
+					.getDistance()-distanceAlongConnection);
+			indexOfCurrentNode++;
+			while ((remainingSpeed>Game.currentMap.getConnections()[listOfNodes.get(indexOfCurrentNode).getId()][listOfNodes.get(indexOfCurrentNode+1).getId()]
+					.getDistance()) && indexOfCurrentNode!=listOfNodes.size()){
+				remainingSpeed = remainingSpeed - (Game.currentMap.getConnections()[listOfNodes.get(indexOfCurrentNode).getId()][listOfNodes.get(indexOfCurrentNode+1).getId()].getDistance());
 			}
-			this.distanceAlongConnection = 0;
-			int leftDistance = distanceAlongConnection + speedPerTurn - totalDistance;
-			if (leftDistance == 0) {
-				return;
-			} else {
-				updateDistanceAlongConnection(leftDistance);
-			}
+			distanceAlongConnection=remainingSpeed;
 		}
+
 	}
 
-	public void updateDistanceAlongConnection(int left) {
-		int totalDistance = Game.currentMap
-				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
-						this.listOfNodes.get(this.indexOfCurrentNode + 1));
-		if (this.distanceAlongConnection + left < totalDistance) {
-			this.distanceAlongConnection += left;
-		} else {
-			if (indexOfCurrentNode < listOfNodes.size() - 1) {
-				this.indexOfCurrentNode += 1;
-			} else {
-				return;
-			}
-			this.distanceAlongConnection = 0;
-			int leftDistance = distanceAlongConnection + left - totalDistance;
-			if (leftDistance == 0) {
-				return;
-			} else {
-				updateDistanceAlongConnection(leftDistance);
-			}
-		}
-	}
 	public void useTeleport(){
 		indexOfCurrentNode = listOfNodes.size();
 	}
