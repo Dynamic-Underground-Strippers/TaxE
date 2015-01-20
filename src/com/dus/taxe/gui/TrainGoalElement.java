@@ -3,6 +3,7 @@ package com.dus.taxe.gui;
 import com.dus.taxe.Engine;
 import com.dus.taxe.Engine.EngineType;
 import com.dus.taxe.Game;
+import com.dus.taxe.Point;
 import com.dus.taxe.Train;
 import com.dus.taxe.Upgrade;
 
@@ -20,6 +21,7 @@ public class TrainGoalElement extends GuiElement {
 	private final int index;
 	private ButtonElement editRouteButton;
 	private Train train;
+	private Image icon;
 
 	public TrainGoalElement(Rect bounds, int index) {
 		super(bounds);
@@ -57,6 +59,21 @@ public class TrainGoalElement extends GuiElement {
 				e.printStackTrace();
 			}
 		}
+		try {
+			switch (index) {
+				case 0:
+					icon = ImageIO.read(getClass().getResourceAsStream("/train_blue.png"));
+					break;
+				case 1:
+					icon = ImageIO.read(getClass().getResourceAsStream("/train_green.png"));
+					break;
+				case 2:
+					icon = ImageIO.read(getClass().getResourceAsStream("/train_pink.png"));
+					break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -64,9 +81,17 @@ public class TrainGoalElement extends GuiElement {
 		editRouteButton.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y,
 				bounds.height / 3f, bounds.height / 3f);
 		editRouteButton.setTooltip(train.getRoute() == null ? "Set route" : "Edit route");
-		if (train != null && images.get(train.getEngine().getType()) != null) {
-			graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
-					(int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
+		if (train != null) {
+			if (images.get(train.getEngine().getType()) != null) {
+				graphics.drawImage(images.get(train.getEngine().getType()), (int) bounds.x,
+						(int) bounds.y, (int) bounds.width, (int) bounds.height, GUI.self);
+			}
+			if (icon != null && train.getRoute() != null) {
+				Point p = train.getRoute().getCurrentNode().getLocation();
+				graphics.drawImage(icon, (int) (p.getX() - 15), (int) (p.getY() - 15), 30, 30,
+						GUI.self);
+			}
+
 		}
 	}
 
