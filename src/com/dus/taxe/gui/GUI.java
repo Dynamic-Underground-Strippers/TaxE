@@ -238,6 +238,9 @@ public class GUI extends JFrame {
 			for (int i = 0; i < map.getConnections().length; i++) {
 				for (int j = 0; j <= i; j++) {
 					if (map.getConnections()[i][j] != null) {
+						g.setColor((tempRouteConnections.contains(map.getConnections()[i][j]) ||
+								tempRouteConnections.contains(
+										map.getConnections()[j][i])) ? Color.orange : Color.black);
 						g.drawLine((int) (map.retrieveNode(i).getLocation().getX() * Screen.WIDTH),
 								(int) (map.retrieveNode(i).getLocation().getY() * Screen.HEIGHT),
 								(int) (map.retrieveNode(j).getLocation().getX() * Screen.WIDTH),
