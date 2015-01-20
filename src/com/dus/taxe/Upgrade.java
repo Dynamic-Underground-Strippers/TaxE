@@ -37,7 +37,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 	public Upgrade() { //Create upgrade with random upgrade type
 		Random rand = new Random();
 		int chance = rand.nextInt(100) + 1; //random number between 1 and 100
-		if (chance < 50) {
+		if (chance < 80) {
 			this.type = UpgradeType.DOUBLE_SPEED;
 		} else {
 			this.type = UpgradeType.TELEPORT;
