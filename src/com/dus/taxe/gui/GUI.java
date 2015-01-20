@@ -7,6 +7,7 @@ import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
 import com.dus.taxe.Resource;
+import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -50,6 +51,7 @@ public class GUI extends JFrame {
 	private static long lastFrame = 0;
 	static Map map;
 	static TrainGoalElement tempRouteTrainGoalElement;
+	static float scale;
 	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
 	private final BufferedImage image;
 	private final Image mapImage;
@@ -63,6 +65,7 @@ public class GUI extends JFrame {
 
 	public GUI(Map map) {
 		self = this;
+		scale = Screen.WIDTH / 1920f;
 		GUI.map = map;
 		try {
 			baseFont = Font.createFont(Font.TRUETYPE_FONT,
@@ -81,17 +84,21 @@ public class GUI extends JFrame {
 		for (Node n : map.getListOfNodes()) {
 			addGuiElement(new NodeElement(n));
 		}
-		trainGoalElements = new TrainGoalElement[]{
-				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 620, 900, 150), 0),
-				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 413, 900, 150), 1),
-				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 207, 900, 150), 2)};
+		trainGoalElements = new TrainGoalElement[]{new TrainGoalElement(
+				new Rect(-490 * scale, Screen.HEIGHT - 620 * scale, 900 * scale, 150 * scale), 0),
+												   new TrainGoalElement(new Rect(-490 * scale,
+														   Screen.HEIGHT - 413 * scale, 900 * scale,
+														   150 * scale), 1), new TrainGoalElement(
+				new Rect(-490 * scale, Screen.HEIGHT - 207 * scale, 900 * scale, 150 * scale), 2)};
 		for (int i = 0; i < 3; i++) {
 			addGuiElement(trainGoalElements[i]);
 			trainGoalElements[i].setEditRouteButton();
 		}
-		addGuiElement(new SolidColourRect(new Rect(0, 0, 110, Screen.HEIGHT), Color.white));
-		addGuiElement(new ResourceContainer(new Rect(10, Screen.HEIGHT - 650, 100, 640)));
-		addGuiElement(new GoalsContainer(new Rect(10, 10, 900, 200)));
+		addGuiElement(new SolidColourRect(new Rect(0, 0, 110 * scale, Screen.HEIGHT), Color.white));
+		addGuiElement(new ResourceContainer(
+				new Rect(10 * scale, Screen.HEIGHT - 650 * scale, 100 * scale, 640 * scale)));
+		addGuiElement(
+				new GoalsContainer(new Rect(10 * scale, 10 * scale, 900 * scale, 200 * scale)));
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -217,7 +224,6 @@ public class GUI extends JFrame {
 
 	public void addGuiElement(GuiElement guiElement) {
 		guiElements.add(guiElement);
-		repaint();
 	}
 
 	public void paint(Graphics graphics) {
@@ -229,8 +235,7 @@ public class GUI extends JFrame {
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		int imageWidth = (int) ((float) mapImage.getWidth(this) *
-				((float) getHeight() / (float) mapImage.getHeight(this)));
+		int imageWidth = (int) (1485 * scale);
 		g.drawImage(mapImage, getWidth() - imageWidth, 0, imageWidth, getHeight(), this);
 		if (map != null) {
 			g.setColor(Color.BLACK);
@@ -252,6 +257,9 @@ public class GUI extends JFrame {
 		for (GuiElement guiElement : guiElements) {
 			guiElement.update();
 			guiElement.draw(g);
+		}
+		for (Train t : Game.getOtherPlayer().getCurrentTrains()) {
+
 		}
 		if (draggingRect != null && draggingImage != null) {
 			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,

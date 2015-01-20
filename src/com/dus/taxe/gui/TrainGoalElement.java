@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class TrainGoalElement extends GuiElement {
 	private static HashMap<EngineType, Image> images;
@@ -55,7 +55,7 @@ public class TrainGoalElement extends GuiElement {
 			}
 			try {
 				images.put(EngineType.ROCKET,
-						ImageIO.read(getClass().getResourceAsStream("/electric_side.png")));
+						ImageIO.read(getClass().getResourceAsStream("/rocket_side.png")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -122,10 +122,11 @@ public class TrainGoalElement extends GuiElement {
 	@Override
 	public void onClick(MouseEvent e) {
 		if (!isAnimationRunning()) {
-			if (bounds.x == -490) {
+			if (bounds.x == -490 * GUI.scale) {
 				slerpBounds(new Rect(0, bounds.y, bounds.width, bounds.height), 0.075f);
 			} else {
-				slerpBounds(new Rect(-490, bounds.y, bounds.width, bounds.height), 0.075f);
+				slerpBounds(new Rect(-490 * GUI.scale, bounds.y, bounds.width, bounds.height),
+						0.075f);
 			}
 		}
 	}
@@ -139,29 +140,31 @@ public class TrainGoalElement extends GuiElement {
 	public void onMouseUp(MouseEvent e) {
 		if (GUI.draggingRect != null && GUI.draggingImage != null && GUI.draggingResource != null) {
 			if (GUI.draggingResource instanceof Engine) {
-				if (!(train.getEngine().getName()==((Engine) GUI.draggingResource).getName())) {
+				if (!(train.getEngine().getName() == GUI.draggingResource.getName())) {
 					train.setEngine((Engine) GUI.draggingResource);
 					Game.getCurrentPlayer().removeEngine((Engine) GUI.draggingResource);
 					GUI.draggingRect = null;
 					GUI.draggingImage = null;
 					GUI.draggingResource = null;
-				} else{
-					JOptionPane.showMessageDialog(null, "This train already has that engine, cannot apply the engine again", "Train Already Has That Engine", JOptionPane.PLAIN_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"This train already has that engine, cannot apply the engine again",
+							"Train Already Has That Engine", JOptionPane.PLAIN_MESSAGE);
 				}
-			}
-			else if (GUI.draggingResource instanceof Upgrade) {
+			} else if (GUI.draggingResource instanceof Upgrade) {
 				if (!train.hasUpgrade(((Upgrade) GUI.draggingResource).getName())) {
 					train.addUpgrade((Upgrade) GUI.draggingResource);
 					Game.getCurrentPlayer().removeUpgrade((Upgrade) GUI.draggingResource);
 					GUI.draggingRect = null;
 					GUI.draggingImage = null;
 					GUI.draggingResource = null;
-				} else{
-					JOptionPane.showMessageDialog(null, "This train already has that upgrade, cannot apply the upgrade again", "Train Already Has That Upgrade", JOptionPane.PLAIN_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"This train already has that upgrade, cannot apply the upgrade again",
+							"Train Already Has That Upgrade", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 		}
-		GUI.self.repaint();
 	}
 
 	void setEditRouteButton() {

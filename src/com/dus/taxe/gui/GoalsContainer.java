@@ -77,12 +77,16 @@ public class GoalsContainer extends GuiElement {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
 				if (i % 2 == 0) {
 					Node n = Game.getCurrentPlayer().getCurrentGoals().get(i / 2).getStart();
-					GUI.reticuleRect = new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
-							(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
+					GUI.reticuleRect = new Rect(
+							(int) (n.getLocation().getX() * Screen.WIDTH) - 15 * GUI.scale,
+							(int) (n.getLocation().getY() * Screen.HEIGHT) - 15 * GUI.scale,
+							30 * GUI.scale, 30 * GUI.scale);
 				} else {
 					Node n = Game.getCurrentPlayer().getCurrentGoals().get(i / 2).getEnd();
-					GUI.reticuleRect = new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
-							(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
+					GUI.reticuleRect = new Rect(
+							(int) (n.getLocation().getX() * Screen.WIDTH) - 15 * GUI.scale,
+							(int) (n.getLocation().getY() * Screen.HEIGHT) - 15 * GUI.scale,
+							30 * GUI.scale, 30 * GUI.scale);
 				}
 				return;
 			}
@@ -102,6 +106,10 @@ public class GoalsContainer extends GuiElement {
 
 	@Override
 	public void onMouseUp(MouseEvent e) {
+
+	}
+
+	public void setGoalColour(Goal goal, Color color) {
 
 	}
 }

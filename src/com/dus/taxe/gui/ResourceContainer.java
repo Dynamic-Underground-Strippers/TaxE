@@ -4,13 +4,18 @@ import com.dus.taxe.Engine.EngineType;
 import com.dus.taxe.Game;
 import com.dus.taxe.Upgrade.UpgradeType;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
+import javax.swing.ImageIcon;
+
 public class ResourceContainer extends GuiElement {
-    private static final int PADDING = 10;
+    private static int PADDING;
     private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
     private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
     private final Rect[] engineRects = new Rect[3];
@@ -19,6 +24,7 @@ public class ResourceContainer extends GuiElement {
 
     public ResourceContainer(Rect bounds) {
         super(bounds);
+        PADDING = (int) (10 * GUI.scale);
         //noinspection ConstantConditions
         engineImages.put(EngineType.HAND_CART,
                 new ImageIcon(getClass().getClassLoader().getResource("engine_handcart.png"))

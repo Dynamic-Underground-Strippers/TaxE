@@ -54,7 +54,6 @@ class Rect {
             width += (animationTargetBounds.width - width) * animationSpeed * (GUI.frameTime / 32f);
             height += (animationTargetBounds.height - height) * animationSpeed *
                     (GUI.frameTime / 32f);
-            GUI.self.repaint();
             if (Math.abs(x - animationTargetBounds.x) < 1 &&
                     Math.abs(y - animationTargetBounds.y) < 1 &&
                     Math.abs(width - animationTargetBounds.width) < 1 &&

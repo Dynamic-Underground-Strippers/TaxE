@@ -27,8 +27,9 @@ public class NodeElement extends GuiElement {
 	private final boolean isJunction;
 
 	public NodeElement(Node n) {
-		super(new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
-				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30));
+		super(new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15 * GUI.scale,
+				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15 * GUI.scale, 30 * GUI.scale,
+				30 * GUI.scale));
 		this.n = n;
 		if (n instanceof Junction) {
 			isJunction = true;

@@ -29,6 +29,10 @@ public class Game {
 		return currentPlayer;
 	}
 
+	public static Player getOtherPlayer() {
+		return otherPlayer;
+	}
+
 	public static void main(String[] args) {
 		turn = 0;
 		currentMap=new Map();
