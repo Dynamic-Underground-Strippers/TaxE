@@ -92,7 +92,7 @@ public class GoalsContainer extends GuiElement {
 
 	@Override
 	protected void mouseMoved(MouseEvent e) {
-		for (int i = 0; i < nodeLinks.length; i++) {
+		for (int i = 0; i < Game.getCurrentPlayer().getCurrentGoals().size() * 2; i++) {
 			if (nodeLinks[i].contains(e.getPoint())) {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
 				if (i % 2 == 0) {
