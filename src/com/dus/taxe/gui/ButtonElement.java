@@ -6,29 +6,22 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
-/**
- * General class for button-like {@link com.dus.taxe.gui.GuiElement}s
- */
 public class ButtonElement extends GuiElement {
-	private final Runnable action;
+	private String text;
 	private final Color colour = new Color(0, 0, 0, 0.8f);
 	private Font font;
+	private final Runnable action;
 	private Image image;
-	private String text;
 
 	public ButtonElement(Rect bounds, String imageName, Runnable action) {
 		super(bounds);
 		this.action = action;
 		if (imageName != null) {
-			try {
-				image = ImageIO.read(getClass().getResourceAsStream(imageName));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			//noinspection ConstantConditions
+			image = new ImageIcon(getClass().getClassLoader().getResource(imageName)).getImage();
 		}
 	}
 
