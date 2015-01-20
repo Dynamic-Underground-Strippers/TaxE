@@ -19,6 +19,10 @@ public class Point {
 		return (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 	}
 
+	public static Point middle(Point a, Point b) {
+		return new Point((a.x + b.x) / 2f, (a.y + b.y) / 2f);
+	}
+
 	public float getX() {
 		return x;
 	}
@@ -30,9 +34,5 @@ public class Point {
 	public String toString() {
 		String s = "(" + String.valueOf(x) + "," + String.valueOf(y) + ")";
 		return s;
-	}
-
-	public static Point middle(Point a, Point b) {
-		return new Point((a.x + b.x) / 2f, (a.y + b.y) / 2f);
 	}
 }

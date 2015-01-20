@@ -15,12 +15,14 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 public class ResourceContainer extends GuiElement {
+	static final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
 	private static int PADDING;
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
 	private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
 	private final Rect[] engineRects = new Rect[3];
-	static final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
 	private final Rect[] upgradeRects = new Rect[4];
+	Rect hoverRect;
+	String hoverString;
 
 	public ResourceContainer(Rect bounds) {
 		super(bounds);
@@ -65,7 +67,6 @@ public class ResourceContainer extends GuiElement {
 		}
 	}
 
-
 	@Override
 	public void draw(Graphics2D graphics) {
 		graphics.setColor(backgroundColour);
@@ -98,9 +99,6 @@ public class ResourceContainer extends GuiElement {
 					(graphics.getFontMetrics().getHeight() * 0.3f));
 		}
 	}
-
-	Rect hoverRect;
-	String hoverString;
 
 	@Override
 	public void mouseMoved(MouseEvent e) {

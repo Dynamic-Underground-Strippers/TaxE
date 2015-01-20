@@ -12,6 +12,13 @@ public class Goal {
 				"Move a train from " + this.start.getName() + " to " + this.end.getName();
 	}
 
+	public boolean containsNode(Node node) {
+		if ((this.start.getId() == node.getId()) || (this.end.getId() == node.getId())) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean equals(Object other) {
 		if (other instanceof Goal) {
 			Goal g = (Goal) other;
@@ -31,13 +38,6 @@ public class Goal {
 
 	public Node getStart() {
 		return start;
-	}
-
-	public boolean containsNode(Node node) {
-		if ((this.start.getId() == node.getId()) || (this.end.getId() == node.getId())) {
-			return true;
-		}
-		return false;
 	}
 }
 

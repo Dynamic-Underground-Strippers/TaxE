@@ -22,10 +22,6 @@ public class Train {
 		upgrades.add(upgrade);
 	}
 
-	public void setRoute(Route route) {
-		this.route = route;
-	}
-
 	public Engine getEngine() {
 		return engine;
 	}
@@ -55,6 +51,10 @@ public class Train {
 		return route;
 	}
 
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+
 	public int getSpeed() {
 		return speed;
 	}
@@ -82,16 +82,16 @@ public class Train {
 	}
 
 	public void moveTrain() {
-		if (this.route!=null) {
+		if (this.route != null) {
 			boolean teleport = false;
-			for (int i =0; i<upgrades.size();i++){
-				if (upgrades.get(i).getName() == "Teleport"){
+			for (int i = 0; i < upgrades.size(); i++) {
+				if (upgrades.get(i).getName() == "Teleport") {
 					teleport = true;
 				}
 			}
-			if (teleport){
+			if (teleport) {
 				this.route.useTeleport();
-			}else{
+			} else {
 				this.route.updateDistanceAlongConnection(this.speed);
 			}
 

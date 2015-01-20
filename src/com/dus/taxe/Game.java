@@ -18,7 +18,7 @@ public class Game {
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
 		currentPlayer.completeGoals();
-		if (turn==20) {
+		if (turn == 20) {
 			endGame();
 		}
 		swapPlayers();
@@ -35,7 +35,7 @@ public class Game {
 
 	public static void main(String[] args) {
 		turn = 0;
-		currentMap=new Map();
+		currentMap = new Map();
 		String s;
 		if ((s = JOptionPane.showInputDialog("Enter player 1's name:")) == null) {
 			currentPlayer = new Player("Player 1");
@@ -53,7 +53,7 @@ public class Game {
 	public static void newTurn() {
 		//if statement checks whether it is player 2's first turn or not. This was necessary as player 2 was getting a turn advantage.
 		currentPlayer.displayMessages();
-		if (turn!=1) {
+		if (turn != 1) {
 			currentPlayer.addTrains();
 			currentPlayer.addGoal();
 			// Need to somehow add in GUI validation here

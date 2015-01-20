@@ -1,17 +1,18 @@
 package com.dus.taxe;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 public class Player {
 	private final String name;
 	private ArrayList<Goal> currentGoals = new ArrayList<Goal>();
 	private ArrayList<Train> currentTrains = new ArrayList<Train>();
 	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
+	private ArrayList<String> messageList = new ArrayList<String>();
 	private int points;
 	private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
-	private ArrayList<String> messageList = new ArrayList<String>();
 
 	public Player(String name) {
 		this.name = name;
@@ -25,15 +26,21 @@ public class Player {
 	public void addGoal() {
 		if (!hasMaxGoals()) {
 			currentGoals.add(generateGoal());
-		} else{
+		} else {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
-			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Goal?", "New Goal", dialogButton);
-			if(dialogResult == JOptionPane.YES_OPTION) {
+			int dialogResult = JOptionPane
+					.showConfirmDialog(null, "Would You Like Receive a New Goal?", "New Goal",
+							dialogButton);
+			if (dialogResult == JOptionPane.YES_OPTION) {
 				Goal discardedGoal = discardUnstartedGoal();
-				if (discardedGoal==null){
-					JOptionPane.showMessageDialog(null, "There are no unstarted goals, no goal is eligible to be discarded" , "No Unstarted Goal", JOptionPane.PLAIN_MESSAGE);
-				}else {
-					JOptionPane.showMessageDialog(null, "Goal \"" + discardedGoal.getDescription() + "\" discarded", "Goal Discarded", JOptionPane.PLAIN_MESSAGE);
+				if (discardedGoal == null) {
+					JOptionPane.showMessageDialog(null,
+							"There are no unstarted goals, no goal is eligible to be discarded",
+							"No Unstarted Goal", JOptionPane.PLAIN_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Goal \"" + discardedGoal.getDescription() + "\" discarded",
+							"Goal Discarded", JOptionPane.PLAIN_MESSAGE);
 					currentGoals.add(generateGoal());
 				}
 			}
@@ -45,7 +52,7 @@ public class Player {
 	}
 
 	public void addTrains() {
-		while (currentTrains.size()<3){
+		while (currentTrains.size() < 3) {
 			currentTrains.add(new Train());
 		}
 	}
@@ -55,7 +62,7 @@ public class Player {
 		ArrayList<Train> trainsToRemove = new ArrayList<Train>();
 		for (Goal g : currentGoals) {
 			for (Train t : currentTrains) {
-				if ((t.getGoal() !=null) && (t.getGoal().equals(g) && t.hasCompletedGoal())) {
+				if ((t.getGoal() != null) && (t.getGoal().equals(g) && t.hasCompletedGoal())) {
 					System.out.println("Completed goal");
 					addPoint();
 					goalsToRemove.add(g);
@@ -63,11 +70,12 @@ public class Player {
 				}
 			}
 		}
-		for (Goal g : goalsToRemove){
-			messageList.add("Congratulations you completed your goal \"" + g.getDescription() + "\"!");
+		for (Goal g : goalsToRemove) {
+			messageList
+					.add("Congratulations you completed your goal \"" + g.getDescription() + "\"!");
 			currentGoals.remove(g);
 		}
-		for (Train t : trainsToRemove){
+		for (Train t : trainsToRemove) {
 			currentTrains.remove(t);
 		}
 	}
@@ -84,12 +92,6 @@ public class Player {
 		return discardedEngine;
 	}
 
-	public void displayMessages(){
-		for (String message: messageList){
-			JOptionPane.showMessageDialog(null, message , "Goal Completed!", JOptionPane.PLAIN_MESSAGE);
-		}
-		messageList.clear();
-	}
 	public Upgrade discardRandUpgrade() {
 		//This method removes a random upgrade from the list, provided the player has maximum number
 		//of upgrades, and returns it.
@@ -117,26 +119,34 @@ public class Player {
 		return discardedGoal;
 	}
 
+	public void displayMessages() {
+		for (String message : messageList) {
+			JOptionPane
+					.showMessageDialog(null, message, "Goal Completed!", JOptionPane.PLAIN_MESSAGE);
+		}
+		messageList.clear();
+	}
+
 	public Goal generateGoal() {
 		Goal g;
 		Node start = Game.currentMap.getRandomNode();
 		Node end = Game.currentMap.getRandomNode();
-		boolean valid=false;
-		while (!valid){
+		boolean valid = false;
+		while (!valid) {
 			valid = true;
-			for (Goal cg: currentGoals){
-				if ((cg.containsNode(start))||(cg.containsNode(end))){
+			for (Goal cg : currentGoals) {
+				if ((cg.containsNode(start)) || (cg.containsNode(end))) {
 					valid = false;
 					start = Game.currentMap.getRandomNode();
 					end = Game.currentMap.getRandomNode();
 				}
 			}
-			while (start.getId()==end.getId()){
+			while (start.getId() == end.getId()) {
 				valid = false;
 				end = Game.currentMap.getRandomNode();
 			}
 		}
-		g = new Goal(start,end);
+		g = new Goal(start, end);
 		return g;
 	}
 
@@ -181,12 +191,16 @@ public class Player {
 	public void giveRandomEngine() {
 		if (!this.hasMaxEngines()) {
 			this.engineInventory.add(new Engine());
-		}else{
+		} else {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
-			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Engine?", "New Engine", dialogButton);
-			if(dialogResult == JOptionPane.YES_OPTION) {
+			int dialogResult = JOptionPane
+					.showConfirmDialog(null, "Would You Like Receive a New Engine?", "New Engine",
+							dialogButton);
+			if (dialogResult == JOptionPane.YES_OPTION) {
 				Engine discardedEngine = discardRandEngine();
-				JOptionPane.showMessageDialog(null, "Engine \"" + discardedEngine.getName() + "\" discarded" , "Engine Discarded", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"Engine \"" + discardedEngine.getName() + "\" discarded",
+						"Engine Discarded", JOptionPane.PLAIN_MESSAGE);
 				this.engineInventory.add(new Engine());
 			}
 		}
@@ -195,12 +209,16 @@ public class Player {
 	public void giveRandomUpgrade() { //Need to come up with more upgrades
 		if (!this.hasMaxUpgrades()) {
 			this.upgradeInventory.add(new Upgrade());
-		}else{
+		} else {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
-			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Upgrade?", "New Upgrade", dialogButton);
-			if(dialogResult == JOptionPane.YES_OPTION) {
-				Upgrade discardedUpgrade =discardRandUpgrade();
-				JOptionPane.showMessageDialog(null, "Upgrade \"" + discardedUpgrade.getName() + "\" discarded" , "Upgrade Discarded", JOptionPane.PLAIN_MESSAGE);
+			int dialogResult = JOptionPane
+					.showConfirmDialog(null, "Would You Like Receive a New Upgrade?", "New Upgrade",
+							dialogButton);
+			if (dialogResult == JOptionPane.YES_OPTION) {
+				Upgrade discardedUpgrade = discardRandUpgrade();
+				JOptionPane.showMessageDialog(null,
+						"Upgrade \"" + discardedUpgrade.getName() + "\" discarded",
+						"Upgrade Discarded", JOptionPane.PLAIN_MESSAGE);
 				this.upgradeInventory.add(new Upgrade());
 			}
 		}

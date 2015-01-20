@@ -9,12 +9,15 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 
+/**
+ *
+ */
 public class ButtonElement extends GuiElement {
-	private String text;
+	private final Runnable action;
 	private final Color colour = new Color(0, 0, 0, 0.8f);
 	private Font font;
-	private final Runnable action;
 	private Image image;
+	private String text;
 
 	public ButtonElement(Rect bounds, String imageName, Runnable action) {
 		super(bounds);

@@ -135,7 +135,7 @@ public class Route {
 	}
 
 	public void useTeleport() {
-		indexOfCurrentNode = listOfNodes.size()-1;
+		indexOfCurrentNode = listOfNodes.size() - 1;
 	}
 
 }

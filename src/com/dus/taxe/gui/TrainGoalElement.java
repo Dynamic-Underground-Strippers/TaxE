@@ -19,13 +19,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TrainGoalElement extends GuiElement {
-	private static HashMap<EngineType, Image> images;
-	private final int index;
-	private static Image redTrainIcon;
-	private ButtonElement editRouteButton;
-	private Train train;
-	private Image icon;
 	private static int count = 0;
+	private static HashMap<EngineType, Image> images;
+	private static Image redTrainIcon;
+	private final int index;
+	private ButtonElement editRouteButton;
+	private Image icon;
+	private Train train;
 
 	public TrainGoalElement(Rect bounds, int index) {
 		super(bounds);

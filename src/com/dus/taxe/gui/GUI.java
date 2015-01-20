@@ -37,36 +37,36 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class GUI extends JFrame {
+	static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
-	static Goal tempRouteGoal;
 	private static final float X_SCALE = Screen.WIDTH / 1920f;
 	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
-	static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	public static GUI self;
+	static Font baseFont;
 	static Image draggingImage;
 	static Rect draggingRect;
 	static Resource draggingResource;
 	static long frameTime = 0;
-	static boolean settingRoute = false;
-	private static long lastFrame = 0;
 	static Map map;
-	static TrainGoalElement tempRouteTrainGoalElement;
+	static Rect reticuleRect;
 	static float scale;
+	static boolean settingRoute = false;
+	static Goal tempRouteGoal;
+	static TrainGoalElement tempRouteTrainGoalElement;
+	private static long lastFrame = 0;
+	private static Image reticuleImage;
+	private final Font bigFont;
+	private final Color c = new Color(0, 0, 0, 0.8f);
+	private final Font font;
 	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
 	private final BufferedImage image;
 	private final Image mapImage;
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
-	static Font baseFont;
-	private final Font font;
-	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
-	static Rect reticuleRect;
-	private static Image reticuleImage;
-	private final Color c = new Color(0, 0, 0, 0.8f);
-	private final Font bigFont;
 	Color trainBlue = new Color(84, 198, 198);
 	Color trainGreen = new Color(45, 242, 145);
 	Color trainPink = new Color(230, 113, 229);
+	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
 	public GUI(Map map) {
 		self = this;

@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class NodeElement extends GuiElement {
-	private static Image stationImage;
 	private static Image junctionImage;
+	private static Image stationImage;
 	private final BasicStroke dottedStroke = new BasicStroke(3, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{3}, 0);
+	private final boolean isJunction;
 	private final Node n;
 	private final BasicStroke solidStroke = new BasicStroke(3);
-	private final boolean isJunction;
 
 	public NodeElement(Node n) {
 		super(new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15 * GUI.scale,
