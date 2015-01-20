@@ -4,17 +4,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
-	public Connection[][] connections;
-	public ArrayList<Node> listOfNodes;
-	public ArrayList<Goal> possibleGoals;
-	private ArrayList<String> fileNames = new ArrayList<String>();
+	private Connection[][] connections;
+	private ArrayList<Node> listOfNodes;
+	private ArrayList<Goal> possibleGoals;
 
 	public Map() {
+		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add("nodes.json");
 		ArrayList<Node> loadedNodes = new ArrayList<Node>();
 		ArrayList<ArrayList<Connection>> loadedConnections = new ArrayList<ArrayList<Connection>>();
@@ -22,8 +22,11 @@ public class Map {
 		JSONParser parser = new JSONParser();
 		try {
 			Random rand = new Random();
-			Object obj = parser
-					.parse(new FileReader(fileNames.get(rand.nextInt(fileNames.size()))));
+			Object obj = parser.parse(new InputStreamReader(getClass().getClassLoader()
+																	  .getResourceAsStream(fileNames
+																			  .get(rand.nextInt(
+																					  fileNames
+																							  .size())))));
 			JSONObject mapList = (JSONObject) obj;
 			JSONArray nodeList = (JSONArray) mapList.get("nodes");
 			JSONArray connectionList = (JSONArray) mapList.get("connections");
@@ -73,8 +76,7 @@ public class Map {
 						endNode = node;
 					}
 				}
-				Goal tempGoal = new Goal(Integer.valueOf(goalJSON.get("points").toString()),
-						startNode, endNode);
+				Goal tempGoal = new Goal(startNode, endNode);
 				loadedGoals.add(tempGoal);
 				this.possibleGoals = loadedGoals;
 			}
@@ -101,9 +103,20 @@ public class Map {
 
 	}
 
-	public Goal getRandomGoal() {
-		int randomIndex = new Random().nextInt(possibleGoals.size());
-		return possibleGoals.get(randomIndex);
+	public Connection[][] getConnections() {
+		return connections;
+	}
+
+	public ArrayList<Node> getListOfNodes() {
+		return listOfNodes;
+	}
+
+	public Node getRandomNode() {
+		int randomIndex = new Random().nextInt(listOfNodes.size());
+		while (listOfNodes.get(randomIndex) instanceof Junction) {
+			randomIndex = new Random().nextInt(listOfNodes.size());
+		}
+		return listOfNodes.get(randomIndex);
 	}
 
 	public Node retrieveNode(int index) {

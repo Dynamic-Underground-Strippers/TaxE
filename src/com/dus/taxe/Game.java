@@ -5,16 +5,10 @@ import com.dus.taxe.gui.GUI;
 import javax.swing.JOptionPane;
 
 public class Game {
-	private static final int maxPoints = 1000;
 	public static Map currentMap;
 	private static Player currentPlayer;
 	private static Player otherPlayer;
 	private static int turn;
-
-	public Game(Map currentMap) {
-		turn = 0;
-		Game.currentMap = currentMap;
-	}
 
 	public static void endGame() {
 		System.out.println("Congratulations " + currentPlayer.getName());
@@ -24,7 +18,7 @@ public class Game {
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
 		currentPlayer.completeGoals();
-		if (currentPlayer.getPoints() >= maxPoints) {
+		if (turn == 20) {
 			endGame();
 		}
 		swapPlayers();
@@ -35,27 +29,37 @@ public class Game {
 		return currentPlayer;
 	}
 
+	public static Player getOtherPlayer() {
+		return otherPlayer;
+	}
+
 	public static void main(String[] args) {
-		Map m = new Map();
+		turn = 0;
+		currentMap = new Map();
 		String s;
 		if ((s = JOptionPane.showInputDialog("Enter player 1's name:")) == null) {
-			currentPlayer = new Player("Player 1", m);
+			currentPlayer = new Player("Player 1");
 		} else {
-			currentPlayer = new Player(s, m);
+			currentPlayer = new Player(s);
 		}
 		if ((s = JOptionPane.showInputDialog("Enter player 2's name:")) == null) {
-			otherPlayer = new Player("Player 2", m);
+			otherPlayer = new Player("Player 2");
 		} else {
-			otherPlayer = new Player(s, m);
+			otherPlayer = new Player(s);
 		}
-		new GUI(m).setPlayer(currentPlayer);
+		new GUI(currentMap).setPlayer(currentPlayer);
 	}
 
 	public static void newTurn() {
-		currentPlayer.addGoal(currentMap.getRandomGoal());
-		// Need to somehow add in GUI validation here
-		currentPlayer.giveRandomEngine();
-		currentPlayer.giveRandomUpgrade();
+		//if statement checks whether it is player 2's first turn or not. This was necessary as player 2 was getting a turn advantage.
+		currentPlayer.displayMessages();
+		if (turn != 1) {
+			currentPlayer.addTrains();
+			currentPlayer.addGoal();
+			// Need to somehow add in GUI validation here
+			currentPlayer.giveRandomEngine();
+			currentPlayer.giveRandomUpgrade();
+		}
 	}
 
 	private static void swapPlayers() {

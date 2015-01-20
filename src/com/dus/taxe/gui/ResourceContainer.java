@@ -10,48 +10,66 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public class ResourceContainer extends GuiElement {
-	private static final int PADDING = 10;
+	static final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
+	private static int PADDING;
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
 	private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
 	private final Rect[] engineRects = new Rect[3];
-	private final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
 	private final Rect[] upgradeRects = new Rect[4];
+	private Rect hoverRect;
+	private String hoverString;
 
 	public ResourceContainer(Rect bounds) {
 		super(bounds);
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.HAND_CART,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_handcart.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.STEAM,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_steam.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.DIESEL,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_diesel.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.ELECTRIC,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_electric.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.ROCKET,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_rocket.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		upgradeImages.put(UpgradeType.DOUBLE_SPEED,
-				new ImageIcon(getClass().getClassLoader().getResource("upgrade_doublespeed.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		upgradeImages.put(UpgradeType.TELEPORT,
-				new ImageIcon(getClass().getClassLoader().getResource("upgrade_teleport.png"))
-						.getImage());
+		PADDING = (int) (10 * GUI.scale);
+		try {
+			engineImages.put(EngineType.HAND_CART,
+					ImageIO.read(getClass().getResourceAsStream("/engine_handcart.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.STEAM,
+					ImageIO.read(getClass().getResourceAsStream("/engine_steam.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.DIESEL,
+					ImageIO.read(getClass().getResourceAsStream("/engine_diesel.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.ELECTRIC,
+					ImageIO.read(getClass().getResourceAsStream("/engine_electric.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.ROCKET,
+					ImageIO.read(getClass().getResourceAsStream("/engine_rocket.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			upgradeImages.put(UpgradeType.DOUBLE_SPEED,
+					ImageIO.read(getClass().getResourceAsStream("/upgrade_doublespeed.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			upgradeImages.put(UpgradeType.TELEPORT,
+					ImageIO.read(getClass().getResourceAsStream("/upgrade_teleport.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		int imageSize = (int) ((bounds.height - PADDING * 8f) / 7f);
 		for (int i = 0; i < engineRects.length; i++) {
 			engineRects[i] = new Rect(PADDING, i * (imageSize + PADDING) + PADDING, imageSize,
@@ -83,6 +101,18 @@ public class ResourceContainer extends GuiElement {
 					(int) (bounds.x + upgradeRects[i].x), (int) (bounds.y + upgradeRects[i].y),
 					(int) (upgradeRects[i].width), (int) (upgradeRects[i].height), GUI.self);
 		}
+		if (hoverRect != null && hoverString != null) {
+			graphics.setColor(Color.DARK_GRAY);
+			graphics.fillRect((int) (bounds.x + hoverRect.x + hoverRect.width + 10),
+					(int) (bounds.y + hoverRect.y + (hoverRect.height / 2f) -
+							((graphics.getFontMetrics().getHeight() * 1.2f) / 2f)),
+					graphics.getFontMetrics().stringWidth(hoverString) + 20,
+					(int) (graphics.getFontMetrics().getHeight() * 1.2f));
+			graphics.setColor(Color.white);
+			graphics.drawString(hoverString, bounds.x + hoverRect.x +
+					hoverRect.width + 20, bounds.y + hoverRect.y + (hoverRect.height / 2f) +
+					(graphics.getFontMetrics().getHeight() * 0.3f));
+		}
 	}
 
 	@Override
@@ -90,15 +120,25 @@ public class ResourceContainer extends GuiElement {
 		Point p = e.getPoint();
 		p.x -= bounds.x;
 		p.y -= bounds.y;
-		for (Rect r : engineRects) {
-			if (r.contains(p)) {
+		hoverRect = null;
+		hoverString = null;
+		for (int i = 0; i < engineRects.length; i++) {
+			if (engineRects[i].contains(p) &&
+					i < Game.getCurrentPlayer().getEngineInventory().size()) {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
+				hoverRect = engineRects[i];
+				hoverString = Game.getCurrentPlayer().getEngineInventory().get(i).getName();
 				return;
 			}
 		}
-		for (Rect r : upgradeRects) {
-			if (r.contains(p)) {
+		for (int i = 0; i < upgradeRects.length; i++) {
+			if (upgradeRects[i].contains(p) &&
+					i < Game.getCurrentPlayer().getUpgradeInventory().size()) {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
+				hoverRect = upgradeRects[i];
+				hoverString = Game.getCurrentPlayer().getUpgradeInventory().get(i).getName() + " " +
+						"- " +
+						Game.getCurrentPlayer().getUpgradeInventory().get(i).getDescription();
 				return;
 			}
 		}

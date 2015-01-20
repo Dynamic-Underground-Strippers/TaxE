@@ -3,21 +3,26 @@ package com.dus.taxe;
 public class Goal {
 	private String description;
 	private Node end;
-	private int points;
 	private Node start;
 
-	public Goal(int points, Node start, Node end) {
-		this.points = points;
+	public Goal(Node start, Node end) {
 		this.start = start;
 		this.end = end;
 		this.description =
 				"Move a train from " + this.start.getName() + " to " + this.end.getName();
 	}
 
+	public boolean containsNode(Node node) {
+		if ((this.start.getId() == node.getId()) || (this.end.getId() == node.getId())) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean equals(Object other) {
 		if (other instanceof Goal) {
 			Goal g = (Goal) other;
-			return start.equals(g.start) && end.equals(g.end) && points == g.points;
+			return start.equals(g.start) && end.equals(g.end);
 		} else {
 			return false;
 		}
@@ -29,10 +34,6 @@ public class Goal {
 
 	public Node getEnd() {
 		return end;
-	}
-
-	public int getPoints() {
-		return points;
 	}
 
 	public Node getStart() {

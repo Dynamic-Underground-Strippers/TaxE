@@ -3,18 +3,14 @@ package com.dus.taxe;
 import com.dus.taxe.Engine.EngineType;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Train {
 
 	private Engine engine = new Engine(EngineType.HAND_CART);
-	private boolean engineer;
-	private boolean frozen;
 	private Goal goal;
 	private Route route;
 	private int speed;
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
-	private ArrayList<Node> visitedNodes = new ArrayList<Node>();
 
 	public Train() {
 		this.engine = new Engine(Engine.EngineType.HAND_CART);
@@ -26,10 +22,6 @@ public class Train {
 		upgrades.add(upgrade);
 	}
 
-	public void associateRoute(Route route) {
-		this.route = route;
-	}
-
 	public Engine getEngine() {
 		return engine;
 	}
@@ -39,13 +31,12 @@ public class Train {
 		this.engine = engine;
 		for (Upgrade upgrade : this.upgrades) {
 			if (upgrade.getReapply()) {
+				int index = this.upgrades.indexOf(upgrade);
 				this.upgrades.remove(upgrade);
 				upgrade.use(this);
-				this.upgrades.add(upgrade);
+				this.upgrades.add(index, upgrade);
 			}
 		}
-		Collections.sort(this.upgrades);
-
 	}
 
 	public Goal getGoal() {
@@ -58,6 +49,10 @@ public class Train {
 
 	public Route getRoute() {
 		return route;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
 	}
 
 	public int getSpeed() {
@@ -73,13 +68,8 @@ public class Train {
 		return this.upgrades;
 	}
 
-	public ArrayList<Node> getVisitedNodes() {
-		//returns nodes for GUI
-		return this.visitedNodes;
-	}
-
 	public boolean hasCompletedGoal() {
-		return visitedNodes.get(visitedNodes.size() - 1).equals(goal.getEnd());
+		return route.isComplete();
 	}
 
 	public boolean hasUpgrade(String name) {
@@ -92,10 +82,23 @@ public class Train {
 	}
 
 	public void moveTrain() {
-		this.route.updateDistanceAlongConnection();
+		if (this.route != null) {
+			boolean teleport = false;
+			for (int i = 0; i < upgrades.size(); i++) {
+				if (upgrades.get(i).getName() == "Teleport") {
+					teleport = true;
+				}
+			}
+			if (teleport) {
+				this.route.useTeleport();
+			} else {
+				this.route.updateDistanceAlongConnection(this.speed);
+			}
+
+		}
 	}
 
 	public void setFrozen(boolean frozen) {
-		this.frozen = frozen;
+		boolean frozen1 = frozen;
 	}
 }
