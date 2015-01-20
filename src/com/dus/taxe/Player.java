@@ -11,7 +11,7 @@ public class Player {
 	private ArrayList<Engine> engineInventory = new ArrayList<Engine>();
 	private int points;
 	private ArrayList<Upgrade> upgradeInventory = new ArrayList<Upgrade>();
-
+	private ArrayList<String> messageList = new ArrayList<String>();
 
 	public Player(String name) {
 		this.name = name;
@@ -64,6 +64,7 @@ public class Player {
 			}
 		}
 		for (Goal g : goalsToRemove){
+			messageList.add("Congratulations you completed your goal \"" + g.getDescription() + "\"!");
 			currentGoals.remove(g);
 		}
 		for (Train t : trainsToRemove){
@@ -83,6 +84,12 @@ public class Player {
 		return discardedEngine;
 	}
 
+	public void displayMessages(){
+		for (String message: messageList){
+			JOptionPane.showMessageDialog(null, message , "Goal Completed!", JOptionPane.PLAIN_MESSAGE);
+		}
+		messageList.clear();
+	}
 	public Upgrade discardRandUpgrade() {
 		//This method removes a random upgrade from the list, provided the player has maximum number
 		//of upgrades, and returns it.

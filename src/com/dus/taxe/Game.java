@@ -48,6 +48,7 @@ public class Game {
 
 	public static void newTurn() {
 		//if statement checks whether it is player 2's first turn or not. This was necessary as player 2 was getting a turn advantage.
+		currentPlayer.displayMessages();
 		if (turn!=1) {
 			currentPlayer.addTrains();
 			currentPlayer.addGoal();
