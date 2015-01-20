@@ -44,24 +44,39 @@ abstract class GuiElement {
 	}
 
 	/**
-	 * Returns the {@link com.dus.taxe.gui.GuiElement}'s tooltip
-	 *
-	 * @return
+	 * @return the {@link com.dus.taxe.gui.GuiElement}'s tooltip
 	 */
 	public String getTooltip() {
 		return tooltip;
 	}
 
+	/**
+	 * @param tooltip the text to set the {@link com.dus.taxe.gui.GuiElement}'s tooltip to
+	 */
 	void setTooltip(String tooltip) {
 		this.tooltip = tooltip;
 	}
 
+	/**
+	 * @return whether or not this {@link com.dus.taxe.gui.GuiElement}'s bounds are currently
+	 * being animated or not
+	 */
 	boolean isAnimationRunning() {
 		return bounds.animationRunning;
 	}
 
+	/**
+	 * Method that will handle mouseMoved events
+	 *
+	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
+	 */
 	protected abstract void mouseMoved(MouseEvent e);
 
+	/**
+	 * Method that indicates that the mouse has moved outside of the {@link com.dus.taxe.gui.GuiElement}
+	 *
+	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
+	 */
 	public void mouseMovedExternal(MouseEvent e) {
 		hovering = false;
 	}
@@ -87,6 +102,16 @@ abstract class GuiElement {
 		bounds.update();
 	}
 
+	/**
+	 * Utility method to facilitate wrapping text
+	 *
+	 * @param text     the text to wrap
+	 * @param maxWidth the maximum width that each line of text can be
+	 * @param graphics the {@link java.awt.Graphics} object from the {@link javax.swing.JFrame}
+	 * @param font     the font to use to determine text width/height from
+	 * @return a {@link java.lang.String} array, with each element representing a single line of
+	 * wrapped tetx
+	 */
 	String[] wrapText(String text, int maxWidth, Graphics graphics, Font font) {
 		String[] split = text.split(" ");
 		ArrayList<String> sections = new ArrayList<String>();

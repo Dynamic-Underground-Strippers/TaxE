@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TrainGoalElement extends GuiElement {
@@ -79,8 +78,11 @@ public class TrainGoalElement extends GuiElement {
 			e.printStackTrace();
 		}
 		if (redTrainIcon == null) {
-			redTrainIcon = new ImageIcon(getClass().getClassLoader().getResource("train_red.png"))
-					.getImage();
+			try {
+				redTrainIcon = ImageIO.read(getClass().getResourceAsStream("/train_red.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -160,7 +162,7 @@ public class TrainGoalElement extends GuiElement {
 	public void onMouseUp(MouseEvent e) {
 		if (GUI.draggingRect != null && GUI.draggingImage != null && GUI.draggingResource != null) {
 			if (GUI.draggingResource instanceof Engine) {
-				if (!(train.getEngine().getName() == GUI.draggingResource.getName())) {
+				if (!(train.getEngine().getName().equals(GUI.draggingResource.getName()))) {
 					train.setEngine((Engine) GUI.draggingResource);
 					Game.getCurrentPlayer().removeEngine((Engine) GUI.draggingResource);
 					GUI.draggingRect = null;
@@ -191,16 +193,16 @@ public class TrainGoalElement extends GuiElement {
 		String image;
 		switch (index) {
 			case 0:
-				image = "edit_blue.png";
+				image = "/edit_blue.png";
 				break;
 			case 1:
-				image = "edit_green.png";
+				image = "/edit_green.png";
 				break;
 			case 2:
-				image = "edit_pink.png";
+				image = "/edit_pink.png";
 				break;
 			default:
-				image = "edit.png";
+				image = "/edit.png";
 				break;
 		}
 		boolean addToGUI = editRouteButton == null;

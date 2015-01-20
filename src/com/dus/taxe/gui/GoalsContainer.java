@@ -13,13 +13,13 @@ import java.awt.event.MouseEvent;
 
 public class GoalsContainer extends GuiElement {
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
+	private final Color blue = new Color(84, 198, 198);
 	private final float[] centres = new float[3];
+	private final Color green = new Color(45, 242, 145);
 	private final Rect[] nodeLinks = new Rect[6];
 	private final Font normalFont;
+	private final Color pink = new Color(230, 113, 229);
 	private final Font titleFont;
-	Color blue = new Color(84, 198, 198);
-	Color green = new Color(45, 242, 145);
-	Color pink = new Color(230, 113, 229);
 
 	GoalsContainer(Rect bounds) {
 		super(bounds);
@@ -126,10 +126,6 @@ public class GoalsContainer extends GuiElement {
 
 	@Override
 	public void onMouseUp(MouseEvent e) {
-
-	}
-
-	public void setGoalColour(Goal goal, Color color) {
 
 	}
 }

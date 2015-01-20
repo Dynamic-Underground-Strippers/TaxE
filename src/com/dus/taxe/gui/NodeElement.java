@@ -14,9 +14,10 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public class NodeElement extends GuiElement {
 	private static Image junctionImage;
@@ -32,20 +33,20 @@ public class NodeElement extends GuiElement {
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15 * GUI.scale, 30 * GUI.scale,
 				30 * GUI.scale));
 		this.n = n;
-		if (n instanceof Junction) {
-			isJunction = true;
-		} else {
-			isJunction = false;
-		}
+		isJunction = n instanceof Junction;
 		if (stationImage == null) {
-			//noinspection ConstantConditions
-			stationImage = new ImageIcon(getClass().getClassLoader().getResource("station.png"))
-					.getImage();
+			try {
+				stationImage = ImageIO.read(getClass().getResourceAsStream("/station.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		if (junctionImage == null) {
-			//noinspection ConstantConditions
-			junctionImage = new ImageIcon(getClass().getClassLoader().getResource("junction.png"))
-					.getImage();
+			try {
+				junctionImage = ImageIO.read(getClass().getResourceAsStream("/junction.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		setTooltip(n.getName());
 	}

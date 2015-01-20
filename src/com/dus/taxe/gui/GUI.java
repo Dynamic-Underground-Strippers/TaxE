@@ -32,15 +32,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class GUI extends JFrame {
 	static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
-	private static final float X_SCALE = Screen.WIDTH / 1920f;
-	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
 	public static GUI self;
 	static Font baseFont;
 	static Image draggingImage;
@@ -60,12 +58,12 @@ public class GUI extends JFrame {
 	private final Font font;
 	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
 	private final BufferedImage image;
-	private final Image mapImage;
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
-	Color trainBlue = new Color(84, 198, 198);
-	Color trainGreen = new Color(45, 242, 145);
-	Color trainPink = new Color(230, 113, 229);
+	private final Color trainBlue = new Color(84, 198, 198);
+	private final Color trainGreen = new Color(45, 242, 145);
+	private final Color trainPink = new Color(230, 113, 229);
+	private Image mapImage;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
 	public GUI(Map map) {
@@ -82,11 +80,16 @@ public class GUI extends JFrame {
 		}
 		font = baseFont.deriveFont(16f);
 		bigFont = font.deriveFont(60f);
-		//noinspection ConstantConditions
-		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
-		//noinspection ConstantConditions
-		reticuleImage = new ImageIcon(getClass().getClassLoader().getResource("crosshair.png"))
-				.getImage();
+		try {
+			mapImage = ImageIO.read(getClass().getResourceAsStream("/map.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			reticuleImage = ImageIO.read(getClass().getResourceAsStream("/crosshair.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		for (Node n : map.getListOfNodes()) {
 			addGuiElement(new NodeElement(n));
 		}

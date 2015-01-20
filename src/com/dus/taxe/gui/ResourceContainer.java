@@ -10,9 +10,10 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public class ResourceContainer extends GuiElement {
 	static final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
@@ -21,40 +22,54 @@ public class ResourceContainer extends GuiElement {
 	private final HashMap<EngineType, Image> engineImages = new HashMap<EngineType, Image>();
 	private final Rect[] engineRects = new Rect[3];
 	private final Rect[] upgradeRects = new Rect[4];
-	Rect hoverRect;
-	String hoverString;
+	private Rect hoverRect;
+	private String hoverString;
 
 	public ResourceContainer(Rect bounds) {
 		super(bounds);
 		PADDING = (int) (10 * GUI.scale);
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.HAND_CART,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_handcart.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.STEAM,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_steam.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.DIESEL,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_diesel.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.ELECTRIC,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_electric.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		engineImages.put(EngineType.ROCKET,
-				new ImageIcon(getClass().getClassLoader().getResource("engine_rocket.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		upgradeImages.put(UpgradeType.DOUBLE_SPEED,
-				new ImageIcon(getClass().getClassLoader().getResource("upgrade_doublespeed.png"))
-						.getImage());
-		//noinspection ConstantConditions
-		upgradeImages.put(UpgradeType.TELEPORT,
-				new ImageIcon(getClass().getClassLoader().getResource("upgrade_teleport.png"))
-						.getImage());
+		try {
+			engineImages.put(EngineType.HAND_CART,
+					ImageIO.read(getClass().getResourceAsStream("/engine_handcart.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.STEAM,
+					ImageIO.read(getClass().getResourceAsStream("/engine_steam.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.DIESEL,
+					ImageIO.read(getClass().getResourceAsStream("/engine_diesel.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.ELECTRIC,
+					ImageIO.read(getClass().getResourceAsStream("/engine_electric.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			engineImages.put(EngineType.ROCKET,
+					ImageIO.read(getClass().getResourceAsStream("/engine_rocket.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			upgradeImages.put(UpgradeType.DOUBLE_SPEED,
+					ImageIO.read(getClass().getResourceAsStream("/upgrade_doublespeed.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			upgradeImages.put(UpgradeType.TELEPORT,
+					ImageIO.read(getClass().getResourceAsStream("/upgrade_teleport.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		int imageSize = (int) ((bounds.height - PADDING * 8f) / 7f);
 		for (int i = 0; i < engineRects.length; i++) {
 			engineRects[i] = new Rect(PADDING, i * (imageSize + PADDING) + PADDING, imageSize,

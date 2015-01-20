@@ -6,8 +6,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -23,8 +24,11 @@ public class ButtonElement extends GuiElement {
 		super(bounds);
 		this.action = action;
 		if (imageName != null) {
-			//noinspection ConstantConditions
-			image = new ImageIcon(getClass().getClassLoader().getResource(imageName)).getImage();
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream(imageName));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
