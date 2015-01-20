@@ -100,6 +100,10 @@ public class TrainGoalElement extends GuiElement {
 		return editRouteButton;
 	}
 
+	public int getIndex() {
+		return index;
+	}
+
 	public Train getTrain() {
 		return train;
 	}

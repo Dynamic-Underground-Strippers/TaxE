@@ -63,6 +63,9 @@ public class GUI extends JFrame {
 	private static Image reticuleImage;
 	private final Color c = new Color(0, 0, 0, 0.8f);
 	private final Font bigFont;
+	Color trainBlue = new Color(84, 198, 198);
+	Color trainGreen = new Color(45, 242, 145);
+	Color trainPink = new Color(230, 113, 229);
 
 	public GUI(Map map) {
 		self = this;
@@ -250,12 +253,26 @@ public class GUI extends JFrame {
 		if (map != null) {
 			g.setColor(Color.BLACK);
 			g.setStroke(trackStroke);
+			Color c = Color.black;
+			if (settingRoute) {
+				switch (tempRouteTrainGoalElement.getIndex()) {
+					case 0:
+						c = trainBlue;
+						break;
+					case 1:
+						c = trainGreen;
+						break;
+					case 2:
+						c = trainPink;
+						break;
+				}
+			}
 			for (int i = 0; i < map.getConnections().length; i++) {
 				for (int j = 0; j <= i; j++) {
 					if (map.getConnections()[i][j] != null) {
 						g.setColor((tempRouteConnections.contains(map.getConnections()[i][j]) ||
-								tempRouteConnections.contains(
-										map.getConnections()[j][i])) ? Color.orange : Color.black);
+								tempRouteConnections
+										.contains(map.getConnections()[j][i])) ? c : Color.black);
 						g.drawLine((int) (map.retrieveNode(i).getLocation().getX() * Screen.WIDTH),
 								(int) (map.retrieveNode(i).getLocation().getY() * Screen.HEIGHT),
 								(int) (map.retrieveNode(j).getLocation().getX() * Screen.WIDTH),
