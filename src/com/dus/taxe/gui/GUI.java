@@ -6,6 +6,7 @@ import com.dus.taxe.Goal;
 import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
+import com.dus.taxe.Point;
 import com.dus.taxe.Resource;
 
 import java.awt.BasicStroke;
@@ -253,17 +254,17 @@ public class GUI extends JFrame {
 		if (map != null) {
 			g.setColor(Color.BLACK);
 			g.setStroke(trackStroke);
-			Color c = Color.black;
+			Color colour = Color.black;
 			if (settingRoute) {
 				switch (tempRouteTrainGoalElement.getIndex()) {
 					case 0:
-						c = trainBlue;
+						colour = trainBlue;
 						break;
 					case 1:
-						c = trainGreen;
+						colour = trainGreen;
 						break;
 					case 2:
-						c = trainPink;
+						colour = trainPink;
 						break;
 				}
 			}
@@ -271,12 +272,24 @@ public class GUI extends JFrame {
 				for (int j = 0; j <= i; j++) {
 					if (map.getConnections()[i][j] != null) {
 						g.setColor((tempRouteConnections.contains(map.getConnections()[i][j]) ||
-								tempRouteConnections
-										.contains(map.getConnections()[j][i])) ? c : Color.black);
+								tempRouteConnections.contains(
+										map.getConnections()[j][i])) ? colour : Color.black);
 						g.drawLine((int) (map.retrieveNode(i).getLocation().getX() * Screen.WIDTH),
 								(int) (map.retrieveNode(i).getLocation().getY() * Screen.HEIGHT),
 								(int) (map.retrieveNode(j).getLocation().getX() * Screen.WIDTH),
 								(int) (map.retrieveNode(j).getLocation().getY() * Screen.HEIGHT));
+						g.setColor(c);
+						Point middle = Point.middle(map.retrieveNode(i).getLocation(),
+								map.retrieveNode(j).getLocation());
+						g.fillOval((int) (middle.getX() * Screen.WIDTH - 15 * scale),
+								(int) (middle.getY() * Screen.HEIGHT - 15 * scale),
+								(int) (30 * scale), (int) (30 * scale));
+						g.setColor(Color.white);
+						g.drawString(String.valueOf(map.getConnections()[i][j].getDistance()),
+								middle.getX() * Screen.WIDTH - g.getFontMetrics().stringWidth(
+										String.valueOf(map.getConnections()[i][j].getDistance())) /
+										2f, middle.getY() * Screen.HEIGHT +
+										g.getFontMetrics().getHeight() * 0.3f);
 					}
 				}
 			}

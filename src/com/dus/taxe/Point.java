@@ -31,4 +31,8 @@ public class Point {
 		String s = "(" + String.valueOf(x) + "," + String.valueOf(y) + ")";
 		return s;
 	}
+
+	public static Point middle(Point a, Point b) {
+		return new Point((a.x + b.x) / 2f, (a.y + b.y) / 2f);
+	}
 }
