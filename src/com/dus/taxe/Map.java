@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,8 +22,11 @@ public class Map {
 		JSONParser parser = new JSONParser();
 		try {
 			Random rand = new Random();
-			Object obj = parser
-					.parse(new FileReader(fileNames.get(rand.nextInt(fileNames.size()))));
+			Object obj = parser.parse(new InputStreamReader(getClass().getClassLoader()
+																	  .getResourceAsStream(fileNames
+																			  .get(rand.nextInt(
+																					  fileNames
+																							  .size())))));
 			JSONObject mapList = (JSONObject) obj;
 			JSONArray nodeList = (JSONArray) mapList.get("nodes");
 			JSONArray connectionList = (JSONArray) mapList.get("connections");
@@ -105,7 +108,8 @@ public class Map {
 		//returns a node based on index;
 		return listOfNodes.get(index);
 	}
-	public Node getRandomNode(){
+
+	public Node getRandomNode() {
 		return listOfNodes.get(new Random().nextInt(listOfNodes.size()));
 	}
 

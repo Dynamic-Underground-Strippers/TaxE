@@ -27,8 +27,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +66,7 @@ public class GUI extends JFrame {
 		GUI.map = map;
 		try {
 			baseFont = Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(new File("src/font" + ".ttf")));
+					getClass().getClassLoader().getResourceAsStream("font.ttf"));
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
