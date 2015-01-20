@@ -260,6 +260,11 @@ public class GUI extends JFrame {
 		if (reticuleRect != null && reticuleImage != null) {
 			graphics.drawImage(reticuleImage, (int) reticuleRect.x, (int) reticuleRect.y,
 					(int) reticuleRect.width, (int) reticuleRect.height, this);
+			graphics.setColor(Color.magenta);
+			graphics.drawRect((int) reticuleRect.x, (int) reticuleRect.y, (int) reticuleRect.width,
+					(int) reticuleRect.height);
+		} else {
+			System.out.println(reticuleRect + ", " + reticuleImage);
 		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();

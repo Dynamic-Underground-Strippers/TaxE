@@ -75,6 +75,7 @@ public class Route {
 	private void setRoute(ArrayList<Node> newNodes) {
 		// Sets the listOfNodes to be equal to the list passed in the constructor
 		listOfNodes = newNodes;
+		System.out.println(listOfNodes.size());
 	}
 
 	public String toString() {
@@ -87,6 +88,7 @@ public class Route {
 	}
 
 	public void updateDistanceAlongConnection() {
+		System.out.println(listOfNodes.size());
 		int totalDistance = Game.currentMap
 				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
 						this.listOfNodes.get(this.indexOfCurrentNode + 1));

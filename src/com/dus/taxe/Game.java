@@ -15,6 +15,7 @@ public class Game {
 	}
 
 	public static void endTurn() {
+
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
 		currentPlayer.completeGoals();
