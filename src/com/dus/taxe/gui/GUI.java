@@ -58,7 +58,7 @@ public class GUI extends JFrame {
 	static Font baseFont;
 	private final Font font;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
-	static Rect reticuleRect = new Rect();
+	static Rect reticuleRect;
 	private static Image reticuleImage;
 
 	public GUI(Map map) {
@@ -258,13 +258,8 @@ public class GUI extends JFrame {
 			}
 		}
 		if (reticuleRect != null && reticuleImage != null) {
-			graphics.drawImage(reticuleImage, (int) reticuleRect.x, (int) reticuleRect.y,
+			g.drawImage(reticuleImage, (int) reticuleRect.x, (int) reticuleRect.y,
 					(int) reticuleRect.width, (int) reticuleRect.height, this);
-			graphics.setColor(Color.magenta);
-			graphics.drawRect((int) reticuleRect.x, (int) reticuleRect.y, (int) reticuleRect.width,
-					(int) reticuleRect.height);
-		} else {
-			System.out.println(reticuleRect + ", " + reticuleImage);
 		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();
