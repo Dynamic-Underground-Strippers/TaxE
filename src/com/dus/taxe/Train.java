@@ -12,7 +12,6 @@ public class Train {
 	private Route route;
 	private int speed;
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
-	private ArrayList<Node> visitedNodes = new ArrayList<Node>();
 
 	public Train() {
 		this.engine = new Engine(Engine.EngineType.HAND_CART);
@@ -37,13 +36,12 @@ public class Train {
 		this.engine = engine;
 		for (Upgrade upgrade : this.upgrades) {
 			if (upgrade.getReapply()) {
+				int index = this.upgrades.indexOf(upgrade);
 				this.upgrades.remove(upgrade);
 				upgrade.use(this);
-				this.upgrades.add(upgrade);
+				this.upgrades.add(index, upgrade);
 			}
 		}
-		Collections.sort(this.upgrades);
-
 	}
 
 	public Goal getGoal() {
@@ -71,13 +69,8 @@ public class Train {
 		return this.upgrades;
 	}
 
-	public ArrayList<Node> getVisitedNodes() {
-		//returns nodes for GUI
-		return this.visitedNodes;
-	}
-
 	public boolean hasCompletedGoal() {
-		return visitedNodes.get(visitedNodes.size() - 1).equals(goal.getEnd());
+		return route.isComplete();
 	}
 
 	public boolean hasUpgrade(String name) {

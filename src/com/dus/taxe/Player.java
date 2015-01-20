@@ -1,5 +1,6 @@
 package com.dus.taxe;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,6 +25,13 @@ public class Player {
 	public void addGoal() {
 		if (!hasMaxGoals()) {
 			currentGoals.add(generateGoal());
+		} else{
+			int dialogButton = JOptionPane.YES_NO_OPTION;
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Goal?", "New Goal", dialogButton);
+			if(dialogResult == JOptionPane.YES_OPTION) {
+				discardUnstartedGoal();
+				currentGoals.add(generateGoal());
+			}
 		}
 	}
 
@@ -83,6 +91,7 @@ public class Player {
 			}
 		}
 		Goal discardedGoal = discardable.get((int) (Math.random() * discardable.size()));
+		currentGoals.remove(discardedGoal);
 		return discardedGoal;
 	}
 
@@ -150,12 +159,26 @@ public class Player {
 	public void giveRandomEngine() {
 		if (!this.hasMaxEngines()) {
 			this.engineInventory.add(new Engine());
+		}else{
+			int dialogButton = JOptionPane.YES_NO_OPTION;
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Engine?", "New Engine", dialogButton);
+			if(dialogResult == JOptionPane.YES_OPTION) {
+				discardRandEngine();
+				this.engineInventory.add(new Engine());
+			}
 		}
 	}
 
 	public void giveRandomUpgrade() { //Need to come up with more upgrades
 		if (!this.hasMaxUpgrades()) {
 			this.upgradeInventory.add(new Upgrade());
+		}else{
+			int dialogButton = JOptionPane.YES_NO_OPTION;
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Upgrade?", "New Upgrade", dialogButton);
+			if(dialogResult == JOptionPane.YES_OPTION) {
+				discardRandUpgrade();
+				this.upgradeInventory.add(new Upgrade());
+			}
 		}
 	}
 
