@@ -31,5 +31,11 @@ public class Goal {
 	public Node getStart() {
 		return start;
 	}
+	public boolean containsNode(Node node){
+		if ((this.start.getId() == node.getId())||(this.end.getId()==node.getId())){
+			return true;
+		}
+		return false;
+	}
 }
 

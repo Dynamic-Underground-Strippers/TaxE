@@ -90,8 +90,20 @@ public class Player {
 		Goal g;
 		Node start = Game.currentMap.getRandomNode();
 		Node end = Game.currentMap.getRandomNode();
-		while (start.getId() == end.getId()){
-			end = Game.currentMap.getRandomNode();
+		boolean valid=false;
+		while (!valid){
+			valid = true;
+			for (Goal cg: currentGoals){
+				if ((cg.containsNode(start))||(cg.containsNode(end))){
+					valid = false;
+					start = Game.currentMap.getRandomNode();
+					end = Game.currentMap.getRandomNode();
+				}
+			}
+			while (start.getId()==end.getId()){
+				valid = false;
+				end = Game.currentMap.getRandomNode();
+			}
 		}
 		g = new Goal(start,end);
 		return g;
