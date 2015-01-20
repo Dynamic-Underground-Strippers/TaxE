@@ -4,6 +4,7 @@ public class Goal {
 	private String description;
 	private Node end;
 	private Node start;
+
 	public Goal(Node start, Node end) {
 		this.start = start;
 		this.end = end;
@@ -31,8 +32,9 @@ public class Goal {
 	public Node getStart() {
 		return start;
 	}
-	public boolean containsNode(Node node){
-		if ((this.start.getId() == node.getId())||(this.end.getId()==node.getId())){
+
+	public boolean containsNode(Node node) {
+		if ((this.start.getId() == node.getId()) || (this.end.getId() == node.getId())) {
 			return true;
 		}
 		return false;
