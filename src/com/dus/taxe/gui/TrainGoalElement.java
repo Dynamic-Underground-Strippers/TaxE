@@ -77,6 +77,8 @@ public class TrainGoalElement extends GuiElement {
 		}
 	}
 
+	boolean b = false;
+
 	@Override
 	public void draw(Graphics2D graphics) {
 		editRouteButton.bounds = new Rect(bounds.x + 0.9f * bounds.width, bounds.y,
@@ -89,8 +91,12 @@ public class TrainGoalElement extends GuiElement {
 			}
 			if (icon != null && train.getRoute() != null) {
 				Point p = train.getRoute().getCurrentNode().getLocation();
-				graphics.drawImage(icon, (int) (p.getX() - 15), (int) (p.getY() - 15), 30, 30,
-						GUI.self);
+				if (!b) {
+					b = true;
+					System.out.println(p);
+				}
+				graphics.drawImage(icon, (int) (p.getX() * Screen.WIDTH - 15),
+						(int) (p.getY() * Screen.HEIGHT - 15), 30, 30, GUI.self);
 			}
 
 		}

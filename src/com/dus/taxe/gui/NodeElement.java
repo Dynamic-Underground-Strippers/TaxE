@@ -77,7 +77,7 @@ public class NodeElement extends GuiElement {
 				}
 			} else {
 				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
-					if (goal.getStart().equals(n) || goal.getEnd().equals(n)) {
+					if (goal.getStart().equals(n)) {
 						graphics.setColor(goal.getStart().equals(n) ? Color.green : Color.cyan);
 						graphics.setStroke(dottedStroke);
 						graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
