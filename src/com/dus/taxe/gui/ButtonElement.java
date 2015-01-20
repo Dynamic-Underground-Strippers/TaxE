@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * General class for button-like {@link com.dus.taxe.gui.GuiElement}s
  */
 public class ButtonElement extends GuiElement {
 	private final Runnable action;

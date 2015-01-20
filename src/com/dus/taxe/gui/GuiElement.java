@@ -25,8 +25,12 @@ abstract class GuiElement {
 	 *
 	 * @param graphics The {@link java.awt.Graphics2D} object from the {@link javax.swing.JFrame}
 	 */
-	public abstract void draw(Graphics2D graphics);
+	abstract void draw(Graphics2D graphics);
 
+	/**
+	 * Draws the {@link #tooltip} of the {@link com.dus.taxe.gui.GuiElement}, if one exists
+	 * @param graphics
+	 */
 	void drawTooltip(Graphics2D graphics) {
 		if (tooltip != null && hovering) {
 			graphics.setColor(Color.DARK_GRAY);
@@ -44,9 +48,9 @@ abstract class GuiElement {
 	}
 
 	/**
-	 * @return the {@link com.dus.taxe.gui.GuiElement}'s tooltip
+	 * @return the {@link com.dus.taxe.gui.GuiElement}'s {@link #tooltip}
 	 */
-	public String getTooltip() {
+	String getTooltip() {
 		return tooltip;
 	}
 
@@ -70,35 +74,69 @@ abstract class GuiElement {
 	 *
 	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
 	 */
-	protected abstract void mouseMoved(MouseEvent e);
+	abstract void mouseMoved(MouseEvent e);
 
 	/**
 	 * Method that indicates that the mouse has moved outside of the {@link com.dus.taxe.gui.GuiElement}
 	 *
 	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
 	 */
-	public void mouseMovedExternal(MouseEvent e) {
+	void mouseMovedExternal(MouseEvent e) {
 		hovering = false;
 	}
 
+
+	/**
+	 * Method that indicates that the mouse has moved inside the {@link com.dus.taxe.gui.GuiElement}
+	 *
+	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
+	 */
 	void mouseMovedInternal(MouseEvent e) {
 		hovering = true;
 		mouseMoved(e);
 	}
 
-	public abstract void onClick(MouseEvent e);
+	/**
+	 * Method that indicates that a button on the mouse has been clicked inside the {@link com.dus
+	 * .taxe.gui.GuiElement}
+	 *
+	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
+	 */
+	abstract void onClick(MouseEvent e);
 
-	public abstract void onMouseDown(MouseEvent e);
+	/**
+	 * Method that indicates that a button on the mouse has been pushed down inside the {@link com
+	 * .dus.taxe.gui.GuiElement}
+	 *
+	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
+	 */
+	abstract void onMouseDown(MouseEvent e);
 
-	public abstract void onMouseUp(MouseEvent e);
+	/**
+	 * Method that indicates that a button on the mouse has been released inside the {@link com.dus
+	 * .taxe.gui.GuiElement}
+	 *
+	 * @param e the {@link java.awt.event.MouseEvent} object from the {@link javax.swing.JFrame}
+	 */
+	abstract void onMouseUp(MouseEvent e);
 
+	/**
+	 * Spherically interpolate the {@link #bounds} of the {@link com.dus.taxe.gui.GuiElement}
+	 * from their current state to the target state
+	 * @param targetBounds the target bounds that you are aiming for
+	 * @param speed the speed at which to interpolate the {@link #bounds}
+	 */
 	void slerpBounds(Rect targetBounds, float speed) {
 		bounds.animationRunning = true;
 		bounds.animationTargetBounds = targetBounds;
 		bounds.animationSpeed = speed;
 	}
 
-	public final void update() {
+	/**
+	 * Used to update the {@link #bounds} of the {@link com.dus.taxe.gui.GuiElement}, if they are being
+	 * animated
+	 */
+	final void update() {
 		bounds.update();
 	}
 
@@ -110,7 +148,7 @@ abstract class GuiElement {
 	 * @param graphics the {@link java.awt.Graphics} object from the {@link javax.swing.JFrame}
 	 * @param font     the font to use to determine text width/height from
 	 * @return a {@link java.lang.String} array, with each element representing a single line of
-	 * wrapped tetx
+	 * wrapped text
 	 */
 	String[] wrapText(String text, int maxWidth, Graphics graphics, Font font) {
 		String[] split = text.split(" ");
