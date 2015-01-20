@@ -24,7 +24,7 @@ public class Train {
 		upgrades.add(upgrade);
 	}
 
-	public void associateRoute(Route route) {
+	public void setRoute(Route route) {
 		this.route = route;
 	}
 

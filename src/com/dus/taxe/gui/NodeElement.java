@@ -4,6 +4,7 @@ import com.dus.taxe.Connection;
 import com.dus.taxe.Game;
 import com.dus.taxe.Goal;
 import com.dus.taxe.Node;
+import com.dus.taxe.Route;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -47,7 +48,7 @@ public class NodeElement extends GuiElement {
 				graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 						(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
 			} else if (!GUI.tempRouteNodes.isEmpty() &&
-					GUI.map.connections[GUI.tempRouteNodes.get(GUI.tempRouteNodes.size() - 1)
+					GUI.map.getConnections()[GUI.tempRouteNodes.get(GUI.tempRouteNodes.size() - 1)
 														  .getId()][n.getId()] != null) {
 				graphics.setColor(Color.cyan);
 				graphics.setStroke(solidStroke);
@@ -92,13 +93,18 @@ public class NodeElement extends GuiElement {
 					}
 				}
 			} else if (
-					(c = GUI.map.connections[GUI.tempRouteNodes.get(GUI.tempRouteNodes.size() - 1)
+					(c = GUI.map.getConnections()[GUI.tempRouteNodes.get(GUI.tempRouteNodes.size() - 1)
 															   .getId()][n.getId()]) != null) {
 				GUI.tempRouteNodes.add(n);
 				GUI.tempRouteConnections.add(c);
 			} if (GUI.tempRouteGoal != null && GUI.tempRouteGoal.getEnd().equals(n)) {
+				GUI.tempRouteTrainGoalElement.getTrain().setRoute(new Route(GUI.tempRouteNodes));
+				GUI.tempRouteTrainGoalElement.getEditRouteButton().setTooltip("Edit route");
 				GUI.tempRouteGoal = null;
+				GUI.tempRouteTrainGoalElement = null;
+				GUI.settingRoute = false;
 				GUI.tempRouteNodes.clear();
+				GUI.tempRouteConnections.clear();
 			}
 		}
 	}

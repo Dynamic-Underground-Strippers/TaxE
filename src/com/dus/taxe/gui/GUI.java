@@ -7,6 +7,7 @@ import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
 import com.dus.taxe.Resource;
+import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -51,6 +52,7 @@ public class GUI extends JFrame {
 	static boolean settingRoute = false;
 	private static long lastFrame = 0;
 	static Map map;
+	static TrainGoalElement tempRouteTrainGoalElement;
 	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
 	private final BufferedImage image;
 	private final Image mapImage;
@@ -78,13 +80,13 @@ public class GUI extends JFrame {
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
 		reticuleImage = new ImageIcon(getClass().getClassLoader().getResource("crosshair.png"))
 				.getImage();
-		for (Node n : map.listOfNodes) {
+		for (Node n : map.getListOfNodes()) {
 			addGuiElement(new NodeElement(n));
 		}
 		trainGoalElements = new TrainGoalElement[]{
-				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 620, 900, 150)),
-				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 413, 900, 150)),
-				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 207, 900, 150))};
+				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 620, 900, 150), 0),
+				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 413, 900, 150), 1),
+				new TrainGoalElement(new Rect(-490, Screen.HEIGHT - 207, 900, 150), 2)};
 		for (int i = 0; i < 3; i++) {
 			addGuiElement(trainGoalElements[i]);
 			trainGoalElements[i].setEditRouteButton();
