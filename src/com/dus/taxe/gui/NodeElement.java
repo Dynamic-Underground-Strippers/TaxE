@@ -64,28 +64,45 @@ public class NodeElement extends GuiElement {
 				(int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30, GUI.self);
 		if (GUI.settingRoute) {
-			if (GUI.tempRouteNodes.contains(n)) {
+			if (GUI.tempRouteNodes.contains(n)) { // if the node is already in the route
 				graphics.setColor(Color.green);
 				graphics.setStroke(solidStroke);
 				graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 						(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
 			} else if (!GUI.tempRouteNodes.isEmpty() &&
 					GUI.map.getConnections()[GUI.tempRouteNodes.get(GUI.tempRouteNodes.size() - 1)
-															   .getId()][n.getId()] != null) {
+															   .getId()][n.getId()] != null) { //
+				// if the route isn't empty and
+				// the node is connected to the
+				// last added node
 				graphics.setColor(Color.cyan);
 				graphics.setStroke(solidStroke);
 				graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 						(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
-			} else if (GUI.tempRouteGoal != null) {
-				if (GUI.tempRouteGoal.getStart().equals(n) ||
-						GUI.tempRouteGoal.getEnd().equals(n)) {
-					graphics.setColor(
-							GUI.tempRouteGoal.getStart().equals(n) ? Color.green : Color.cyan);
-					graphics.setStroke(dottedStroke);
-					graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
-							(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
+			} else if (GUI.tempRouteGoal != null && (GUI.tempRouteGoal.getStart().equals(n) ||
+					GUI.tempRouteGoal.getEnd().equals(n))) {
+				if (GUI.tempRouteGoal.getStart().equals(n)) {
+					graphics.setColor(Color.green);
+					for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+						if (t.getGoal() != null && t.getGoal().getStart().equals(n)) {
+							return;
+						}
+					}
+					if (GUI.tempRouteTrainGoalElement.getTrain().getRoute() != null) {
+						return;
+					}
+				} else if (GUI.tempRouteGoal.getEnd().equals(n)) {
+					graphics.setColor(Color.cyan);
 				}
-			} else {
+				graphics.setStroke(dottedStroke);
+				graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
+						(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
+			} else if (GUI.tempRouteTrainGoalElement.getTrain().getRoute() == null) {
+				for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+					if (t.getGoal() != null && t.getGoal().getStart().equals(n)) {
+						return;
+					}
+				}
 				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
 					if (goal.getStart().equals(n)) {
 						graphics.setColor(goal.getStart().equals(n) ? Color.green : Color.cyan);
@@ -108,6 +125,11 @@ public class NodeElement extends GuiElement {
 		if (GUI.settingRoute) {
 			Connection c;
 			if (GUI.tempRouteNodes.isEmpty()) {
+				for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+					if (t.getGoal() != null && t.getGoal().getStart().equals(n)) {
+						return;
+					}
+				}
 				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
 					if (goal.getStart().equals(n)) {
 						GUI.tempRouteGoal = goal;
