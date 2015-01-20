@@ -83,6 +83,11 @@ public class NodeElement extends GuiElement {
 					GUI.tempRouteGoal.getEnd().equals(n))) {
 				if (GUI.tempRouteGoal.getStart().equals(n)) {
 					graphics.setColor(Color.green);
+					for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+						if (t.getGoal() != null && t.getGoal().getStart().equals(n)) {
+							return;
+						}
+					}
 					if (GUI.tempRouteTrainGoalElement.getTrain().getRoute() != null) {
 						return;
 					}
@@ -93,6 +98,11 @@ public class NodeElement extends GuiElement {
 				graphics.drawOval((int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 						(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30);
 			} else if (GUI.tempRouteTrainGoalElement.getTrain().getRoute() == null) {
+				for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+					if (t.getGoal() != null && t.getGoal().getStart().equals(n)) {
+						return;
+					}
+				}
 				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
 					if (goal.getStart().equals(n)) {
 						graphics.setColor(goal.getStart().equals(n) ? Color.green : Color.cyan);
@@ -115,6 +125,11 @@ public class NodeElement extends GuiElement {
 		if (GUI.settingRoute) {
 			Connection c;
 			if (GUI.tempRouteNodes.isEmpty()) {
+				for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+					if (t.getGoal() != null && t.getGoal().getStart().equals(n)) {
+						return;
+					}
+				}
 				for (Goal goal : Game.getCurrentPlayer().getCurrentGoals()) {
 					if (goal.getStart().equals(n)) {
 						GUI.tempRouteGoal = goal;
