@@ -29,7 +29,8 @@ public class Player {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Goal?", "New Goal", dialogButton);
 			if(dialogResult == JOptionPane.YES_OPTION) {
-				discardUnstartedGoal();
+				Goal discardedGoal = discardUnstartedGoal();
+				JOptionPane.showMessageDialog(null, "Goal \"" + discardedGoal.getDescription() + "\" discarded" , "Goal Discarded", JOptionPane.PLAIN_MESSAGE);
 				currentGoals.add(generateGoal());
 			}
 		}
@@ -163,7 +164,8 @@ public class Player {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Engine?", "New Engine", dialogButton);
 			if(dialogResult == JOptionPane.YES_OPTION) {
-				discardRandEngine();
+				Engine discardedEngine = discardRandEngine();
+				JOptionPane.showMessageDialog(null, "Engine \"" + discardedEngine.getName() + "\" discarded" , "Engine Discarded", JOptionPane.PLAIN_MESSAGE);
 				this.engineInventory.add(new Engine());
 			}
 		}
@@ -176,7 +178,8 @@ public class Player {
 			int dialogButton = JOptionPane.YES_NO_OPTION;
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Upgrade?", "New Upgrade", dialogButton);
 			if(dialogResult == JOptionPane.YES_OPTION) {
-				discardRandUpgrade();
+				Upgrade discardedUpgrade =discardRandUpgrade();
+				JOptionPane.showMessageDialog(null, "Upgrade \"" + discardedUpgrade.getName() + "\" discarded" , "Upgrade Discarded", JOptionPane.PLAIN_MESSAGE);
 				this.upgradeInventory.add(new Upgrade());
 			}
 		}

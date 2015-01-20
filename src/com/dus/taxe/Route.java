@@ -83,9 +83,14 @@ public class Route {
 
 
 	public void updateDistanceAlongConnection(int speed) {
-		int totalDistance = Game.currentMap
-				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
-						this.listOfNodes.get(this.indexOfCurrentNode + 1));
+		int totalDistance = 0;
+		if (indexOfCurrentNode < listOfNodes.size() - 1) {
+			totalDistance = Game.currentMap
+					.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
+							this.listOfNodes.get(this.indexOfCurrentNode + 1));
+		} else {
+			return;
+		}
 		if (this.distanceAlongConnection + speed < totalDistance) {
 			this.distanceAlongConnection += speed;
 		} else {
@@ -105,9 +110,15 @@ public class Route {
 	}
 
 	public void updateDistanceAlongConnectionRecursive(int left) {
-		int totalDistance = Game.currentMap
-				.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
-						this.listOfNodes.get(this.indexOfCurrentNode + 1));
+		int totalDistance = 0;
+		if (indexOfCurrentNode < listOfNodes.size() - 1) {
+			totalDistance = Game.currentMap
+					.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
+							this.listOfNodes.get(this.indexOfCurrentNode + 1));
+		} else {
+			return;
+		}
+
 		if (this.distanceAlongConnection + left < totalDistance) {
 			this.distanceAlongConnection += left;
 		} else {
