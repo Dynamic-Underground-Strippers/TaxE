@@ -269,6 +269,7 @@ public class GUI extends JFrame {
 		for (GuiElement guiElement : guiElements) {
 			guiElement.update();
 			guiElement.draw(g);
+			g.setFont(font);
 		}
 		g.setFont(bigFont);
 		g.setColor(c);
