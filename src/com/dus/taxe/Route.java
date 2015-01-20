@@ -2,12 +2,9 @@ package com.dus.taxe;
 
 import java.util.ArrayList;
 
-//How do we store where the train is on the route??? indexOfCurrentNode
-//Need update route method to occur at the end of every turn. Teleport upgrade
-//Change route method, passed an index and a list of nodes and replaces all nodes after that index with those from the ordered list
 public class Route {
-	int length = 0; //Length of the route as a unit measurement
-	ArrayList<Node> listOfNodes;
+	private int length = 0; //Length of the route as a unit measurement
+	private ArrayList<Node> listOfNodes;
 	private int distanceAlongConnection;
 	private int indexOfCurrentNode;
 
@@ -16,11 +13,6 @@ public class Route {
 		this.indexOfCurrentNode = 0;
 		this.distanceAlongConnection = 0;
 		this.length = findTotalDistance();
-	}
-
-	public void changeRoute(int index, ArrayList<Node> nodes) {
-		this.listOfNodes.addAll(index,
-				nodes); //assuming that the GUI will force the user to select suitable nodes!!
 	}
 
 	private int findTotalDistance() {
@@ -37,18 +29,6 @@ public class Route {
 		return listOfNodes.get(indexOfCurrentNode);
 	}
 
-	public int getDistanceAlongConnection() {
-		return this.distanceAlongConnection;
-	}
-
-	public void setDistanceAlongConnection(int distance) {
-		this.distanceAlongConnection = distance;
-	}
-
-	public void incrementIndexOfCurrentNode() {
-		this.indexOfCurrentNode += 1;
-	}
-
 	public boolean isComplete() {
 		if (this.indexOfCurrentNode == listOfNodes.size() - 1) {
 			return true;
@@ -56,17 +36,6 @@ public class Route {
 			return false;
 		}
 	}
-
-	private boolean isValid() {
-		// Checks whether a route is possible, should not be necessary as this should all be handled within the GUI
-		for (int i = 0; i < (listOfNodes.size() - 1); i++) {
-			if ((Game.currentMap.findDistance(listOfNodes.get(i), listOfNodes.get(i + 1))) == 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 
 	private void setRoute(ArrayList<Node> newNodes) {
 		// Sets the listOfNodes to be equal to the list passed in the constructor
@@ -80,7 +49,7 @@ public class Route {
 
 
 	public void updateDistanceAlongConnection(int speed) {
-		int totalDistance = 0;
+		int totalDistance=0;
 		if (indexOfCurrentNode < listOfNodes.size() - 1) {
 			totalDistance = Game.currentMap
 					.findDistance(this.listOfNodes.get(this.indexOfCurrentNode),
@@ -106,7 +75,7 @@ public class Route {
 		}
 	}
 
-	public void updateDistanceAlongConnectionRecursive(int left) {
+	void updateDistanceAlongConnectionRecursive(int left) {
 		int totalDistance = 0;
 		if (indexOfCurrentNode < listOfNodes.size() - 1) {
 			totalDistance = Game.currentMap

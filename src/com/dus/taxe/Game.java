@@ -10,8 +10,20 @@ public class Game {
 	private static Player otherPlayer;
 	private static int turn;
 
-	public static void endGame() {
-		System.out.println("Congratulations " + currentPlayer.getName());
+	private static void endGame() {
+		Player winner;
+		if (currentPlayer.getPoints()>otherPlayer.getPoints()){
+			winner = currentPlayer;
+		} else if (currentPlayer.getPoints()<otherPlayer.getPoints()){
+			winner = otherPlayer;
+		} else{
+			winner = null;
+		}
+		if (winner == null){
+			JOptionPane.showMessageDialog(null, "Congratulations! It's a tie!" , "Game Over! Tie!", JOptionPane.PLAIN_MESSAGE);
+		} else{
+			JOptionPane.showMessageDialog(null, "Congratulations " + winner.getName() + "! You are the winner!" , "Game Over! " + winner.getName()+ " wins!", JOptionPane.PLAIN_MESSAGE);
+		}
 	}
 
 	public static void endTurn() {
@@ -70,7 +82,7 @@ public class Game {
 		GUI.self.setPlayer(currentPlayer);
 	}
 
-	public int getTurn() {
-		return this.turn;
+	public static int getTurn() {
+		return turn;
 	}
 }

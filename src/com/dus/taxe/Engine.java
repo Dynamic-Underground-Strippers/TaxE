@@ -4,7 +4,7 @@ import java.util.Random;
 
 
 public class Engine implements Resource, Comparable<Engine> {
-	private EngineType type;
+	private final EngineType type;
 
 	public enum EngineType { //enumerated type containing types of engine
 		//EngineType (String name, String description, int speed)
@@ -14,9 +14,9 @@ public class Engine implements Resource, Comparable<Engine> {
 		ELECTRIC("Electric Engine", "", 75),
 		ROCKET("Rocket Engine", "", 100);
 
-		private String description; //description variable internal to enumerated type
-		private String name; //name variable internal to enumerated type
-		private int speed; //speed variable internal to enumerated type
+		private final String description; //description variable internal to enumerated type
+		private final String name; //name variable internal to enumerated type
+		private final int speed; //speed variable internal to enumerated type
 
 		private EngineType(String name, String description,
 				int speed) { //setting engine type sets names to those defined in enum

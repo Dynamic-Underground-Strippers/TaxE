@@ -5,7 +5,7 @@ public abstract class Node {
 	private final Point location;
 	private final String name;
 
-	public Node(int id, String name, Point location) {
+	Node(int id, String name, Point location) {
 		this.id = id;
 		this.name = name;
 		this.location = location;

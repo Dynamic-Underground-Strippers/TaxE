@@ -10,7 +10,7 @@ public class Train {
 	private Goal goal;
 	private Route route;
 	private int speed;
-	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
+	private final ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
 
 	public Train() {
 		this.engine = new Engine(Engine.EngineType.HAND_CART);
@@ -20,6 +20,10 @@ public class Train {
 	public void addUpgrade(Upgrade upgrade) {
 		upgrade.use(this); //applies upgrade
 		upgrades.add(upgrade);
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
 	}
 
 	public Engine getEngine() {
@@ -51,10 +55,6 @@ public class Train {
 		return route;
 	}
 
-	public void setRoute(Route route) {
-		this.route = route;
-	}
-
 	public int getSpeed() {
 		return speed;
 	}
@@ -82,23 +82,19 @@ public class Train {
 	}
 
 	public void moveTrain() {
-		if (this.route != null) {
+		if (this.route!=null) {
 			boolean teleport = false;
-			for (int i = 0; i < upgrades.size(); i++) {
-				if (upgrades.get(i).getName() == "Teleport") {
+			for (int i =0; i<upgrades.size();i++){
+				if (upgrades.get(i).getName().equals("Teleport")){
 					teleport = true;
 				}
 			}
-			if (teleport) {
+			if (teleport){
 				this.route.useTeleport();
-			} else {
+			}else{
 				this.route.updateDistanceAlongConnection(this.speed);
 			}
 
 		}
-	}
-
-	public void setFrozen(boolean frozen) {
-		boolean frozen1 = frozen;
 	}
 }

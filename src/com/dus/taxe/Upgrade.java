@@ -3,7 +3,7 @@ package com.dus.taxe;
 import java.util.Random;
 
 public class Upgrade implements Resource, Comparable<Upgrade> {
-	private UpgradeType type;
+	private final UpgradeType type;
 
 	public enum UpgradeType { //enumerated type containing types of engine
 		//UpgradeType (String name, String description, boolean reapply)
@@ -16,9 +16,9 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 		//removeObstacle,
 		;
 
-		private String description; //description variable internal to enumerated type
-		private String name; //name variable internal to enumerated type
-		private boolean reapply; //true if upgrade must be reapplied for new engine
+		private final String description; //description variable internal to enumerated type
+		private final String name; //name variable internal to enumerated type
+		private final boolean reapply; //true if upgrade must be reapplied for new engine
 
 		private UpgradeType(String name, String description,
 				boolean reapply) { //setting upgrade type sets names to those defined in enum
@@ -26,13 +26,7 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 			this.description = description;
 			this.reapply = reapply;
 		}
-
-
 	}
-
-	public Upgrade(UpgradeType type) { //Why would this ever be used??
-		this.setType(type);
-	} //Create upgrade with specified type
 
 	public Upgrade() { //Create upgrade with random upgrade type
 		Random rand = new Random();
@@ -76,10 +70,6 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
     * if called with a node or a connection as parameter allows to use obstacles related upgrades
     *
     * */
-
-	public void setType(UpgradeType type) {//Why would this ever be used??
-		this.type = type;
-	}
 
 	public void use(Train train) {
 		if (train.hasUpgrade(type.name)) {
