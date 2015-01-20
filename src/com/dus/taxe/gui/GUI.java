@@ -7,7 +7,6 @@ import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
 import com.dus.taxe.Resource;
-import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -274,9 +273,6 @@ public class GUI extends JFrame {
 		g.setFont(bigFont);
 		g.setColor(c);
 		g.drawString(Game.getCurrentPlayer().getName() + "'s turn", 10 * scale, 290 * scale);
-		for (Train t : Game.getOtherPlayer().getCurrentTrains()) {
-
-		}
 		if (draggingRect != null && draggingImage != null) {
 			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
 					(int) draggingRect.width, (int) draggingRect.height, this);

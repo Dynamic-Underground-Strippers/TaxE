@@ -17,6 +17,9 @@ public class GoalsContainer extends GuiElement {
 	private final Rect[] nodeLinks = new Rect[6];
 	private final Font normalFont;
 	private final Font titleFont;
+	Color blue = new Color(84, 198, 198);
+	Color green = new Color(45, 242, 145);
+	Color pink = new Color(230, 113, 229);
 
 	GoalsContainer(Rect bounds) {
 		super(bounds);
@@ -48,8 +51,25 @@ public class GoalsContainer extends GuiElement {
 		graphics.fillRoundRect((int) bounds.x, (int) bounds.y, (int) bounds.width,
 				(int) bounds.height, 10, 10);
 		int count = 0;
+		graphics.setColor(Color.white);
 		for (Goal g : Game.getCurrentPlayer().getCurrentGoals()) {
 			graphics.setColor(Color.white);
+			for (int i = 0; i < Game.getCurrentPlayer().getCurrentTrains().size(); i++) {
+				if (Game.getCurrentPlayer().getCurrentTrains().get(i).getGoal() != null &&
+						Game.getCurrentPlayer().getCurrentTrains().get(i).getGoal().equals(g)) {
+					switch (i) {
+						case 0:
+							graphics.setColor(blue);
+							break;
+						case 1:
+							graphics.setColor(green);
+							break;
+						case 2:
+							graphics.setColor(pink);
+							break;
+					}
+				}
+			}
 			graphics.setFont(titleFont);
 			int count2 = 1;
 			for (String s : wrapText(g.getDescription(), (int) (bounds.width / 3.1f), graphics,
