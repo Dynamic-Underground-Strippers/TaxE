@@ -15,9 +15,6 @@ public class Route {
 		setRoute(newNodes);
 		this.indexOfCurrentNode = 0;
 		this.distanceAlongConnection = 0;
-	  /*  if (!isValid()){
-			throw new Error("Invalid Route");
-        }*/
 		this.length = findTotalDistance();
 	}
 

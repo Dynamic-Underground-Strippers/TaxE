@@ -30,8 +30,12 @@ public class Player {
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like Receive a New Goal?", "New Goal", dialogButton);
 			if(dialogResult == JOptionPane.YES_OPTION) {
 				Goal discardedGoal = discardUnstartedGoal();
-				JOptionPane.showMessageDialog(null, "Goal \"" + discardedGoal.getDescription() + "\" discarded" , "Goal Discarded", JOptionPane.PLAIN_MESSAGE);
-				currentGoals.add(generateGoal());
+				if (discardedGoal==null){
+					JOptionPane.showMessageDialog(null, "There are no unstarted goals, no goal is eligible to be discarded" , "No Unstarted Goal", JOptionPane.PLAIN_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Goal \"" + discardedGoal.getDescription() + "\" discarded", "Goal Discarded", JOptionPane.PLAIN_MESSAGE);
+					currentGoals.add(generateGoal());
+				}
 			}
 		}
 	}
