@@ -59,6 +59,11 @@ public class NodeElement extends GuiElement {
 				s += " - Train " + (i + 1);
 			}
 		}
+		for (Train t : Game.getOtherPlayer().getCurrentTrains()) {
+			if (t.getRoute() != null && t.getRoute().getCurrentNode().equals(n)) {
+				s += " - Enemy Train";
+			}
+		}
 		setTooltip(s);
 		graphics.drawImage(isJunction ? junctionImage : stationImage,
 				(int) (n.getLocation().getX() * Screen.WIDTH) - 15,
