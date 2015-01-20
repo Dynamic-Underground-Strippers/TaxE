@@ -69,7 +69,7 @@ abstract class GuiElement {
         bounds.update();
     }
 
-    protected String[] wrapText(String text, int maxWidth, Graphics graphics, Font font) {
+    String[] wrapText(String text, int maxWidth, Graphics graphics, Font font) {
         String[] split = text.split(" ");
         ArrayList<String> sections = new ArrayList<String>();
         String temp = "";

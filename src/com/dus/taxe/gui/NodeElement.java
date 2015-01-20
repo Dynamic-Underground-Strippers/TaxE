@@ -5,6 +5,7 @@ import com.dus.taxe.Game;
 import com.dus.taxe.Goal;
 import com.dus.taxe.Node;
 import com.dus.taxe.Route;
+import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -34,11 +35,8 @@ public class NodeElement extends GuiElement {
 		setTooltip(n.getName());
 	}
 
-	boolean special = false;
-
 	@Override
 	public void draw(Graphics2D graphics) {
-		special = false;
 		graphics.drawImage(stationImage, (int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30, GUI.self);
 		if (GUI.settingRoute) {
@@ -99,6 +97,9 @@ public class NodeElement extends GuiElement {
 				GUI.tempRouteConnections.add(c);
 			} if (GUI.tempRouteGoal != null && GUI.tempRouteGoal.getEnd().equals(n)) {
 				GUI.tempRouteTrainGoalElement.getTrain().setRoute(new Route(GUI.tempRouteNodes));
+				for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
+					System.out.println(t.getRoute());
+				}
 				GUI.tempRouteTrainGoalElement.getEditRouteButton().setTooltip("Edit route");
 				GUI.tempRouteGoal = null;
 				GUI.tempRouteTrainGoalElement = null;

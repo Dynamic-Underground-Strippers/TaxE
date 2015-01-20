@@ -7,7 +7,6 @@ import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
 import com.dus.taxe.Resource;
-import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -28,8 +27,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,17 +56,17 @@ public class GUI extends JFrame {
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
 	static Font baseFont;
-	private Font font;
+	private final Font font;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 	static Rect reticuleRect = new Rect();
-	static Image reticuleImage;
+	private static Image reticuleImage;
 
 	public GUI(Map map) {
 		self = this;
 		GUI.map = map;
 		try {
 			baseFont = Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(new File("src/font" + ".ttf")));
+					getClass().getClassLoader().getResourceAsStream("font.ttf"));
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -78,6 +75,7 @@ public class GUI extends JFrame {
 		font = baseFont.deriveFont(16f);
 		//noinspection ConstantConditions
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
+		//noinspection ConstantConditions
 		reticuleImage = new ImageIcon(getClass().getClassLoader().getResource("crosshair.png"))
 				.getImage();
 		for (Node n : map.getListOfNodes()) {
@@ -262,6 +260,11 @@ public class GUI extends JFrame {
 		if (reticuleRect != null && reticuleImage != null) {
 			graphics.drawImage(reticuleImage, (int) reticuleRect.x, (int) reticuleRect.y,
 					(int) reticuleRect.width, (int) reticuleRect.height, this);
+			graphics.setColor(Color.magenta);
+			graphics.drawRect((int) reticuleRect.x, (int) reticuleRect.y, (int) reticuleRect.width,
+					(int) reticuleRect.height);
+		} else {
+			System.out.println(reticuleRect + ", " + reticuleImage);
 		}
 		graphics.drawImage(image, 0, 0, Screen.WIDTH, Screen.HEIGHT, this);
 		repaint();

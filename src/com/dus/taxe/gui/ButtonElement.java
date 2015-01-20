@@ -1,11 +1,13 @@
 package com.dus.taxe.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
+
 public class ButtonElement extends GuiElement {
-    private Runnable action;
+    private final Runnable action;
     private Image image;
 
     public ButtonElement(Rect bounds, String imageName, Runnable action) {
