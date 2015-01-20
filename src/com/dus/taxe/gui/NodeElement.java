@@ -6,6 +6,7 @@ import com.dus.taxe.Goal;
 import com.dus.taxe.Junction;
 import com.dus.taxe.Node;
 import com.dus.taxe.Route;
+import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -51,6 +52,14 @@ public class NodeElement extends GuiElement {
 
 	@Override
 	public void draw(Graphics2D graphics) {
+		String s = n.getName();
+		for (int i = 0; i < Game.getCurrentPlayer().getCurrentTrains().size(); i++) {
+			Train t = Game.getCurrentPlayer().getCurrentTrains().get(i);
+			if (t.getRoute() != null && t.getRoute().getCurrentNode().equals(n)) {
+				s += " - Train " + (i + 1);
+			}
+		}
+		setTooltip(s);
 		graphics.drawImage(isJunction ? junctionImage : stationImage,
 				(int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30, GUI.self);

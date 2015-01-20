@@ -62,6 +62,8 @@ public class GUI extends JFrame {
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 	static Rect reticuleRect;
 	private static Image reticuleImage;
+	private final Color c = new Color(0, 0, 0, 0.8f);
+	private final Font bigFont;
 
 	public GUI(Map map) {
 		self = this;
@@ -76,6 +78,7 @@ public class GUI extends JFrame {
 			e.printStackTrace();
 		}
 		font = baseFont.deriveFont(16f);
+		bigFont = font.deriveFont(60f);
 		//noinspection ConstantConditions
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
 		//noinspection ConstantConditions
@@ -99,6 +102,14 @@ public class GUI extends JFrame {
 				new Rect(10 * scale, Screen.HEIGHT - 650 * scale, 100 * scale, 640 * scale)));
 		addGuiElement(
 				new GoalsContainer(new Rect(10 * scale, 10 * scale, 900 * scale, 200 * scale)));
+		addGuiElement(
+				new ButtonElement(new Rect(10 * scale, 330 * scale, 0, 0), "End turn", bigFont,
+						new Runnable() {
+							public void run() {
+								Game.endTurn();
+								Game.newTurn();
+							}
+						}));
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -254,10 +265,14 @@ public class GUI extends JFrame {
 				}
 			}
 		}
+		g.setFont(font);
 		for (GuiElement guiElement : guiElements) {
 			guiElement.update();
 			guiElement.draw(g);
 		}
+		g.setFont(bigFont);
+		g.setColor(c);
+		g.drawString(Game.getCurrentPlayer().getName() + "'s turn", 10 * scale, 290 * scale);
 		for (Train t : Game.getOtherPlayer().getCurrentTrains()) {
 
 		}
