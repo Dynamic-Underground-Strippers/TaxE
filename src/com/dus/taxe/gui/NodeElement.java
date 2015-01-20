@@ -6,7 +6,6 @@ import com.dus.taxe.Goal;
 import com.dus.taxe.Junction;
 import com.dus.taxe.Node;
 import com.dus.taxe.Route;
-import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -14,6 +13,7 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -110,10 +110,8 @@ public class NodeElement extends GuiElement {
 				GUI.tempRouteConnections.add(c);
 			}
 			if (GUI.tempRouteGoal != null && GUI.tempRouteGoal.getEnd().equals(n)) {
-				GUI.tempRouteTrainGoalElement.getTrain().setRoute(new Route(GUI.tempRouteNodes));
-				for (Train t : Game.getCurrentPlayer().getCurrentTrains()) {
-					System.out.println(t.getRoute());
-				}
+				GUI.tempRouteTrainGoalElement.getTrain().setRoute(
+						new Route(new ArrayList<Node>(GUI.tempRouteNodes)));
 				GUI.tempRouteTrainGoalElement.getEditRouteButton().setTooltip("Edit route");
 				GUI.tempRouteGoal = null;
 				GUI.tempRouteTrainGoalElement = null;
