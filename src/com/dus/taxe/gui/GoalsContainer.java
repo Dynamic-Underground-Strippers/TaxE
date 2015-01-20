@@ -12,11 +12,11 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
 public class GoalsContainer extends GuiElement {
-	Color backgroundColour = new Color(0, 0, 0, 0.8f);
-	float[] centres = new float[3];
-	Rect[] nodeLinks = new Rect[6];
-	Font normalFont;
-	Font titleFont;
+	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
+	private final float[] centres = new float[3];
+	private final Rect[] nodeLinks = new Rect[6];
+	private final Font normalFont;
+	private final Font titleFont;
 
 	GoalsContainer(Rect bounds) {
 		super(bounds);

@@ -34,11 +34,8 @@ public class NodeElement extends GuiElement {
 		setTooltip(n.getName());
 	}
 
-	boolean special = false;
-
 	@Override
 	public void draw(Graphics2D graphics) {
-		special = false;
 		graphics.drawImage(stationImage, (int) (n.getLocation().getX() * Screen.WIDTH) - 15,
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15, 30, 30, GUI.self);
 		if (GUI.settingRoute) {

@@ -7,7 +7,6 @@ import com.dus.taxe.Map;
 import com.dus.taxe.Node;
 import com.dus.taxe.Player;
 import com.dus.taxe.Resource;
-import com.dus.taxe.Train;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -59,10 +58,10 @@ public class GUI extends JFrame {
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
 	static Font baseFont;
-	private Font font;
+	private final Font font;
 	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 	static Rect reticuleRect = new Rect();
-	static Image reticuleImage;
+	private static Image reticuleImage;
 
 	public GUI(Map map) {
 		self = this;
@@ -78,6 +77,7 @@ public class GUI extends JFrame {
 		font = baseFont.deriveFont(16f);
 		//noinspection ConstantConditions
 		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
+		//noinspection ConstantConditions
 		reticuleImage = new ImageIcon(getClass().getClassLoader().getResource("crosshair.png"))
 				.getImage();
 		for (Node n : map.getListOfNodes()) {
