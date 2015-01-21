@@ -105,15 +105,22 @@ public class Player {
 
 	Goal discardUnstartedGoal() {
 		ArrayList<Goal> discardable = new ArrayList<Goal>();
+		Goal discardedGoal = null;
 		for (Goal g : currentGoals) {
+			boolean discard = true;
 			for (Train t : currentTrains) {
-				if (!g.equals(t.getGoal())) {
-					discardable.add(g);
+				if (g.getStart().getId() == t.getGoal().getStart().getId()) {
+					discard = false;
 				}
 			}
+			if (discard){
+				discardable.add(g);
+			}
 		}
-		Goal discardedGoal = discardable.get((int) (Math.random() * discardable.size()));
-		currentGoals.remove(discardedGoal);
+		if (discardable.size()!=0) {
+			discardedGoal = discardable.get(new Random().nextInt(discardable.size()));
+			currentGoals.remove(discardedGoal);
+		}
 		return discardedGoal;
 	}
 
