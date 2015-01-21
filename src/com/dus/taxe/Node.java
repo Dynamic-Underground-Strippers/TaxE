@@ -1,5 +1,8 @@
 package com.dus.taxe;
 
+/**
+ * Base class for all stations, junctions etc on the map
+ */
 public abstract class Node {
 	private final int id;
 	private final Point location;
@@ -20,14 +23,25 @@ public abstract class Node {
 		}
 	}
 
+	/**
+	 * @return the ID of this {@link com.dus.taxe.Node}
+	 */
 	public int getId() {
 		return id;
 	}
 
+
+	/**
+	 * @return the location of this {@link com.dus.taxe.Node}
+	 */
 	public Point getLocation() {
 		return location;
 	}
 
+
+	/**
+	 * @return the ID of this {@link com.dus.taxe.Node}
+	 */
 	public String getName() {
 		return name;
 	}

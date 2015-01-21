@@ -2,7 +2,9 @@ package com.dus.taxe;
 
 import java.util.Random;
 
-
+/**
+ * Representation of a {@link com.dus.taxe.Train}'s engine
+ */
 public class Engine implements Resource, Comparable<Engine> {
 	private final EngineType type;
 
@@ -50,22 +52,38 @@ public class Engine implements Resource, Comparable<Engine> {
 		return (this.getName().compareTo(engine.getName()));
 	}
 
+	/**
+	 * @return a description of the {@link com.dus.taxe.Engine}
+	 */
 	public String getDescription() {
 		return this.type.description;
 	}
 
+	/**
+	 * @return the {@link com.dus.taxe.Engine}'s name
+	 */
 	public String getName() {
 		return this.type.name;
 	}
 
+	/**
+	 * @return the {@link com.dus.taxe.Engine}'s speed
+	 */
 	public int getSpeed() {
 		return this.type.speed;
 	}
 
+	/**
+	 * @return the {@link com.dus.taxe.Engine}'s type
+	 */
 	public EngineType getType() {
 		return type;
 	}
 
+	/**
+	 * Uses this {@link com.dus.taxe.Engine} on the given {@link com.dus.taxe.Train}
+	 * @param train the {@link com.dus.taxe.Train} to use this {@link com.dus.taxe.Engine} on
+	 */
 	public void use(Train train) {
 		train.setSpeed(type.speed);
 	}

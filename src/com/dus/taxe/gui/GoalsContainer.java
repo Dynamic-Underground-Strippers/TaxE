@@ -17,13 +17,13 @@ import java.awt.event.MouseEvent;
  */
 class GoalsContainer extends GuiElement {
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
+	private final Color blue = new Color(84, 198, 198);
 	private final float[] centres = new float[3];
+	private final Color green = new Color(45, 242, 145);
 	private final Rect[] nodeLinks = new Rect[6];
 	private final Font normalFont;
-	private final Font titleFont;
-	private final Color blue = new Color(84, 198, 198);
-	private final Color green = new Color(45, 242, 145);
 	private final Color pink = new Color(230, 113, 229);
+	private final Font titleFont;
 
 	GoalsContainer(Rect bounds) {
 		super(bounds);
@@ -96,7 +96,7 @@ class GoalsContainer extends GuiElement {
 
 	@Override
 	protected void mouseMoved(MouseEvent e) {
-		for (int i = 0; i < nodeLinks.length; i++) {
+		for (int i = 0; i < Game.getCurrentPlayer().getCurrentGoals().size() * 2; i++) {
 			if (nodeLinks[i].contains(e.getPoint())) {
 				GUI.self.setCursor(Cursor.HAND_CURSOR);
 				if (i % 2 == 0) {
