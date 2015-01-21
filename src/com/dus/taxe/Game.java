@@ -4,12 +4,18 @@ import com.dus.taxe.gui.GUI;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Main class for the game
+ */
 public class Game {
 	public static Map currentMap;
 	private static Player currentPlayer;
 	private static Player otherPlayer;
 	private static int turn;
 
+	/**
+	 * Ends the game
+	 */
 	private static void endGame() {
 		Player winner;
 		if (currentPlayer.getPoints()>otherPlayer.getPoints()){
@@ -28,6 +34,9 @@ public class Game {
 		System.exit(0);
 	}
 
+	/**
+	 * Ends the current turn
+	 */
 	public static void endTurn() {
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
@@ -40,12 +49,25 @@ public class Game {
 		}
 	}
 
+	/**
+	 * @return the {@link com.dus.taxe.Player} whose turn it currently is
+	 */
 	public static Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 
+	/**
+	 * @return the {@link com.dus.taxe.Player} whose turn it currently is not
+	 */
 	public static Player getOtherPlayer() {
 		return otherPlayer;
+	}
+
+	/**
+	 * @return the current turn number of the game
+	 */
+	public static int getTurn() {
+		return turn;
 	}
 
 	public static void main(String[] args) {
@@ -65,6 +87,9 @@ public class Game {
 		new GUI(currentMap).setPlayer(currentPlayer);
 	}
 
+	/**
+	 * Starts a new turn
+	 */
 	public static void newTurn() {
 		//if statement checks whether it is player 2's first turn or not. This was necessary as player 2 was getting a turn advantage.
 		currentPlayer.displayMessages();
@@ -77,15 +102,14 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Swaps {@link #currentPlayer} with {@link #otherPlayer}
+	 */
 	private static void swapPlayers() {
 		Player temp;
 		temp = currentPlayer;
 		currentPlayer = otherPlayer;
 		otherPlayer = temp;
 		GUI.self.setPlayer(currentPlayer);
-	}
-
-	public static int getTurn() {
-		return turn;
 	}
 }

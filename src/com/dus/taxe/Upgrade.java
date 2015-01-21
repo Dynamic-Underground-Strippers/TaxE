@@ -2,6 +2,9 @@ package com.dus.taxe;
 
 import java.util.Random;
 
+/**
+ * Representation of an in-game upgrade
+ */
 public class Upgrade implements Resource, Comparable<Upgrade> {
 	private final UpgradeType type;
 
@@ -43,34 +46,50 @@ public class Upgrade implements Resource, Comparable<Upgrade> {
 		return (this.getName().compareTo(upgrade.getName()));
 	}
 
+	/**
+	 * @return this {@link com.dus.taxe.Upgrade}'s description
+	 */
 	public String getDescription() {
 		return type.description;
 	}
 
+	/**
+	 * @return this {@link com.dus.taxe.Upgrade}'s name
+	 */
 	public String getName() {
 		return type.name;
 	}
 
+	/**
+	 * @return whether or not to reapply this {@link com.dus.taxe.Upgrade}'s type
+	 */
 	public boolean getReapply() {
 		return type.reapply;
 	}
 
+	/**
+	 * @return this {@link com.dus.taxe.Upgrade}'s type
+	 */
 	public UpgradeType getType() {
 		return type;
 	}
 
-    /*
-	*
-    * the method use allows an upgrade to be applied to a train
-    *
-    * if called with a train object as parameter allows to apply modifiers to trains
-    *
-    * if called with a train object and a node as parameters allows to warp a train to a node given that the node is contained in the route
-    *
-    * if called with a node or a connection as parameter allows to use obstacles related upgrades
-    *
-    * */
-
+	/**
+	 * <p>Allows an {@link com.dus.taxe.Upgrade} to be applied to a {@link com.dus.taxe
+	 * .Train}
+	 * <p/>
+	 * If called with a {@link com.dus.taxe.Train} object as parameter allows to apply modifiers
+	 * to {@link com.dus.taxe.Train}s
+	 * <p/>
+	 * If called with a {@link com.dus.taxe.Train} object and a {@link Node} as parameters allows
+	 * to warp a {@link com.dus.taxe.Train} to a node given that the node is contained in the
+	 * route
+	 * <p/>
+	 * If called with a {@link com.dus.taxe.Node} or a {@link com.dus.taxe.Connection} as parameter allows to use
+	 * obstacles
+	 *
+	 * @param train the {@link com.dus.taxe.Train} to apply this {@link com.dus.taxe.Upgrade} to
+	 */
 	public void use(Train train) {
 		if (train.hasUpgrade(type.name)) {
 			//throw exception - can't have 2 of an upgrade applied

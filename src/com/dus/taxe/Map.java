@@ -85,17 +85,13 @@ public class Map {
 		}
 	}
 
-	public ArrayList<Node> findAdjacentNodes(Node node1) {
-		// returns a list of all nodes that have a connection with the node passed to the function
-		ArrayList<Node> adjacentNodes = new ArrayList<Node>();
-		for (int i = 0; i < listOfNodes.size(); i++) {
-			if (connections[node1.getId()][i] != null) {
-				adjacentNodes.add(listOfNodes.get(i));
-			}
-		}
-		return adjacentNodes;
-	}
-
+	/**
+	 * Finds the distance between the 2 given {@link com.dus.taxe.Node}s
+	 *
+	 * @param node1
+	 * @param node2
+	 * @return the distance betwen the 2 given {@link com.dus.taxe.Node}s
+	 */
 	public int findDistance(Node node1, Node node2) {
 		// returns the distance between two nodes if a connection exists, if it doesn't returns 0
 		return connections[node1.getId()][node2.getId()].getDistance();
@@ -103,12 +99,23 @@ public class Map {
 
 	}
 
-
-	public Node retrieveNode(int index) {
-		//returns a node based on index;
-		return listOfNodes.get(index);
+	/**
+	 * @return all {@link com.dus.taxe.Connection}s between {@link com.dus.taxe.Node}s
+	 */
+	public Connection[][] getConnections() {
+		return connections;
 	}
 
+	/**
+	 * @return all {@link com.dus.taxe.Node}s on the {@link com.dus.taxe.Map}
+	 */
+	public ArrayList<Node> getListOfNodes() {
+		return listOfNodes;
+	}
+
+	/**
+	 * @return a random {@link com.dus.taxe.Node}
+	 */
 	public Node getRandomNode(){
 		int randomIndex = new Random().nextInt(listOfNodes.size());
 		while (listOfNodes.get(randomIndex) instanceof Junction){
@@ -117,11 +124,14 @@ public class Map {
 		return listOfNodes.get(randomIndex);
 	}
 
-	public ArrayList<Node> getListOfNodes() {
-		return listOfNodes;
-	}
-
-	public Connection[][] getConnections() {
-		return connections;
+	/**
+	 * Returns the {@link com.dus.taxe.Node} with the given index
+	 *
+	 * @param index the index of the {@link com.dus.taxe.Node}
+	 * @return the {@link com.dus.taxe.Node} with the given index
+	 */
+	public Node retrieveNode(int index) {
+		//returns a node based on index;
+		return listOfNodes.get(index);
 	}
 }

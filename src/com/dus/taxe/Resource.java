@@ -1,5 +1,8 @@
 package com.dus.taxe;
 
+/**
+ * Base class for all in-game resources
+ */
 public interface Resource {
 
 	public String getDescription();
