@@ -106,7 +106,7 @@ public class GUI extends JFrame {
 		addGuiElement(
 				new GoalsContainer(new Rect(10 * scale, 10 * scale, 900 * scale, 200 * scale)));
 		addGuiElement(
-				new ButtonElement(new Rect(10 * scale, 330 * scale, 0, 0), "End turn", bigFont,
+				new ButtonElement(new Rect(10 * scale, 330 * scale, 0, 0), "End Turn", bigFont,
 						new Runnable() {
 							public void run() {
 								Game.endTurn();
