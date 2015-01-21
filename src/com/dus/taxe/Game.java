@@ -21,21 +21,23 @@ public class Game {
 		}
 		if (winner == null){
 			JOptionPane.showMessageDialog(null, "Game Over! It's a tie!" , "Game Over! Tie!", JOptionPane.PLAIN_MESSAGE);
+
 		} else{
 			JOptionPane.showMessageDialog(null, "Congratulations " + winner.getName() + "! You are the winner!" , "Game Over! " + winner.getName()+ " wins!", JOptionPane.PLAIN_MESSAGE);
 		}
+		System.exit(0);
 	}
 
 	public static void endTurn() {
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
 		currentPlayer.completeGoals();
-		if (turn==20) {
+		if (turn==19) {
 			endGame();
-
+		}else {
+			swapPlayers();
+			turn += 1;
 		}
-		swapPlayers();
-		turn += 1;
 	}
 
 	public static Player getCurrentPlayer() {
