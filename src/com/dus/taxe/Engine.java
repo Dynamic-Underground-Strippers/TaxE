@@ -8,8 +8,8 @@ public class Engine implements Resource, Comparable<Engine> {
 
 	public enum EngineType { //enumerated type containing types of engine
 		//EngineType (String name, String description, int speed)
-		HAND_CART("Hand Cart", "", 15),
-		STEAM("Steam Engine", "", 25),
+		HAND_CART("Hand Cart", "", 20),
+		STEAM("Steam Engine", "", 35),
 		DIESEL("Diesel Engine", "", 50),
 		ELECTRIC("Electric Engine", "", 75),
 		ROCKET("Rocket Engine", "", 100);

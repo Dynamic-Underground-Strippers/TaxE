@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -41,34 +41,36 @@ import javax.swing.WindowConstants;
  * inside it
  */
 public class GUI extends JFrame {
-	static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
+	static Goal tempRouteGoal;
+	private static final float X_SCALE = Screen.WIDTH / 1920f;
+	private static final float Y_SCALE = Screen.HEIGHT / 1080f;
+	static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	public static GUI self;
-	static Font baseFont;
 	static Image draggingImage;
 	static Rect draggingRect;
 	static Resource draggingResource;
 	static long frameTime = 0;
-	static Map map;
-	static Rect reticuleRect;
-	static float scale;
 	static boolean settingRoute = false;
-	static Goal tempRouteGoal;
-	static TrainGoalElement tempRouteTrainGoalElement;
 	private static long lastFrame = 0;
-	private static Image reticuleImage;
-	private final Font bigFont;
-	private final Color c = new Color(0, 0, 0, 0.8f);
-	private final Font font;
+	static Map map;
+	static TrainGoalElement tempRouteTrainGoalElement;
+	static float scale;
 	private final ArrayList<GuiElement> guiElements = new ArrayList<GuiElement>();
 	private final BufferedImage image;
+	private final Image mapImage;
 	private final BasicStroke trackStroke = new BasicStroke(8, BasicStroke.CAP_BUTT,
 			BasicStroke.JOIN_MITER, 10, new float[]{8}, 0);
+	static Font baseFont;
+	private final Font font;
+	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
+	static Rect reticuleRect;
+	private static Image reticuleImage;
+	private final Color c = new Color(0, 0, 0, 0.8f);
+	private final Font bigFont;
 	private final Color trainBlue = new Color(84, 198, 198);
 	private final Color trainGreen = new Color(45, 242, 145);
 	private final Color trainPink = new Color(230, 113, 229);
-	private Image mapImage;
-	private TrainGoalElement[] trainGoalElements = new TrainGoalElement[3];
 
 	public GUI(Map map) {
 		self = this;
@@ -84,16 +86,11 @@ public class GUI extends JFrame {
 		}
 		font = baseFont.deriveFont(16f);
 		bigFont = font.deriveFont(60f);
-		try {
-			mapImage = ImageIO.read(getClass().getResourceAsStream("/map.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			reticuleImage = ImageIO.read(getClass().getResourceAsStream("/crosshair.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//noinspection ConstantConditions
+		mapImage = new ImageIcon(getClass().getClassLoader().getResource("map.png")).getImage();
+		//noinspection ConstantConditions
+		reticuleImage = new ImageIcon(getClass().getClassLoader().getResource("crosshair.png"))
+				.getImage();
 		for (Node n : map.getListOfNodes()) {
 			addGuiElement(new NodeElement(n));
 		}
@@ -113,7 +110,7 @@ public class GUI extends JFrame {
 		addGuiElement(
 				new GoalsContainer(new Rect(10 * scale, 10 * scale, 900 * scale, 200 * scale)));
 		addGuiElement(
-				new ButtonElement(new Rect(10 * scale, 330 * scale, 0, 0), "End turn", bigFont,
+				new ButtonElement(new Rect(10 * scale, 330 * scale, 0, 0), "End Turn", bigFont,
 						new Runnable() {
 							public void run() {
 								Game.endTurn();
@@ -311,7 +308,7 @@ public class GUI extends JFrame {
 		}
 		g.setFont(bigFont);
 		g.setColor(c);
-		g.drawString(Game.getCurrentPlayer().getName() + "'s turn", 10 * scale, 290 * scale);
+		g.drawString(Game.getCurrentPlayer().getName() + "'s Turn: " + String.valueOf((int) Math.floor(Game.getTurn() / 2) + 1), 10 * scale, 290 * scale);
 		if (draggingRect != null && draggingImage != null) {
 			g.drawImage(draggingImage, (int) draggingRect.x, (int) draggingRect.y,
 					(int) draggingRect.width, (int) draggingRect.height, this);

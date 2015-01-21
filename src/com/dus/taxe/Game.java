@@ -20,21 +20,24 @@ public class Game {
 			winner = null;
 		}
 		if (winner == null){
-			JOptionPane.showMessageDialog(null, "Congratulations! It's a tie!" , "Game Over! Tie!", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Game Over! It's a tie!" , "Game Over! Tie!", JOptionPane.PLAIN_MESSAGE);
+
 		} else{
 			JOptionPane.showMessageDialog(null, "Congratulations " + winner.getName() + "! You are the winner!" , "Game Over! " + winner.getName()+ " wins!", JOptionPane.PLAIN_MESSAGE);
 		}
+		System.exit(0);
 	}
 
 	public static void endTurn() {
 		currentPlayer.moveTrains();
 		//This will instantly move their trains, may want to have some kind of animation?
 		currentPlayer.completeGoals();
-		if (turn == 20) {
+		if (turn==19) {
 			endGame();
+		}else {
+			swapPlayers();
+			turn += 1;
 		}
-		swapPlayers();
-		turn += 1;
 	}
 
 	public static Player getCurrentPlayer() {
@@ -47,7 +50,7 @@ public class Game {
 
 	public static void main(String[] args) {
 		turn = 0;
-		currentMap = new Map();
+		currentMap=new Map();
 		String s;
 		if ((s = JOptionPane.showInputDialog("Enter player 1's name:")) == null) {
 			currentPlayer = new Player("Player 1");
@@ -65,7 +68,7 @@ public class Game {
 	public static void newTurn() {
 		//if statement checks whether it is player 2's first turn or not. This was necessary as player 2 was getting a turn advantage.
 		currentPlayer.displayMessages();
-		if (turn != 1) {
+		if (turn!=1) {
 			currentPlayer.addTrains();
 			currentPlayer.addGoal();
 			// Need to somehow add in GUI validation here

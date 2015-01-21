@@ -103,24 +103,25 @@ public class Map {
 
 	}
 
-	public Connection[][] getConnections() {
-		return connections;
+
+	public Node retrieveNode(int index) {
+		//returns a node based on index;
+		return listOfNodes.get(index);
+	}
+
+	public Node getRandomNode(){
+		int randomIndex = new Random().nextInt(listOfNodes.size());
+		while (listOfNodes.get(randomIndex) instanceof Junction){
+			randomIndex = new Random().nextInt(listOfNodes.size());
+		}
+		return listOfNodes.get(randomIndex);
 	}
 
 	public ArrayList<Node> getListOfNodes() {
 		return listOfNodes;
 	}
 
-	public Node getRandomNode() {
-		int randomIndex = new Random().nextInt(listOfNodes.size());
-		while (listOfNodes.get(randomIndex) instanceof Junction) {
-			randomIndex = new Random().nextInt(listOfNodes.size());
-		}
-		return listOfNodes.get(randomIndex);
-	}
-
-	public Node retrieveNode(int index) {
-		//returns a node based on index;
-		return listOfNodes.get(index);
+	public Connection[][] getConnections() {
+		return connections;
 	}
 }
