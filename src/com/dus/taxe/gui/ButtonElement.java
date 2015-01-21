@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 /**
  * General class for button-like {@link com.dus.taxe.gui.GuiElement}s
  */
-public class ButtonElement extends GuiElement {
+class ButtonElement extends GuiElement {
 	private final Runnable action;
 	private final Color colour = new Color(0, 0, 0, 0.8f);
 	private Font font;

@@ -19,7 +19,10 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class NodeElement extends GuiElement {
+/**
+ * {@link com.dus.taxe.gui.GuiElement} to represent a {@link com.dus.taxe.Node} on the map
+ */
+class NodeElement extends GuiElement {
 	private static Image junctionImage;
 	private static Image stationImage;
 	private final BasicStroke dottedStroke = new BasicStroke(3, BasicStroke.CAP_BUTT,
@@ -28,7 +31,7 @@ public class NodeElement extends GuiElement {
 	private final Node n;
 	private final BasicStroke solidStroke = new BasicStroke(3);
 
-	public NodeElement(Node n) {
+	NodeElement(Node n) {
 		super(new Rect((int) (n.getLocation().getX() * Screen.WIDTH) - 15 * GUI.scale,
 				(int) (n.getLocation().getY() * Screen.HEIGHT) - 15 * GUI.scale, 30 * GUI.scale,
 				30 * GUI.scale));

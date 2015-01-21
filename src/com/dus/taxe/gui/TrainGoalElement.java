@@ -17,7 +17,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-public class TrainGoalElement extends GuiElement {
+class TrainGoalElement extends GuiElement {
 	private static int count = 0;
 	private static HashMap<EngineType, Image> images;
 	private static Image redTrainIcon;
@@ -26,7 +26,7 @@ public class TrainGoalElement extends GuiElement {
 	private Image icon;
 	private Train train;
 
-	public TrainGoalElement(Rect bounds, int index) {
+	TrainGoalElement(Rect bounds, int index) {
 		super(bounds);
 		this.index = index;
 		if (images == null) {
@@ -120,19 +120,19 @@ public class TrainGoalElement extends GuiElement {
 		}
 	}
 
-	public ButtonElement getEditRouteButton() {
+	ButtonElement getEditRouteButton() {
 		return editRouteButton;
 	}
 
-	public int getIndex() {
+	int getIndex() {
 		return index;
 	}
 
-	public Train getTrain() {
+	Train getTrain() {
 		return train;
 	}
 
-	public void setTrain(Train train) {
+	void setTrain(Train train) {
 		this.train = train;
 	}
 

@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
-public class SolidColourRect extends GuiElement {
+/**
+ * {@link com.dus.taxe.gui.GuiElement} that represents a solid block of colour on the screen
+ */
+class SolidColourRect extends GuiElement {
 	private final Color colour;
 
-	public SolidColourRect(Rect bounds, Color colour) {
+	SolidColourRect(Rect bounds, Color colour) {
 		super(bounds);
 		this.colour = colour;
 	}

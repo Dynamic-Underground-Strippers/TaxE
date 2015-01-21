@@ -2,35 +2,56 @@ package com.dus.taxe.gui;
 
 import java.awt.Point;
 
+/**
+ * Utility class that represents a rectangle with floating-point precision
+ */
 class Rect {
-	public float height;
-	public float width;
-	public float x;
-	public float y;
+	float height;
+	float width;
+	float x;
+	float y;
 	boolean animationRunning;
 	float animationSpeed;
 	Rect animationTargetBounds;
 
-	public Rect() {
+	Rect() {
 		this(0, 0, 0, 0);
 	}
 
-	public Rect(float x, float y, float width, float height) {
+	Rect(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 	}
 
+	/**
+	 * Determines whether or not the {@link com.dus.taxe.gui.Rect} contains the given coordinates
+	 * @param x
+	 * @param y
+	 * @return whether or not the {@link com.dus.taxe.gui.Rect} contains the given coordinates
+	 */
 	boolean contains(float x, float y) {
 		return x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height;
 	}
 
-	public boolean contains(Point p) {
+	/**
+	 * Determines whether or not the {@link com.dus.taxe.gui.Rect} contains the given coordinates
+	 * @param p
+	 * @return whether or not the {@link com.dus.taxe.gui.Rect} contains the coordinates derived
+	 * from the given {@link java.awt.Point}
+	 */
+	boolean contains(Point p) {
 		return contains(p.x, p.y);
 	}
 
-	public boolean contains(com.dus.taxe.Point p) {
+	/**
+	 * Determines whether or not the {@link com.dus.taxe.gui.Rect} contains the given coordinates
+	 * @param p
+	 * @return whether or not the {@link com.dus.taxe.gui.Rect} contains the coordinates derived
+	 * from the given {@link com.dus.taxe.Point}
+	 */
+	boolean contains(com.dus.taxe.Point p) {
 		return contains(p.getX(), p.getY());
 	}
 
@@ -47,7 +68,10 @@ class Rect {
 		return "Rect(x:" + x + ", y:" + y + ", width:" + width + ", height:" + height + ")";
 	}
 
-	public final void update() {
+	/**
+	 * Updates the properties of the {@link com.dus.taxe.gui.Rect}, if they are being animated
+	 */
+	final void update() {
 		if (animationRunning) {
 			x += (animationTargetBounds.x - x) * animationSpeed * (GUI.frameTime / 32f);
 			y += (animationTargetBounds.y - y) * animationSpeed * (GUI.frameTime / 32f);

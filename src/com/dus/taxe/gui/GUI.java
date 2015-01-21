@@ -36,6 +36,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+/**
+ * Base class for the GUI - creates a window then draws {@link com.dus.taxe.gui.GuiElement}s
+ * inside it
+ */
 public class GUI extends JFrame {
 	static final ArrayList<Connection> tempRouteConnections = new ArrayList<Connection>();
 	static final ArrayList<Node> tempRouteNodes = new ArrayList<Node>();
@@ -236,6 +240,11 @@ public class GUI extends JFrame {
 		image = config.createCompatibleImage(Screen.WIDTH, Screen.HEIGHT, Transparency.TRANSLUCENT);
 	}
 
+	/**
+	 * Adds a {@link com.dus.taxe.gui.GuiElement} to the screen
+	 *
+	 * @param guiElement the element to add to the screen
+	 */
 	public void addGuiElement(GuiElement guiElement) {
 		guiElements.add(guiElement);
 	}
@@ -320,6 +329,11 @@ public class GUI extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Sets the {@link com.dus.taxe.Player} to associate the GUI with
+	 *
+	 * @param player the player to associate the GUI with
+	 */
 	public void setPlayer(Player player) {
 		for (int i = 0; i < player.getCurrentTrains().size(); i++) {
 			trainGoalElements[i].setTrain(player.getCurrentTrains().get(i));

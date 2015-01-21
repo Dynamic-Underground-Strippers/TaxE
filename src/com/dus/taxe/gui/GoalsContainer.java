@@ -11,7 +11,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
-public class GoalsContainer extends GuiElement {
+/**
+ * {@link com.dus.taxe.gui.GuiElement} that contains the {@link com.dus.taxe.Goal}s associated
+ * with the current player
+ */
+class GoalsContainer extends GuiElement {
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
 	private final Color blue = new Color(84, 198, 198);
 	private final float[] centres = new float[3];

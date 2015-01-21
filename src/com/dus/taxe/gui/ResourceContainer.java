@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-public class ResourceContainer extends GuiElement {
+class ResourceContainer extends GuiElement {
 	static final HashMap<UpgradeType, Image> upgradeImages = new HashMap<UpgradeType, Image>();
 	private static int PADDING;
 	private final Color backgroundColour = new Color(0, 0, 0, 0.8f);
@@ -25,7 +25,7 @@ public class ResourceContainer extends GuiElement {
 	private Rect hoverRect;
 	private String hoverString;
 
-	public ResourceContainer(Rect bounds) {
+	ResourceContainer(Rect bounds) {
 		super(bounds);
 		PADDING = (int) (10 * GUI.scale);
 		try {
