@@ -15,19 +15,18 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class TrainGoalElement extends GuiElement {
-	private static HashMap<EngineType, Image> images;
-	private final int index;
-	private static Image redTrainIcon;
-	private ButtonElement editRouteButton;
-	private Train train;
-	private Image icon;
+class TrainGoalElement extends GuiElement {
 	private static int count = 0;
+	private static HashMap<EngineType, Image> images;
+	private static Image redTrainIcon;
+	private final int index;
+	private ButtonElement editRouteButton;
+	private Image icon;
+	private Train train;
 
-	public TrainGoalElement(Rect bounds, int index) {
+	TrainGoalElement(Rect bounds, int index) {
 		super(bounds);
 		this.index = index;
 		if (images == null) {
@@ -79,8 +78,11 @@ public class TrainGoalElement extends GuiElement {
 			e.printStackTrace();
 		}
 		if (redTrainIcon == null) {
-			redTrainIcon = new ImageIcon(getClass().getClassLoader().getResource("train_red.png"))
-					.getImage();
+			try {
+				redTrainIcon = ImageIO.read(getClass().getResourceAsStream("/train_red.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -118,19 +120,19 @@ public class TrainGoalElement extends GuiElement {
 		}
 	}
 
-	public ButtonElement getEditRouteButton() {
+	ButtonElement getEditRouteButton() {
 		return editRouteButton;
 	}
 
-	public int getIndex() {
+	int getIndex() {
 		return index;
 	}
 
-	public Train getTrain() {
+	Train getTrain() {
 		return train;
 	}
 
-	public void setTrain(Train train) {
+	void setTrain(Train train) {
 		this.train = train;
 	}
 
@@ -191,16 +193,16 @@ public class TrainGoalElement extends GuiElement {
 		String image;
 		switch (index) {
 			case 0:
-				image = "edit_blue.png";
+				image = "/edit_blue.png";
 				break;
 			case 1:
-				image = "edit_green.png";
+				image = "/edit_green.png";
 				break;
 			case 2:
-				image = "edit_pink.png";
+				image = "/edit_pink.png";
 				break;
 			default:
-				image = "edit.png";
+				image = "/edit.png";
 				break;
 		}
 		boolean addToGUI = editRouteButton == null;
